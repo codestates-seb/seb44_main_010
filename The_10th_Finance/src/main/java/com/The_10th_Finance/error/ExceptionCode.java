@@ -3,8 +3,9 @@ package com.The_10th_Finance.error;
 import lombok.Getter;
 
 public enum ExceptionCode {
-    USERNOTFOUND(404, "Member Not Found");
-
+    USERNOTFOUND(404, "Member Not Found"),
+    INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
+    NOTYPE(500,"THERES NO TYPE");
     @Getter
     private int status;
 
