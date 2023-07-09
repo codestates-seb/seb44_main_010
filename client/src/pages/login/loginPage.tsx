@@ -1,3 +1,10 @@
+import LoginContainer from "../../containers/loginContainer";
+import * as S from "./loginPageStyled";
+
 export default function LoginPage() {
-  return <div></div>;
+  return (
+    <S.Main>
+      <LoginContainer></LoginContainer>
+    </S.Main>
+  );
 }

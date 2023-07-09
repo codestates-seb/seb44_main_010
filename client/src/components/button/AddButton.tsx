@@ -1,10 +1,11 @@
 import { styled } from "styled-components";
 
 interface Props {
-  backgroundcolor: string;
-  width: number;
-  height: number;
-  borderradius: number;
+  backgroundcolor?: string;
+  width?: number;
+  height?: number;
+  borderRadius?: number;
+  marginBottom?: number;
 }
 
 export const AddButton = styled.button<Props>`
@@ -17,6 +18,11 @@ export const AddButton = styled.button<Props>`
   color: ${(props) => (props.backgroundcolor === "yellow" ? "white" : "black")};
   width: ${(props) => props.width && `${props.width}rem`};
   height: ${(props) => props.height && `${props.height}rem`};
-  border-radius: ${(props) => props.borderradius && `${props.borderradius}`}px;
-  border: 0px;
+  border-radius: ${(props) => props.borderRadius && `${props.borderRadius}`}px;
+  border: 1px solid ${(props) => (props.backgroundcolor === "yellow" ? "#FFCE0B" : "#C9C9C9")};
+  margin-bottom: ${(props) => props.marginBottom && `${props.marginBottom}rem`};
+
+  & > *:first-child {
+    margin-right: 3rem;
+  }
 `;
