@@ -1,37 +1,9 @@
 import { styled } from "styled-components";
 
-export default function Footer() {
-  return (
-    <FooterContainer>
-      <FooterBox>
-        <FooterItem_1>MONEY MADE</FooterItem_1>
-        <FooterItem_2>
-          <span>Front-End</span>
-          <br />
-          <span>정지은 | google.com</span>
-          <br />
-          <span>정태현 | google.com</span>
-          <br />
-          <span>채명수 | gmail.com</span>
-        </FooterItem_2>
-        <FooterItem_2>
-          <span>Back-End</span>
-          <br />
-          <span>이은호 | google.com</span>
-          <br />
-          <span>백지희 | google.com</span>
-          <br />
-          <span>장태환 | gmail.com</span>
-        </FooterItem_2>
-      </FooterBox>
-    </FooterContainer>
-  );
-}
-
-const FooterContainer = styled.div`
+const Main = styled.div`
   /* border: 1px solid red; */
-  border-top: 3px solid #f0f0f0;
-  width: 100vw;
+  border-top: 1px solid #f0f0f0;
+  width: 90vw;
   height: 20vh;
   display: flex;
   justify-content: center;
@@ -63,3 +35,31 @@ const FooterItem_2 = styled.div`
     font-size: 3rem;
   }
 `;
+
+export default function Footer() {
+  return (
+    <Main>
+      <FooterBox>
+        <FooterItem_1>MONEY MADE</FooterItem_1>
+        <FooterItem_2>
+          <span>Front-End</span>
+          <br />
+          <span>정지은 | google.com</span>
+          <br />
+          <span>정태현 | google.com</span>
+          <br />
+          <span>채명수 | gmail.com</span>
+        </FooterItem_2>
+        <FooterItem_2>
+          <span>Back-End</span>
+          <br />
+          <span>이은호 | google.com</span>
+          <br />
+          <span>백지희 | google.com</span>
+          <br />
+          <span>장태환 | gmail.com</span>
+        </FooterItem_2>
+      </FooterBox>
+    </Main>
+  );
+}
