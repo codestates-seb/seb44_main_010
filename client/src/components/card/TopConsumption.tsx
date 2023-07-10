@@ -4,6 +4,7 @@ import { DayMoveButtonLeft } from "../../components/button/DayMoveButton";
 import AddButtonConsumption from "../button/AddButtonConsumption";
 
 export const TopContainer = styled.div`
+    display:flex;
     width: 44vw;
     height: 12vh;
     justify-content:space-between;
@@ -23,10 +24,10 @@ export const TopContainer = styled.div`
 export const DateContainer = styled.div`
     display:flex;
     flex-direction: column;
-    justify-content:flex-start;
 `;
 
 export const MoveDayButton = styled.div`
+    display:flex;
     width: 7vw;
     height: 5vh;
     align-items:center;
@@ -40,7 +41,8 @@ export const MoveDayButton = styled.div`
 
 `;
 
-export default function TopConsumption(){
+export default function TopConsumption({ showInput, setShowInput }: { showInput: boolean, setShowInput: React.Dispatch<React.SetStateAction<boolean>>}){
+
  return(
     <TopContainer>
     <DateContainer>
@@ -51,7 +53,7 @@ export default function TopConsumption(){
     <DayMoveButtonRight />
     </MoveDayButton>
     </DateContainer>
-    <AddButtonConsumption />
+    <AddButtonConsumption showInput={showInput} setShowInput={setShowInput}/>
     </TopContainer>
  )
 }

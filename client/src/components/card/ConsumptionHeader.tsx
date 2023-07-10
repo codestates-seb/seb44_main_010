@@ -5,6 +5,7 @@ const Main = styled.div`
   display:flex;
   justify-content:center;
   align-items:center;
+  position: fixed;
 `;
 
 const ComsumptionHeaderBox = styled.div`
@@ -12,13 +13,15 @@ height: 15vh;
 width: 100vw;
 background-image: url(${소비배경});
 background-size: contain;
+display:flex;
+align-items:center;
 `;
 
 const WordsContainer = styled.div`
   display:flex;
   flex-direction:row;
   align-items:center;
-  margin-left: 10vw;
+  margin-left: 15vw;
   
   .소비{
     font-size: 7rem;

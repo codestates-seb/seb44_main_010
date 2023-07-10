@@ -8,6 +8,7 @@ export const PlusButton = styled.div`
     background-color:#FFD800;
     align-items:center;
     transition: box-shadow 0.3s;
+    display:flex;
 
     img{
     width: 40%;
@@ -22,12 +23,18 @@ export const PlusButton = styled.div`
 
     &:hover {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3); 
+    cursor: pointer;
   }
 `;
 
-export default function AddButton(){
- return(
- <PlusButton>
+export default function AddButtonConsumption({ showInput, setShowInput }: { showInput: boolean, setShowInput: React.Dispatch<React.SetStateAction<boolean>>}){
+ 
+  const handleButtonClick = () =>{
+    setShowInput(!showInput)
+};
+
+  return(
+ <PlusButton onClick={handleButtonClick}>
  <img src={plusIcon}></img>
  <div className="추가">추가</div>
  </PlusButton>
