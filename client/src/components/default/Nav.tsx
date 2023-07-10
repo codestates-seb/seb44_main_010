@@ -25,7 +25,7 @@ const NavBox = styled.div`
   padding: 2% 0 2% 0;
   width: 80%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 `;
 
