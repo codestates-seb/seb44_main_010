@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class AccountsService {
-    private AccountsRepository accountsRepository;
+    private final AccountsRepository accountsRepository;
 
     public Accounts post(Accounts accountsPostToAccounts) {
         accountsPostToAccounts.setAccountStatement(Accounts.AccountStatement.ACTIVE);
@@ -33,5 +33,9 @@ public class AccountsService {
 
     public void deleteOne(Long id) {
         accountsRepository.deleteById(id);
+    }
+
+    public String getAccountType(Long accountId) {
+        return accountsRepository.findAccountTypebyAccountId(accountId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.USERNOTFOUND));
     }
 }

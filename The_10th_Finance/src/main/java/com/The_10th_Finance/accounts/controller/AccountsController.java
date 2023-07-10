@@ -18,12 +18,12 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping()
+@RequestMapping("/account")
 public class AccountsController {
     private final AccountsService accountsService;
     private final AccountsMapper accountsMapper;
 
-    @PostMapping()
+    @PostMapping("/post")
     public ResponseEntity postAccount(@Valid @RequestBody AccountsPost accountsPost){
         Accounts accounts =accountsService.post(accountsMapper.accountsPostToAccounts(accountsPost));
         return  new ResponseEntity(accountsMapper.accountsToAccountsResponseDto(accounts), HttpStatus.CREATED);

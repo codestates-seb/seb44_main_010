@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 @Setter
@@ -20,15 +17,15 @@ public class AccountsPost {
     private String acoountType;
 
     //데이터 베이스에선 DECIMAL
-    @NotBlank
+    @NotNull
     @PositiveOrZero
     private BigDecimal balance;
 
-    @NotBlank
+    @NotNull
     @Positive
     private Long userId;
 
-    @NotBlank
+    @NotNull
     @Positive
     private Long bankId;
 

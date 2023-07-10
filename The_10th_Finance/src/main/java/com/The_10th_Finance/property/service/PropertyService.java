@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PropertyService {
 
-    private PropertyRepository propertyRepository;
+    private final PropertyRepository propertyRepository;
     public Property post(Property property) {
        return propertyRepository.save(property);
     }
@@ -21,7 +21,9 @@ public class PropertyService {
     public Property getOne(Long id) {
        return propertyRepository.findById(id).orElseThrow(() -> new BusinessLogicException(ExceptionCode.USERNOTFOUND));
     }
-
+    public Property getByUserid(Long userid) {
+        return propertyRepository.findPropertiesByUserId(userid).orElseThrow(() -> new BusinessLogicException(ExceptionCode.USERNOTFOUND));
+    }
     public void deleteOne(Long id) {
         propertyRepository.deleteById(id);
     }

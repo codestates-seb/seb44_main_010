@@ -73,9 +73,9 @@ public class SecurityConfiguration {
 //                .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, authorityUtils, userService)))
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers("/{accesstocken}/{refreshtocken}","/api/v1/chat-gpt/question").permitAll()
-                        .antMatchers("/payment/complete","/payment/sum").permitAll()
+                        .antMatchers("/payment/complete","/payment/sum","/account/post","/main/{userId}/{Month}").permitAll()
                         .antMatchers("/user/profile","/user/captcha","/user/sign-up","/user/login","/user/RefreshToken").permitAll()
-                        .antMatchers("/user/emailConfirm").permitAll()
+                        .antMatchers("/user/emailConfirm","/property/post").permitAll()
                         .antMatchers("/oauth2/authorization/google","oauth2/authorization/github").permitAll()
                         .antMatchers("/login/oauth2/code/google","/oauth2/authorization/github").permitAll()
                         .antMatchers("/h2-console/**","/login/error").permitAll()
