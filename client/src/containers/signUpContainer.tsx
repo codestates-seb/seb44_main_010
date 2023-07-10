@@ -2,6 +2,8 @@
 import styled from "styled-components";
 import { Input } from "../components/input/Input";
 import { AddButton } from "../components/button/AddButton";
+import { useEffect, useState } from "react";
+import { ChangeEvent } from "react";
 // import { useNavigate } from "react-router-dom";
 
 interface StyledProps {
@@ -57,13 +59,58 @@ const RequiredText = styled(Text)`
 
 const Star = styled.div`
   font-size: 4rem;
-  color: red;
+  color: ${(props) => (props.color ? "red" : "white")};
   margin-right: 4rem;
   margin-bottom: 3rem;
 `;
 
 export default function SignUpContainer() {
   //   const navigate = useNavigate();
+
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    passwordConfirm: "",
+  });
+
+  const [isValid, setIsValid] = useState({
+    isEmail: false,
+    isPassword: false,
+    isPasswordConfirm: false,
+  });
+
+  useEffect(() => {
+    const exp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    if (form.email === "") {
+      setIsValid((prevIsValid) => ({ ...prevIsValid, isEmail: true }));
+    } else if (exp.test(form.email)) {
+      setIsValid((prevIsValid) => ({ ...prevIsValid, isEmail: true }));
+    } else {
+      setIsValid((prevIsValid) => ({ ...prevIsValid, isEmail: false }));
+    }
+  }, [form.email]);
+
+  useEffect(() => {
+    const exp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$/;
+
+    if (form.password === "") {
+      setIsValid((prevIsValid) => ({ ...prevIsValid, isPassword: true }));
+    } else if (exp.test(form.password)) {
+      setIsValid((prevIsValid) => ({ ...prevIsValid, isPassword: true }));
+    } else {
+      setIsValid((prevIsValid) => ({ ...prevIsValid, isPassword: false }));
+    }
+  }, [form.password]);
+
+  useEffect(() => {
+    if (form.passwordConfirm === "") {
+      setIsValid((prevIsValid) => ({ ...prevIsValid, isPasswordConfirm: true }));
+    } else if (form.password === form.passwordConfirm) {
+      setIsValid((prevIsValid) => ({ ...prevIsValid, isPasswordConfirm: true }));
+    } else {
+      setIsValid((prevIsValid) => ({ ...prevIsValid, isPasswordConfirm: false }));
+    }
+  }, [form.passwordConfirm, form.password]);
 
   return (
     <Main>
@@ -82,34 +129,44 @@ export default function SignUpContainer() {
         <RequiredText size={2} weight={300} color="red" marginBottom={3}>
           * 표는 필수 항목입니다.
         </RequiredText>
-        <Star>*</Star>
+        <Star color="red">*</Star>
         <Input type="text" placeholder="이름(실명)" />
       </InputBox>
       <InputBox>
-        <Star>*</Star>
-        <Input type="text" placeholder="아이디(이메일 형식)" />
+        <Star color="red">*</Star>
+        <Input type="email" placeholder="아이디(이메일 형식)" value={form.email} onChange={(e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, email: e.target.value })} />
       </InputBox>
-      <Text size={2} weight={600} color="red" marginBottom={3}>
-        아이디가 이메일 형식이 아닙니다/ 중복된 아이디 입니다
-      </Text>
-      <InputBox>
-        <Star>*</Star>
-        <Input type="text" placeholder="비밀번호 (영문과 숫자 조합, 6자 이상, 15자 이하)" />
-      </InputBox>
-      <Text size={2} weight={600} color="red" marginBottom={3}>
-        비밀번호가 6자 이상이어야 합니다.
-      </Text>
+      {!isValid.isEmail && (
+        <Text size={2} weight={600} color="red" marginBottom={3}>
+          아이디가 이메일 형식이 아닙니다
+        </Text>
+      )}
 
       <InputBox>
-        <Star>*</Star>
-        <Input type="text" placeholder="비밀번호 확인" marginBottom={10} />
+        <Star color="red">*</Star>
+        <Input type="password" placeholder="비밀번호 (영문과 숫자 조합, 6자 이상, 15자 이하)" value={form.password} onChange={(e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, password: e.target.value })} />
       </InputBox>
-      <Text size={2} weight={600} color="red" marginBottom={3}>
-        비밀번호가 일치하지 않습니다.
-      </Text>
-      <AddButton backgroundcolor="yellow" width={95} height={10} borderRadius={10} marginBottom={15}>
-        가입 완료
-      </AddButton>
+      {!isValid.isPassword && (
+        <Text size={2} weight={600} color="red" marginBottom={3}>
+          비밀번호는 영문과 숫자 조합, 6자 이상,15자 이하여야 합니다.
+        </Text>
+      )}
+
+      <InputBox>
+        <Star color="red">*</Star>
+        <Input type="password" placeholder="비밀번호 확인" marginBottom={10} value={form.passwordConfirm} onChange={(e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, passwordConfirm: e.target.value })} />
+      </InputBox>
+      {!isValid.isPasswordConfirm && (
+        <Text size={2} weight={600} color="red" marginBottom={3}>
+          비밀번호가 일치하지 않습니다.
+        </Text>
+      )}
+      <InputBox>
+        <Star>*</Star>
+        <AddButton backgroundcolor="yellow" width={95} height={10} borderRadius={10} marginBottom={15}>
+          가입 완료
+        </AddButton>
+      </InputBox>
     </Main>
   );
 }

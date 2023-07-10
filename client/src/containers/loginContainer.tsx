@@ -53,7 +53,7 @@ export default function LoginContainer() {
       </Text>
       <Bar />
       <Input type="text" placeholder="이메일을 입력해주세요." />
-      <Input type="text" placeholder="비밀번호를 입력해주세요." />
+      <Input type="password" placeholder="비밀번호를 입력해주세요." />
       <AddButton backgroundcolor="yellow" width={95} height={10} borderRadius={10} marginBottom={3}>
         로그인
       </AddButton>
