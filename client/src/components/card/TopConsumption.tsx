@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { DayMoveButtonRight } from "../../components/button/DayMoveButton";
 import { DayMoveButtonLeft } from "../../components/button/DayMoveButton";
-import AddButton from "../button/AddButtonConsumption";
+import AddButtonConsumption from "../button/AddButtonConsumption";
 
 export const TopContainer = styled.div`
     width: 44vw;
@@ -51,7 +51,7 @@ export default function TopConsumption(){
     <DayMoveButtonRight />
     </MoveDayButton>
     </DateContainer>
-    <AddButton />
+    <AddButtonConsumption />
     </TopContainer>
  )
 }
