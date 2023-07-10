@@ -1,16 +1,17 @@
+// import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Nav from "../src/components/default/Nav.tsx";
-import Footer from "../src/components/default/Footer.tsx";
-import IntroductionPage from "../src/pages/introduction/introductionPage.tsx";
-import LoginPage from "../src/pages/login/loginPage.tsx";
-import SignupPage from "../src/pages/signup/signupPage.tsx";
-import Completed from "../src/pages/login/loginCompletedPage.tsx";
-import AssetPage from "../src/pages/asset/assetPage.tsx";
-import DayPage from "../src/pages/consumption/dayPage.tsx";
-import MonthPage from "../src/pages/consumption/monthPage.tsx";
-import CalendarPage from "../src/pages/consumption/calendarPage.tsx";
-import SummaryPage from "../src/pages/consumption/summaryPage.tsx";
-import ErrorPage from "../src/pages/error/404Page.tsx";
+import Nav from "../src/components/default/Nav";
+import Footer from "../src/components/default/Footer";
+import IntroductionPage from "../src/pages/introduction/introductionPage";
+import LoginPage from "../src/pages/login/loginPage";
+import SignupPage from "../src/pages/signup/signupPage";
+import Completed from "../src/pages/login/loginCompletedPage";
+import AssetPage from "../src/pages/asset/assetPage";
+import DayPage from "../src/pages/consumption/dayPage";
+import MonthPage from "../src/pages/consumption/monthPage";
+import CalendarPage from "../src/pages/consumption/calendarPage";
+import SummaryPage from "../src/pages/consumption/summaryPage";
+import ErrorPage from "../src/pages/error/404Page";
 
 function App() {
   return (

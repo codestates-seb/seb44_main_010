@@ -1,3 +1,4 @@
+// import React from "react";
 import { styled } from "styled-components";
 import { Input } from "../components/input/Input";
 import { AddButton } from "../components/button/AddButton";
@@ -44,7 +45,7 @@ export default function LoginContainer() {
 
   return (
     <Main>
-      <Text size={5} weight={600} margintop={20} marginBottom={3}>
+      <Text size={5} weight={600} margintop={15} marginBottom={3}>
         MONEY MADE에 오신 것을 환영합니다
       </Text>
       <Text size={3} weight={300} marginBottom={3}>
@@ -63,7 +64,7 @@ export default function LoginContainer() {
       <Text
         size={3}
         weight={300}
-        marginBottom={16}
+        marginBottom={15}
         cursor="pointer"
         onClick={() => {
           navigate("/users/sign_up");
