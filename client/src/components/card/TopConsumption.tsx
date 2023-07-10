@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { DayMoveButtonRight } from "../../components/button/DayMoveButton";
 import { DayMoveButtonLeft } from "../../components/button/DayMoveButton";
-import AddButton from "../../components/button/AddButton";
+import AddButton from "../button/AddButtonConsumption";
 
 export const TopContainer = styled.div`
     width: 44vw;

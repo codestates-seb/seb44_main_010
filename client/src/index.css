@@ -150,7 +150,6 @@ video {
   vertical-align: baseline;
   font-size: 5px;
   font-family: "SCDream", sans-serif;
-  display: flex;
 }
 
 /* 미디어 쿼리로 페이지 크기에 따라 폰트 크기 조정 */
