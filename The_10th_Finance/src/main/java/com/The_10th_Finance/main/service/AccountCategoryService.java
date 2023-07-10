@@ -1,6 +1,7 @@
-package com.The_10th_Finance.accounts.service;
+package com.The_10th_Finance.main.service;
 
 import com.The_10th_Finance.accounts.db.Accounts;
+import com.The_10th_Finance.accounts.service.AccountsService;
 import com.The_10th_Finance.categorysum.service.CategorySumService;
 import com.The_10th_Finance.dailiysum.service.DailySumService;
 import com.The_10th_Finance.user.db.User;

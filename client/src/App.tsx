@@ -34,20 +34,15 @@ function App() {
           {/*소비 일일페이지 */}
           <Route path="/consumption/day_upload" element={<DayPage />}></Route>
           {/*소비 월별페이지 */}
-          <Route
-            path="/consumption/month_upload"
-            element={<MonthPage />}
-          ></Route>
+          <Route path="/consumption/month_upload" element={<MonthPage />}></Route>
           {/*소비 달력페이지 */}
-          <Route
-            path="/consumption/calendar"
-            element={<CalendarPage />}
-          ></Route>
+          <Route path="/consumption/calendar" element={<CalendarPage />}></Route>
           {/*소비 요약페이지 */}
           <Route path="/consumption/summary" element={<SummaryPage />}></Route>
           {/* 404 페이지 */}
           <Route path="*" element={<ErrorPage />}></Route>
         </Routes>
+
         <Footer />
       </BrowserRouter>
     </>

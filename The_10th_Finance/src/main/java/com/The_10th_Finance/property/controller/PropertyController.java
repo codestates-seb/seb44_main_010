@@ -16,13 +16,13 @@ import javax.validation.constraints.Positive;
 
 @Slf4j
 @RestController
-@RequestMapping("/cash")
+@RequestMapping("/property")
 @RequiredArgsConstructor
 public class PropertyController {
-    private PropertyMapper propertyMapper;
-    private PropertyService propertyService;
+    private final PropertyMapper propertyMapper;
+    private final PropertyService propertyService;
 
-    @PostMapping()
+    @PostMapping("/post")
     public ResponseEntity postTodo(@Valid @RequestBody PropertyPost propertyPost){
         Property property =propertyService.post(propertyMapper.propertyPostToProperty(propertyPost));
         return  new ResponseEntity(propertyMapper.propertyToPropertyResponse(property), HttpStatus.CREATED);
