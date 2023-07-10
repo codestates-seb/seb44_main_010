@@ -11,10 +11,10 @@ spring:
       path: /h2-console  # H2 Console의 Path
   # Database Setting Info (Database를 H2로 사용하기 위해 H2연결 정보 입력)
   datasource:
-    driver-class-name: org.h2.Driver  # Database를 H2로 사용하겠다.
-    url: jdbc:h2:~/test5  # H2 접속 정보
-    username: sa  # H2 접속 시 입력할 username 정보 (원하는 것으로 입력)
-    password:  # H2 접속 시 입력할 password 정보 (원하는 것으로 입력)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://moneymade-db.c3r6azftukjh.ap-northeast-2.rds.amazonaws.com:3306/moneymade?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: admin
+    password: 12341234
   jpa:
     hibernate:
       ddl-auto: create-drop
