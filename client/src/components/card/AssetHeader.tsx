@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import 소비배경 from "../../assets/소비배경.svg";
+import 자산배경 from "../../assets/자산배경.svg";
 
 const Main = styled.div`
   display: flex;
@@ -7,10 +7,10 @@ const Main = styled.div`
   align-items: center;
 `;
 
-const ComsumptionHeaderBox = styled.div`
+const AssetHeaderBox = styled.div`
   height: 15vh;
   width: 100vw;
-  background-image: url(${소비배경});
+  background-image: url(${자산배경});
   background-size: contain;
 `;
 
@@ -20,7 +20,7 @@ const WordsContainer = styled.div`
   align-items: center;
   margin-left: 10vw;
 
-  .소비 {
+  .자산 {
     font-size: 7rem;
     color: #4073b2;
     font-weight: 500;
@@ -33,16 +33,15 @@ const WordsContainer = styled.div`
   }
 `;
 
-export default function ConsumptionHeader() {
+export default function AssetHeader() {
   return (
     <Main>
-      <ComsumptionHeaderBox>
+      <AssetHeaderBox>
         <WordsContainer>
-          <div className="소비">소비</div>
-          <div className="알아봐요">나만의 소비패턴 알아봐요</div>
+          <div className="자산">자산</div>
+          <div className="알아봐요">나의 자산을 관리해봐요</div>
         </WordsContainer>
-      </ComsumptionHeaderBox>
+      </AssetHeaderBox>
     </Main>
   );
 }
-
