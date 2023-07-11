@@ -11,7 +11,9 @@ export default function AssetPage() {
     <S.AssetPageContainer>
       <AssetHeader />
       <S.SavingAccountBox>
+        <S.Title>입출금 계좌</S.Title>
         <SavingAccount />
+        <S.Title>증권 계좌</S.Title>
         <Stock />
         <S.AddButtons>
           <AddProperty />

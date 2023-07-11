@@ -17,6 +17,15 @@ export const SavingAccountBox = styled.div`
   /* 머지 후 삭제 */
 `;
 
+export const Title = styled.div`
+  display: flex;
+  font-size: 5rem;
+  color: #414141;
+  font-weight: 600;
+  width: 67%;
+  margin-top: 5%;
+`;
+
 export const AddButtons = styled.div`
   display: flex;
 `;

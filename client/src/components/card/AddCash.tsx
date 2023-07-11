@@ -13,6 +13,7 @@ const Main = styled.div`
   border: 1px solid #d9d9d9;
   padding: 3rem;
   margin: 5rem;
+  cursor: pointer;
   &:hover {
     background-color: #ffce0b;
     color: #ffffff;
@@ -20,9 +21,8 @@ const Main = styled.div`
 `;
 
 const CashImg = styled.img`
-  cursor: pointer;
-  width: auto;
-  height: auto;
+  width: 10vw;
+  height: 15vh;
 `;
 const Title = styled.div`
   font-size: 3rem;
