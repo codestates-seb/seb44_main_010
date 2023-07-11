@@ -1,47 +1,15 @@
-// import React from "react";
+import * as S from "./loginSignUpStyled";
 import styled from "styled-components";
 import { Input } from "../components/input/Input";
 import { AddButton } from "../components/button/AddButton";
 import { useEffect, useState } from "react";
 import { ChangeEvent } from "react";
-// import { useNavigate } from "react-router-dom";
-
-interface StyledProps {
-  size: number;
-  weight: number;
-  margintop?: number;
-  marginBottom?: number;
-  cursor?: string;
-  color?: string;
-}
-
-const Main = styled.div`
-  background-color: white;
-  width: 132rem;
-  /* height: 119rem; */
-  border-radius: 6rem;
-  box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const Text = styled.div<StyledProps>`
-  cursor: ${(props) => (props.cursor ? `${props.cursor}` : null)};
-  margin-top: ${(props) => (props.margintop ? `${props.margintop}rem` : null)};
-  font-size: ${(props) => (props.size ? `${props.size}rem` : null)};
-  font-weight: ${(props) => (props.weight ? `${props.weight}` : null)};
-  margin-bottom: ${(props) => (props.marginBottom ? `${props.marginBottom}rem` : null)};
-  color: ${(props) => (props.color ? `${props.color}` : null)};
-`;
-
-const Bar = styled.div`
-  width: 23rem;
-  height: 1rem;
-  background-color: #ffce0b;
-  margin: 3rem 0px 7rem 0px;
-`;
+import { useDispatch, useSelector } from "react-redux";
+import axios, { AxiosResponse } from "axios";
+import { useNavigate } from "react-router-dom";
+import { RootState } from "../redux/store";
+import { login } from "../redux/loginSlice";
+import { setLocalStorage } from "../util/localStorage";
 
 const InputBox = styled.div`
   display: flex;
@@ -51,7 +19,7 @@ const InputBox = styled.div`
   position: relative;
 `;
 
-const RequiredText = styled(Text)`
+const RequiredText = styled(S.Text)`
   position: absolute;
   top: -3rem;
   right: 0;
@@ -65,19 +33,56 @@ const Star = styled.div`
 `;
 
 export default function SignUpContainer() {
-  //   const navigate = useNavigate();
-
   const [form, setForm] = useState({
+    name: "",
     email: "",
     password: "",
     passwordConfirm: "",
   });
-
   const [isValid, setIsValid] = useState({
     isEmail: false,
     isPassword: false,
     isPasswordConfirm: false,
   });
+
+  const dispatch = useDispatch();
+  const isLogined = useSelector((state: RootState) => {
+    return state.loginSlice.isLogined;
+  });
+  const navigate = useNavigate();
+
+  if (isLogined) {
+    navigate("/");
+  }
+
+  const handleSignUp: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm) {
+      axios
+        .post("https://f5ad-2406-5900-1009-4081-63-4cea-7956-5130.ngrok-free.app/user/sign-up", {
+          name: form.name,
+          email: form.email,
+          password: form.password,
+        })
+        .then((res) => {
+          const acessToken = res.headers.authorization;
+          const refreshToken = res.headers.refresh;
+          const userId = res.data.userId;
+
+          dispatch(login({ acessToken, refreshToken }));
+          setLocalStorage("refreshToken", refreshToken);
+          setLocalStorage("acessToken", acessToken);
+          setLocalStorage("userId", userId);
+          navigate("/");
+        })
+        .catch((err) => {
+          const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
+          window.alert(errMessage);
+        });
+    } else {
+      window.alert("회원가입에 실패하였습니다.");
+    }
+  };
 
   useEffect(() => {
     const exp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -91,7 +96,8 @@ export default function SignUpContainer() {
   }, [form.email]);
 
   useEffect(() => {
-    const exp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$/;
+    const exp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$/; //영문과 숫자 조합, 6자 이상,15자 이하
+    // ^(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.[@#$%^&+=])(?=\S+$).{8,}$ 숫자, 소문자, 대문자, 특수문자
 
     if (form.password === "") {
       setIsValid((prevIsValid) => ({ ...prevIsValid, isPassword: true }));
@@ -113,33 +119,33 @@ export default function SignUpContainer() {
   }, [form.passwordConfirm, form.password]);
 
   return (
-    <Main>
-      <Text size={5} weight={600} margintop={15} marginBottom={3}>
+    <S.Main>
+      <S.Text size={5} weight={600} margintop={15} marginBottom={3}>
         MONEY MADE에 오신 것을 환영합니다
-      </Text>
-      <Text size={3} weight={300} marginBottom={3}>
+      </S.Text>
+      <S.Text size={3} weight={300} marginBottom={3}>
         평생 무료로 개인 자산을 관리해보세요
-      </Text>
-      <Bar />
-      <Text size={5} weight={600} marginBottom={3}>
+      </S.Text>
+      <S.Bar />
+      <S.Text size={5} weight={600} marginBottom={3}>
         회원가입
-      </Text>
+      </S.Text>
 
       <InputBox>
         <RequiredText size={2} weight={300} color="red" marginBottom={3}>
           * 표는 필수 항목입니다.
         </RequiredText>
         <Star color="red">*</Star>
-        <Input type="text" placeholder="이름(실명)" />
+        <Input type="text" placeholder="이름(실명)" value={form.name} onChange={(e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, name: e.target.value })} />
       </InputBox>
       <InputBox>
         <Star color="red">*</Star>
         <Input type="email" placeholder="아이디(이메일 형식)" value={form.email} onChange={(e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, email: e.target.value })} />
       </InputBox>
       {!isValid.isEmail && (
-        <Text size={2} weight={600} color="red" marginBottom={3}>
+        <S.Text size={2} weight={600} color="red" marginBottom={3}>
           아이디가 이메일 형식이 아닙니다
-        </Text>
+        </S.Text>
       )}
 
       <InputBox>
@@ -147,9 +153,9 @@ export default function SignUpContainer() {
         <Input type="password" placeholder="비밀번호 (영문과 숫자 조합, 6자 이상, 15자 이하)" value={form.password} onChange={(e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, password: e.target.value })} />
       </InputBox>
       {!isValid.isPassword && (
-        <Text size={2} weight={600} color="red" marginBottom={3}>
+        <S.Text size={2} weight={600} color="red" marginBottom={3}>
           비밀번호는 영문과 숫자 조합, 6자 이상,15자 이하여야 합니다.
-        </Text>
+        </S.Text>
       )}
 
       <InputBox>
@@ -157,16 +163,16 @@ export default function SignUpContainer() {
         <Input type="password" placeholder="비밀번호 확인" marginBottom={10} value={form.passwordConfirm} onChange={(e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, passwordConfirm: e.target.value })} />
       </InputBox>
       {!isValid.isPasswordConfirm && (
-        <Text size={2} weight={600} color="red" marginBottom={3}>
+        <S.Text size={2} weight={600} color="red" marginBottom={3}>
           비밀번호가 일치하지 않습니다.
-        </Text>
+        </S.Text>
       )}
       <InputBox>
         <Star>*</Star>
-        <AddButton backgroundcolor="yellow" width={95} height={10} borderRadius={10} marginBottom={15}>
+        <AddButton backgroundcolor="yellow" width={95} height={10} borderRadius={10} marginBottom={15} onClick={handleSignUp}>
           가입 완료
         </AddButton>
       </InputBox>
-    </Main>
+    </S.Main>
   );
 }
