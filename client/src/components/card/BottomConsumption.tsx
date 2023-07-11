@@ -30,6 +30,7 @@ export const IncomeContainer = styled.div`
 `;
 
 export const SpenditureContainer = styled.div`
+  display:flex;
   width: 44vw;
   height: 5vh;
   justify-content: space-between;
@@ -47,6 +48,7 @@ export const SpenditureContainer = styled.div`
 `;
 
 export const SumContainer = styled.div`
+  display:flex;
   width: 44vw;
   height: 5vh;
   justify-content: space-between;

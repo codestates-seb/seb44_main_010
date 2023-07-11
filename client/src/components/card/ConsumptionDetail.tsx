@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import dot from "../../assets/Rectangle 80.svg";
 import axios from "axios";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 const ConsumptionDetailBox = styled.div`
   width: 50vw;
@@ -64,9 +64,9 @@ interface Item {
   source: string;
 }
 
-export default function ConsumptionDetail() {
+export default function ConsumptionDetail({detailBoxRef}) {
   const [data, setData] = useState([]);
-  const detailBoxRef = useRef<HTMLDivElement>(null);
+ 
 
   useEffect(() => {
     getData();
