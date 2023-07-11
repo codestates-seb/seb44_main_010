@@ -21,6 +21,7 @@ export const AddButton = styled.button<Props>`
   border-radius: ${(props) => props.borderRadius && `${props.borderRadius}`}px;
   border: 1px solid ${(props) => (props.backgroundcolor === "yellow" ? "#FFCE0B" : "#C9C9C9")};
   margin-bottom: ${(props) => props.marginBottom && `${props.marginBottom}rem`};
+  z-index: 9999;
 
   & > *:first-child {
     margin-right: 3rem;

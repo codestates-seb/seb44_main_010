@@ -21,7 +21,7 @@ const WordsContainer = styled.div`
   display:flex;
   flex-direction:row;
   align-items:center;
-  margin-left: 15vw;
+  margin-left: 20vw;
   
   .소비{
     font-size: 7rem;

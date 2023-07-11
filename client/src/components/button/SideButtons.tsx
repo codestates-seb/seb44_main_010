@@ -1,4 +1,6 @@
 import styled from "styled-components";
+//display:flex; position: absolute 사용해서 그리드 옆으로 빼기
+
 
 export const ButtonContainer = styled.div`
   display: flex;
