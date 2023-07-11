@@ -14,14 +14,6 @@ interface Item {
 const Main = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 5%;
-`;
-
-const Title = styled.div`
-  justify-content: flex-start;
-  font-size: 5rem;
-  color: #414141;
-  font-weight: 600;
 `;
 
 const StockList = styled.div`
@@ -46,7 +38,7 @@ const Top = styled.div`
   display: flex;
 `;
 
-const StockName = styled.p`
+const StockName = styled.div`
   font-size: 4rem;
   font-weight: 600;
   margin: 2rem;
@@ -132,7 +124,6 @@ export default function SavingAccount() {
 
   return (
     <Main ref={StockBoxRef}>
-      <Title>주식 계좌</Title>
       <StockList>
         {displayedData.map((item: Item) => (
           <StockContainer key={item.id}>

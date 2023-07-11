@@ -14,13 +14,6 @@ interface Item {
 const Main = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 5%;
-`;
-
-const Title = styled.div`
-  font-size: 5rem;
-  color: #414141;
-  font-weight: 600;
 `;
 
 const SavingAccountList = styled.div`
@@ -131,7 +124,6 @@ export default function SavingAccount() {
 
   return (
     <Main ref={SavingAccountBoxRef}>
-      <Title>입출금 계좌</Title>
       <SavingAccountList>
         {displayedData.map((item: Item) => (
           <SavingAccountContainer key={item.id}>
