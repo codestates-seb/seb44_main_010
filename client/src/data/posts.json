@@ -1,12 +1,72 @@
 {
   "posts": [
-    { "id": 1, "title": "버거킹", "price": "-11,900", "source": "국민은행" },
-    { "id": 2, "title": "사무용품", "price": "-38,000", "source": "현금" },
-    { "id": 3, "title": "도서구입", "price": "-50,000", "source": "현금" },
-    { "id": 4, "title": "월급", "price": "2,500,000", "source": "농협은행" },
-    { "id": 1, "title": "버거킹", "price": "-11,900", "source": "국민은행" },
-    { "id": 2, "title": "사무용품", "price": "-38,000", "source": "현금" },
-    { "id": 3, "title": "도서구입", "price": "-50,000", "source": "현금" },
-    { "id": 4, "title": "월급", "price": "2,500,000", "source": "농협은행" }
+    {
+      "id": 1,
+      "title": "버거킹",
+      "price": "-11,900",
+      "source": "국민은행"
+    },
+    {
+      "id": 2,
+      "title": "사무용품",
+      "price": "-38,000",
+      "source": "현금"
+    },
+    {
+      "id": 3,
+      "title": "도서구입",
+      "price": "-50,000",
+      "source": "현금"
+    },
+    {
+      "id": 4,
+      "title": "월급",
+      "price": "2,500,000",
+      "source": "농협은행"
+    }
+  ],
+  "account": [
+    {
+      "id": 1,
+      "bank_name": "기업",
+      "bank_amount": "500,000"
+    },
+    {
+      "id": 2,
+      "bank_name": "우리",
+      "bank_amount": "3,000,000"
+    },
+    {
+      "id": 3,
+      "bank_name": "국민",
+      "bank_amount": "20,000,000"
+    },
+    {
+      "id": 4,
+      "bank_name": "국민",
+      "bank_amount": "1,200,000"
+    }
+  ],
+  "stock": [
+    {
+      "id": 1,
+      "stock_name": "우리",
+      "stock_amount": "300,000"
+    },
+    {
+      "id": 2,
+      "stock_name": "기업",
+      "stock_amount": "7,000,000"
+    },
+    {
+      "id": 3,
+      "stock_name": "국민",
+      "stock_amount": "1,200,000"
+    },
+    {
+      "id": 4,
+      "stock_name": "국민",
+      "stock_amount": "1,200,000"
+    }
   ]
 }
