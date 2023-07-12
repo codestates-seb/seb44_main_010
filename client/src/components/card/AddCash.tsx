@@ -22,7 +22,7 @@ const Main = styled.div`
 
 const CashImg = styled.img`
   width: 10vw;
-  height: 15vh;
+  height: 10vh;
 `;
 const Title = styled.div`
   font-size: 3rem;
