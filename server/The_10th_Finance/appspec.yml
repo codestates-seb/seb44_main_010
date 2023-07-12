@@ -3,24 +3,22 @@ os: linux
 
 files:
   - source: /
-    destination: /home/ubuntu/build
+    destination: /home/ubuntu/app
     overwrite : yes
 
+permissions:
+  - object: /
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+
 hooks:
-  BeforeInstall:
-    - location: server_clear.sh
-      timeout: 3000
-      runas: root
   AfterInstall:
-    - location: initialize.sh
-      timeout: 3000
-      runas: root
+    - location: scripts/stop.sh
+      timeout: 60
+      runas: ubuntu
   ApplicationStart:
-    - location: server_start.sh
-      timeout: 3000
-      runas: root
-  ApplicationStop:
-    - location: server_stop.sh
-      timeout: 3000
-      runas: root
+    - location: scripts/start.sh
+      timeout: 60
+      runas: ubuntu
 
