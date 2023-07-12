@@ -17,6 +17,7 @@ const Main = styled.div`
   &:hover {
     background-color: #ffce0b;
     color: #ffffff;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
   }
 `;
 
