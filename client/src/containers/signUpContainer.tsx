@@ -59,7 +59,7 @@ export default function SignUpContainer() {
     e.preventDefault();
     if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm) {
       axios
-        .post("https://f5ad-2406-5900-1009-4081-63-4cea-7956-5130.ngrok-free.app/user/sign-up", {
+        .post("/user/sign-up", {
           name: form.name,
           email: form.email,
           password: form.password,

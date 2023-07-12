@@ -1,3 +1,4 @@
+import * as S from "./loginCompletedPageStyled";
 export default function LoginCompletedPage() {
-  return <div></div>;
+  return <S.Main></S.Main>;
 }
