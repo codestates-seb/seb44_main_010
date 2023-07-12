@@ -37,7 +37,7 @@ export default function LoginContainer() {
   const handleLogin: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     axios
-      .post("https://d270-2406-5900-1009-4081-10d0-8abe-25b9-cad3.ngrok-free.app/user/login", {
+      .post("/user/login", {
         userName: email,
         password: password,
       })
@@ -47,8 +47,8 @@ export default function LoginContainer() {
         const userId = res.data.userId;
         if (typeof acessToken === "string" && typeof refreshToken === "string") {
           dispatch(login({ acessToken, refreshToken }));
-          setLocalStorage("refreshToken", refreshToken);
           setLocalStorage("acessToken", acessToken);
+          setLocalStorage("refreshToken", refreshToken);
           setLocalStorage(userId, userId);
         } else {
           window.alert("로그인에 실패하였습니다.");
