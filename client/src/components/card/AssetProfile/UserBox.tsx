@@ -6,7 +6,7 @@ const Main = styled.div`
   align-items: center;
   border: 2px solid #e1e1e1;
   border-radius: 3rem;
-  width: 95%;
+  width: 90%;
   background-color: #ffffff;
 `;
 
@@ -39,6 +39,7 @@ const UserName = styled.div`
 
 const Text = styled.div`
   font-size: 3rem;
+  margin-top: 5rem;
 `;
 
 export default function UserBox() {

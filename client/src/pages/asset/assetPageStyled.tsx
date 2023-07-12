@@ -5,6 +5,7 @@ export const AssetPageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 19rem;
+  margin-bottom: 19rem;
 `;
 
 export const ContentContainer = styled.div`

@@ -4,12 +4,12 @@ const Main = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 95%;
+  width: 90%;
 `;
 
 const TotalContainer = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   width: 50vw;
   margin: 5rem;
 `;
@@ -33,7 +33,7 @@ const TotalAsset = styled.div`
   color: #414141;
 `;
 
-export default function TotalAssets() {
+export default function TotalAssetsBox() {
   return (
     <Main>
       <TotalContainer>
