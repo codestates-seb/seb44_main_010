@@ -8,7 +8,6 @@ export const DayPageContainer = styled.div`
 `;
 
 export const Grid = styled.div`
-    border: 1px solid;
     width: 80vw;
     display:flex;
     flex-direction:row;

@@ -6,6 +6,7 @@ const Main = styled.div`
   justify-content: center;
   align-items: center;
   position: fixed;
+  z-index: 5;
 `;
 
 const ComsumptionHeaderBox = styled.div`

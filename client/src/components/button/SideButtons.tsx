@@ -13,16 +13,17 @@ export const DayButton = styled.div`
   border-radius: 50%; /* 동그라미 모양으로 설정 */
   color: #000000;
   font-size: 3rem;
-  border: 1px solid;
   align-items: center;
   justify-content: center;
   font-weight: 500;
   transition: background-color 0.3s, color 0.3s; /* 트랜지션 효과 설정 */
-
+  box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.1);
+  cursor: pointer;
+  
   &:hover{
     background-color:#FFCE0B;
     color:#FFFFFF;
-    cursor: pointer;
+
   }
 
 `;
