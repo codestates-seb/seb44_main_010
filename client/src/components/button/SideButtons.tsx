@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 //display:flex; position: absolute 사용해서 그리드 옆으로 빼기
 
 
@@ -6,7 +7,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
-export const DayButton = styled.div`
+export const DayButton = styled(Link)`
   display: flex;
   width: 13rem;
   height: 13rem;
@@ -30,10 +31,10 @@ export const DayButton = styled.div`
 
 export default function SideButtons() {
   return(<ButtonContainer>
-    <DayButton>일일</DayButton>
-    <DayButton>월별</DayButton>
-    <DayButton>달력</DayButton>
-    <DayButton>요약</DayButton>
+    <DayButton to="/consumption/day_upload">일일</DayButton>
+    <DayButton to="/consumption/month_upload">월별</DayButton>
+    <DayButton to="/consumption/calendar">달력</DayButton>
+    <DayButton to ="/consumption/summary">요약</DayButton>
   </ButtonContainer>);
   
 }
