@@ -57,6 +57,15 @@ const PriceContainer = styled.div`
   }
 `;
 
+const 없다 = styled.div`
+  width: 50vw;
+  height: 100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size: 3rem;
+`;
+
 interface Item {
   id: number;
   title: string;
@@ -64,10 +73,9 @@ interface Item {
   source: string;
 }
 
-export default function ConsumptionDetail({detailBoxRef}) {
+export default function ConsumptionDetail({ detailBoxRef }: { detailBoxRef: React.RefObject<HTMLDivElement> }) {
   const [data, setData] = useState([]);
  
-
   useEffect(() => {
     getData();
   }, []);
@@ -95,20 +103,25 @@ export default function ConsumptionDetail({detailBoxRef}) {
     }
   };
 
+
+
   return (
+    data.length === 0 ? (<없다>소비 내역이 없습니다.</없다>):
     <ConsumptionDetailBox ref={detailBoxRef}>
-      {data.map((item: Item) => (
-        <ConsumptionDetailContainer key={item.id}>
-          <NameContainer>
-            <img src={dot} alt="icon"></img>
-            <div className="title">{item.title}</div>
-          </NameContainer>
-          <PriceContainer>
-            <div className="price">{item.price}</div>
-            <div className="source">{item.source}</div>
-          </PriceContainer>
-        </ConsumptionDetailContainer>
-      ))}
+      {
+        (data.map((item: Item) => (
+          <ConsumptionDetailContainer key={item.id}>
+            <NameContainer>
+              <img src={dot} alt="icon"></img>
+              <div className="title">{item.title}</div>
+            </NameContainer>
+            <PriceContainer>
+              <div className="price">{item.price}</div>
+              <div className="source">{item.source}</div>
+            </PriceContainer>
+          </ConsumptionDetailContainer>
+        )))
+      }
     </ConsumptionDetailBox>
   );
 }
