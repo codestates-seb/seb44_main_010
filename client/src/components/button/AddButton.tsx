@@ -6,6 +6,7 @@ interface Props {
   height?: number;
   borderRadius?: number;
   marginBottom?: number;
+  marginTop?: number;
 }
 
 export const AddButton = styled.button<Props>`
@@ -21,6 +22,7 @@ export const AddButton = styled.button<Props>`
   border-radius: ${(props) => props.borderRadius && `${props.borderRadius}`}px;
   border: 1px solid ${(props) => (props.backgroundcolor === "yellow" ? "#FFCE0B" : "#C9C9C9")};
   margin-bottom: ${(props) => props.marginBottom && `${props.marginBottom}rem`};
+  margin-top: ${(props) => props.marginTop && `${props.marginTop}rem`};
   z-index: 9999;
 
   & > *:first-child {

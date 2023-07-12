@@ -12,12 +12,14 @@ export const ConsumptionBox = styled.div<ConsumptionBoxProps>`
 width: 50vw;
 height: ${({dynamicHeight}) => `calc(${dynamicHeight}+ 35vh)`};
 //65vh, 아이템 갯수에 따라서 박스의 높이가 달라져야 함
-border: 1px solid;
 display:flex;
 flex-direction:column;
 justify-content:flex-start;
 margin-left: 7rem;
 margin-right: 3rem;
+box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.1);
+border: 1px #DDDDDD;
+border-radius: 3rem;
 `;
 
 export default function ConsumptionContainer({ showInput, setShowInput }: { showInput: boolean, setShowInput: React.Dispatch<React.SetStateAction<boolean>>}){

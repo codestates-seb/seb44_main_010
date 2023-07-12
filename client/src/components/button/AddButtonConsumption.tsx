@@ -9,6 +9,7 @@ export const PlusButton = styled.div`
     align-items:center;
     transition: box-shadow 0.3s;
     display:flex;
+    cursor: pointer;
 
     img{
     width: 40%;
@@ -23,7 +24,6 @@ export const PlusButton = styled.div`
 
     &:hover {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3); 
-    cursor: pointer;
   }
 `;
 
