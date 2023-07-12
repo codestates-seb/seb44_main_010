@@ -1,14 +1,19 @@
+// import 순서 한번만 다시 불러주세욥
+//(외부라이브러리,서드파티,우리가 안만든거 - asset, style - component - api, util, hook )
 import styled from "styled-components";
-import { AddButton } from "../components/button/AddButton";
+import { useState } from "react";
+import Select from "react-select";
+import axios from "axios";
+import { ValueType } from "react-select";
+
 import checkBox from "../assets/checkbox.svg";
 import yellowBox from "../assets/yellow.svg";
-import { useState } from "react";
-import { ContentInput, PriceInput } from "../components/input/ConsumptionInput";
-import Select from "react-select";
-import { ValueType } from "react-select";
-import DateInput from "../components/input/DateInput";
 import Date from "../assets/svg/date.svg";
-import axios from "axios";
+
+import { AddButton } from "../components/button/AddButton";
+import { ContentInput, PriceInput } from "../components/input/ConsumptionInput";
+import DateInput from "../components/input/DateInput";
+
 
 export const InputWrapper = styled.div`
   width: 25vw;
@@ -51,9 +56,8 @@ export const CategoryContainer = styled.div`
   }
 `;
 
-const CustomSelect = styled(Select)`
+export const CustomSelect = styled(Select)`
   width: 65rem;
-
   .css-art2ul-ValueContainer2 {
     height: 7rem;
     box-sizing: none;
@@ -253,6 +257,9 @@ export default function InputContainer() {
 
     console.log(data);
     //POST 요청 보내기
+
+    // api폴더를 따로 만들어서 관리
+    // data 이름을 구별할 수 있게 선언하기
     axios
       .post("/consumption/day_upload", data)
       .then((response) => {
