@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Property from "../../assets/Property.svg";
+
 const Main = styled.div`
   display: flex;
   justify-content: space-around;
@@ -21,7 +22,7 @@ const Main = styled.div`
 
 const PropertyImg = styled.img`
   width: 10vw;
-  height: 15vh;
+  height: 10vh;
 `;
 const Title = styled.div`
   font-size: 3rem;
