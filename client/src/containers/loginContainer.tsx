@@ -31,7 +31,7 @@ export default function LoginContainer() {
   const navigate = useNavigate();
 
   if (isLogined) {
-    navigate("/");
+    navigate("/completed");
   }
 
   const handleLogin: React.FormEventHandler<HTMLFormElement> = (e) => {

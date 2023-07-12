@@ -1,6 +1,8 @@
 import { styled } from "styled-components";
 
 interface Props {
+  fontSize?: number;
+  fontWeight?: number;
   backgroundcolor?: string;
   width?: number;
   height?: number;
@@ -14,7 +16,8 @@ export const AddButton = styled.button<Props>`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3rem;
+  font-size: ${(props) => (props.fontSize ? `${props.fontSize}rem` : "3rem")};
+  font-weight: ${(props) => (props.fontWeight ? `${props.fontWeight}` : null)};
   background-color: ${(props) => (props.backgroundcolor === "yellow" ? "#FFCE0B" : "white")};
   color: ${(props) => (props.backgroundcolor === "yellow" ? "white" : "black")};
   width: ${(props) => props.width && `${props.width}rem`};

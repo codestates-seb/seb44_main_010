@@ -4,12 +4,8 @@ import { Input } from "../components/input/Input";
 import { AddButton } from "../components/button/AddButton";
 import { useEffect, useState } from "react";
 import { ChangeEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
-import { RootState } from "../redux/store";
-import { login } from "../redux/loginSlice";
-import { setLocalStorage } from "../util/localStorage";
 
 const InputBox = styled.div`
   display: flex;
@@ -45,15 +41,7 @@ export default function SignUpContainer() {
     isPasswordConfirm: false,
   });
 
-  const dispatch = useDispatch();
-  const isLogined = useSelector((state: RootState) => {
-    return state.loginSlice.isLogined;
-  });
   const navigate = useNavigate();
-
-  if (isLogined) {
-    navigate("/");
-  }
 
   const handleSignUp: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
@@ -64,16 +52,8 @@ export default function SignUpContainer() {
           email: form.email,
           password: form.password,
         })
-        .then((res) => {
-          const acessToken = res.headers.authorization;
-          const refreshToken = res.headers.refresh;
-          const userId = res.data.userId;
-
-          dispatch(login({ acessToken, refreshToken }));
-          setLocalStorage("refreshToken", refreshToken);
-          setLocalStorage("acessToken", acessToken);
-          setLocalStorage("userId", userId);
-          navigate("/");
+        .then(() => {
+          navigate("/users/login");
         })
         .catch((err) => {
           const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
