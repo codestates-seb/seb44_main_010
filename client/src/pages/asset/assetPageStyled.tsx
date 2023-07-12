@@ -3,18 +3,29 @@ import styled from "styled-components";
 export const AssetPageContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin-top: 19rem;
 `;
 
-export const SavingAccountBox = styled.div`
+export const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 17vh;
+  position: relative;
+  border: 1px solid;
+  width: 80vw;
+  justify-content: space-between;
+`;
+
+export const Grid = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   border: 2px solid #e1e1e1;
   border-radius: 3rem;
   width: 50vw;
-  margin: 20rem;
-  /* 머지 후 삭제 */
+  margin-left: 7rem;
+  margin-right: 3rem;
 `;
 
 export const Title = styled.div`
@@ -22,8 +33,9 @@ export const Title = styled.div`
   font-size: 5rem;
   color: #414141;
   font-weight: 600;
-  width: 67%;
+  width: 70%;
   margin-top: 5%;
+  margin-left: 5%;
 `;
 
 export const AddButtons = styled.div`

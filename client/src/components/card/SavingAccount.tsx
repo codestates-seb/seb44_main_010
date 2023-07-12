@@ -14,10 +14,12 @@ interface Item {
 const Main = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 const SavingAccountList = styled.div`
   display: flex;
+  justify-content: center;
 `;
 
 const SavingAccountContainer = styled.div`
@@ -38,9 +40,8 @@ const Top = styled.div`
   display: flex;
 `;
 
-const BankName = styled.p`
+const BankName = styled.div`
   font-size: 4rem;
-  font-weight: 600;
   margin: 2rem;
   color: #414141;
 `;
@@ -55,8 +56,15 @@ const Delete = styled.div`
   margin-left: 10rem;
 `;
 
-const BankAmount = styled.p`
+const BankAmount = styled.div`
   font-size: 4rem;
+`;
+
+const EmptyText = styled.div`
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
 `;
 
 const PageButton = styled.div`
@@ -124,17 +132,21 @@ export default function SavingAccount() {
 
   return (
     <Main ref={SavingAccountBoxRef}>
-      <SavingAccountList>
-        {displayedData.map((item: Item) => (
-          <SavingAccountContainer key={item.id}>
-            <Top>
-              <BankName>{item.bank_name}</BankName>
-              <Delete onClick={() => handleDelete(item.id)} />
-            </Top>
-            <BankAmount>{item.bank_amount}원</BankAmount>
-          </SavingAccountContainer>
-        ))}
-      </SavingAccountList>
+      {displayedData.length > 0 ? (
+        <SavingAccountList>
+          {displayedData.map((item: Item) => (
+            <SavingAccountContainer key={item.id}>
+              <Top>
+                <BankName>{item.bank_name}</BankName>
+                <Delete onClick={() => handleDelete(item.id)} />
+              </Top>
+              <BankAmount>{item.bank_amount}원</BankAmount>
+            </SavingAccountContainer>
+          ))}
+        </SavingAccountList>
+      ) : (
+        <EmptyText>표시할 내용이 없습니다.</EmptyText>
+      )}
       <PageButton>
         <LeftButton src={YellowLeft} alt="Left" onClick={handlePrevious} />
         <RightButton src={YellowRight} alt="Right" onClick={handleNext} />

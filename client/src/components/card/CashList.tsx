@@ -7,8 +7,8 @@ import YellowRight from "../../assets/yellowright.svg";
 
 interface Item {
   id: number;
-  stock_name: string;
-  stock_amount: number;
+  cash_name: string;
+  cash_amount: number;
 }
 
 const Main = styled.div`
@@ -17,12 +17,12 @@ const Main = styled.div`
   width: 100%;
 `;
 
-const StockList = styled.div`
+const CashList = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-const StockContainer = styled.div`
+const CashContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,7 +40,7 @@ const Top = styled.div`
   display: flex;
 `;
 
-const StockName = styled.div`
+const CashName = styled.div`
   font-size: 4rem;
   margin: 2rem;
   color: #414141;
@@ -56,15 +56,8 @@ const Delete = styled.div`
   margin-left: 10rem;
 `;
 
-const StockAmount = styled.div`
+const CashAmount = styled.div`
   font-size: 4rem;
-`;
-
-const EmptyText = styled.div`
-  font-size: 3rem;
-  text-align: center;
-  margin-top: 5rem;
-  margin-bottom: 5rem;
 `;
 
 const PageButton = styled.div`
@@ -83,11 +76,11 @@ const RightButton = styled.img`
   margin-left: 5rem;
 `;
 
-export default function Stock() {
+export default function Cash() {
   const [data, setData] = useState<Item[]>([]);
   const [displayedData, setDisplayedData] = useState<Item[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const StockBoxRef = useRef<HTMLDivElement>(null);
+  const CashBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     getData();
@@ -101,7 +94,7 @@ export default function Stock() {
 
   const getData = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/stock");
+      const response = await axios.get("http://localhost:3000/cash");
       const data = response.data;
       setData(data);
     } catch (error) {
@@ -111,7 +104,7 @@ export default function Stock() {
 
   const handleDelete = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:3000/stock/${id}`);
+      await axios.delete(`http://localhost:3000/cash/${id}`);
       getData();
     } catch (error) {
       console.log(error);
@@ -130,23 +123,23 @@ export default function Stock() {
     }
   };
 
+  if (data.length === 0) {
+    return null;
+  }
+
   return (
-    <Main ref={StockBoxRef}>
-      {displayedData.length > 0 ? (
-        <StockList>
-          {displayedData.map((item: Item) => (
-            <StockContainer key={item.id}>
-              <Top>
-                <StockName>{item.stock_name}</StockName>
-                <Delete onClick={() => handleDelete(item.id)} />
-              </Top>
-              <StockAmount>{item.stock_amount}원</StockAmount>
-            </StockContainer>
-          ))}
-        </StockList>
-      ) : (
-        <EmptyText>표시할 내용이 없습니다.</EmptyText>
-      )}
+    <Main ref={CashBoxRef}>
+      <CashList>
+        {displayedData.map((item: Item) => (
+          <CashContainer key={item.id}>
+            <Top>
+              <CashName>{item.cash_name}</CashName>
+              <Delete onClick={() => handleDelete(item.id)} />
+            </Top>
+            <CashAmount>{item.cash_amount}원</CashAmount>
+          </CashContainer>
+        ))}
+      </CashList>
       <PageButton>
         <LeftButton src={YellowLeft} alt="Left" onClick={handlePrevious} />
         <RightButton src={YellowRight} alt="Right" onClick={handleNext} />
