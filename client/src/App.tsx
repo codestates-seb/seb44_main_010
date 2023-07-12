@@ -12,6 +12,10 @@ import MonthPage from "../src/pages/consumption/monthPage";
 import CalendarPage from "../src/pages/consumption/calendarPage";
 import SummaryPage from "../src/pages/consumption/summaryPage";
 import ErrorPage from "../src/pages/error/404Page";
+import axios from "axios";
+
+axios.defaults.baseURL = "https://4a24-2406-5900-1009-4081-8505-a565-2eb8-43a0.ngrok-free.app";
+axios.defaults.withCredentials = true;
 
 function App() {
   return (

@@ -5,6 +5,7 @@ const Main = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
 `;
 
 const AssetHeaderBox = styled.div`
@@ -12,6 +13,8 @@ const AssetHeaderBox = styled.div`
   width: 100vw;
   background-image: url(${자산배경});
   background-size: contain;
+  display: flex;
+  align-items: center;
 `;
 
 const WordsContainer = styled.div`

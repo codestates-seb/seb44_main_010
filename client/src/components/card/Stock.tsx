@@ -14,10 +14,12 @@ interface Item {
 const Main = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 const StockList = styled.div`
   display: flex;
+  justify-content: center;
 `;
 
 const StockContainer = styled.div`
@@ -40,7 +42,6 @@ const Top = styled.div`
 
 const StockName = styled.div`
   font-size: 4rem;
-  font-weight: 600;
   margin: 2rem;
   color: #414141;
 `;
@@ -55,8 +56,15 @@ const Delete = styled.div`
   margin-left: 10rem;
 `;
 
-const StockAmount = styled.p`
+const StockAmount = styled.div`
   font-size: 4rem;
+`;
+
+const EmptyText = styled.div`
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
 `;
 
 const PageButton = styled.div`
@@ -75,7 +83,7 @@ const RightButton = styled.img`
   margin-left: 5rem;
 `;
 
-export default function SavingAccount() {
+export default function Stock() {
   const [data, setData] = useState<Item[]>([]);
   const [displayedData, setDisplayedData] = useState<Item[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -124,17 +132,21 @@ export default function SavingAccount() {
 
   return (
     <Main ref={StockBoxRef}>
-      <StockList>
-        {displayedData.map((item: Item) => (
-          <StockContainer key={item.id}>
-            <Top>
-              <StockName>{item.stock_name}</StockName>
-              <Delete onClick={() => handleDelete(item.id)} />
-            </Top>
-            <StockAmount>{item.stock_amount}원</StockAmount>
-          </StockContainer>
-        ))}
-      </StockList>
+      {displayedData.length > 0 ? (
+        <StockList>
+          {displayedData.map((item: Item) => (
+            <StockContainer key={item.id}>
+              <Top>
+                <StockName>{item.stock_name}</StockName>
+                <Delete onClick={() => handleDelete(item.id)} />
+              </Top>
+              <StockAmount>{item.stock_amount}원</StockAmount>
+            </StockContainer>
+          ))}
+        </StockList>
+      ) : (
+        <EmptyText>표시할 내용이 없습니다.</EmptyText>
+      )}
       <PageButton>
         <LeftButton src={YellowLeft} alt="Left" onClick={handlePrevious} />
         <RightButton src={YellowRight} alt="Right" onClick={handleNext} />
