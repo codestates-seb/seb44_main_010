@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { SumData } from "../../pages/consumption/dayPage";
 
 export const EmptyBottomContainer = styled.div`
     width: 44vw;
@@ -72,48 +71,27 @@ export const SumContainer = styled.div`
   }
 `;
 
-interface Item {
-  id: number;
-  수입: number;
-  지출: number;
-  합계: number;
-}
 
-
-export default function BottomConsumption(){
-  const [sumData, setSumData] = useState([]);
-
-  useEffect(() => {
-    getSumData();
-  }, []);
-
-  const getSumData = async () => {
-    try {
-      const response = await axios.get("http://localhost:3000/daySum");
-      const data = response.data;
-      setSumData(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+export default function BottomConsumption({ sumData }: { sumData: SumData | Record<string, never>
+}){
+  
   return (
-    sumData.length === 0 ? <EmptyBottomContainer /> :
-      sumData.map((item :Item) => (
-        <BottomContainer key={item.id}>
+    Object.keys(sumData).length === 0 ? <EmptyBottomContainer /> :
+     (
+        <BottomContainer key={sumData.date}>
           <IncomeContainer>
             <div className="수입">수입</div>
-            <div className="수입액">{item.수입}</div>
+            <div className="수입액">{sumData.income}</div>
           </IncomeContainer>
           <SpenditureContainer>
             <div className="지출">지출</div>
-            <div className="지출액">{item.지출}</div>
+            <div className="지출액">{sumData.expense}</div>
           </SpenditureContainer>
           <SumContainer>
             <div className="합계">합계</div>
-            <div className="합계액">{item.합계}</div>
+            <div className="합계액">{sumData.total}</div>
           </SumContainer>
           </BottomContainer>
-      ))
+      )
   );
 }
