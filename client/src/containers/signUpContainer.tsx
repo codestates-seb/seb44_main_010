@@ -100,7 +100,7 @@ export default function SignUpContainer() {
 
   return (
     <S.Main>
-      <S.Text size={5} weight={600} margintop={15} marginBottom={3}>
+      <S.Text size={5} weight={600} margintop={10} marginBottom={3}>
         MONEY MADE에 오신 것을 환영합니다
       </S.Text>
       <S.Text size={3} weight={300} marginBottom={3}>
@@ -149,7 +149,7 @@ export default function SignUpContainer() {
       )}
       <InputBox>
         <Star>*</Star>
-        <AddButton backgroundcolor="yellow" width={95} height={10} borderRadius={10} marginBottom={15} onClick={handleSignUp}>
+        <AddButton backgroundcolor="yellow" width={95} height={10} borderRadius={10} marginBottom={10} onClick={handleSignUp}>
           가입 완료
         </AddButton>
       </InputBox>
