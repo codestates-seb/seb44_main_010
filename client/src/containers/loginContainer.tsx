@@ -92,7 +92,7 @@ export default function LoginContainer() {
 
   return (
     <S.Main>
-      <S.Text size={5} weight={600} margintop={15} marginBottom={3}>
+      <S.Text size={5} weight={600} margintop={10} marginBottom={3}>
         MONEY MADE에 오신 것을 환영합니다
       </S.Text>
       <S.Text size={3} weight={300} marginBottom={3}>
@@ -138,7 +138,7 @@ export default function LoginContainer() {
       <S.Text
         size={3}
         weight={300}
-        marginBottom={15}
+        marginBottom={10}
         cursor="pointer"
         onClick={() => {
           navigate("/users/sign_up");
