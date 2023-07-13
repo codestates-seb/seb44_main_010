@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import dot from "../../assets/Rectangle 80.svg";
-import axios from "axios";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { ConsumptionDataItem } from "../../containers/consumptionContainer.tsx";
 
 const ConsumptionDetailBox = styled.div`
   width: 50vw;
@@ -9,7 +9,7 @@ const ConsumptionDetailBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 2px solid #DDDDDD;
+  border: 2px solid #dddddd;
   border-right: none;
   border-left: none;
   justify-content: center;
@@ -60,68 +60,49 @@ const PriceContainer = styled.div`
 const 없다 = styled.div`
   width: 50vw;
   height: 100%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 3rem;
 `;
 
-interface Item {
-  id: number;
-  title: string;
-  price: number;
-  source: string;
-}
-
-export default function ConsumptionDetail({ detailBoxRef }: { detailBoxRef: React.RefObject<HTMLDivElement> }) {
-  const [data, setData] = useState([]);
- 
-  useEffect(() => {
-    getData();
-  }, []);
+export default function ConsumptionDetail({
+  detailBoxRef,
+  consumptionData
+}: {
+  detailBoxRef: React.RefObject<HTMLDivElement>;
+  consumptionData: ConsumptionDataItem[]; 
+}) {
 
   useEffect(() => {
     setBoxHeight();
-  }, [data]);
-
-  const getData = async () => {
-    try {
-      const response = await axios.get("http://localhost:3000/posts");
-      const data = response.data;
-      setData(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, [consumptionData]);
 
   const setBoxHeight = () => {
     if (detailBoxRef.current) {
       const itemHeight = 5;
-      const itemCount = data.length;
+      const itemCount = consumptionData.length;
       const calculatedHeight = itemHeight * itemCount + itemHeight * 2;
       detailBoxRef.current.style.height = `${calculatedHeight}vh`;
     }
   };
 
-
-
-  return (
-    data.length === 0 ? (<없다>소비 내역이 없습니다.</없다>):
+  return consumptionData.length === 0 ? (
+    <없다>소비 내역이 없습니다.</없다>
+  ) : (
     <ConsumptionDetailBox ref={detailBoxRef}>
-      {
-        (data.map((item: Item) => (
-          <ConsumptionDetailContainer key={item.id}>
-            <NameContainer>
-              <img src={dot} alt="icon"></img>
-              <div className="title">{item.title}</div>
-            </NameContainer>
-            <PriceContainer>
-              <div className="price">{item.price}</div>
-              <div className="source">{item.source}</div>
-            </PriceContainer>
-          </ConsumptionDetailContainer>
-        )))
-      }
+      {consumptionData.map((item: ConsumptionDataItem) => (
+        <ConsumptionDetailContainer key={item.paymentId}>
+          <NameContainer>
+            <img src={dot} alt="icon"></img>
+            <div className="title">{item.category}</div>
+          </NameContainer>
+          <PriceContainer>
+            <div className="price">{item.amount}</div>
+            <div className="source">{item.purpose}</div>
+          </PriceContainer>
+        </ConsumptionDetailContainer>
+      ))}
     </ConsumptionDetailBox>
   );
 }
