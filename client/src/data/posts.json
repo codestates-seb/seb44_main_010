@@ -1,61 +1,40 @@
 {
-  "posts": [
+  "paymentResponses": [
     {
-      "id": 1,
-      "title": "버거킹",
-      "price": "-11,900",
-      "source": "국민은행"
-    },
-    {
-      "id": 2,
-      "title": "사무용품",
-      "price": "-38,000",
-      "source": "현금"
-    },
-    {
-      "id": 3,
-      "title": "도서구입",
-      "price": "-50,000",
-      "source": "현금"
-    },
-    {
-      "id": 4,
-      "title": "월급",
-      "price": "2,500,000",
-      "source": "농협은행"
+        "paymentId": 1,
+        "paymentTime": "2023-06-08T12:00:00",
+        "paymentType": "입금",
+        "counterPartyName": "John Doe",
+        "amount": 1500.00,
+        "purpose": "Salary",
+        "category": "치약",
+        "accountId": 1
     },{
-      "id": 1,
-      "title": "버거킹",
-      "price": "-11,900",
-      "source": "국민은행"
-    },
-    {
-      "id": 2,
-      "title": "사무용품",
-      "price": "-38,000",
-      "source": "현금"
-    },
-    {
-      "id": 3,
-      "title": "도서구입",
-      "price": "-50,000",
-      "source": "현금"
-    },
-    {
-      "id": 4,
-      "title": "월급",
-      "price": "2,500,000",
-      "source": "농협은행"
-    }
-  ],
-  "daySum":[
-  {
-    "id": 1,
-    "수입":"2,500,000",
-    "지출":"99,900",
-    "합계":"2,400,100"
-  }
-  ],
+      "paymentId": 2,
+      "paymentTime": "2023-06-08T12:00:00",
+      "paymentType": "입금",
+      "counterPartyName": "John Doe",
+      "amount": 1500.00,
+      "purpose": "Salary",
+      "category": "치약",
+      "accountId": 1
+  },{
+    "paymentId": 3,
+    "paymentTime": "2023-06-08T12:00:00",
+    "paymentType": "입금",
+    "counterPartyName": "John Doe",
+    "amount": 1500.00,
+    "purpose": "Salary",
+    "category": "치약",
+    "accountId": 1
+}
+],
+"daySummary": {
+  "date": "2023-06-08T12:00:00",
+  "income": 4500.00,
+  "expense": 0.00,
+  "total": 4500.00
+},
 
   "account": [
     {

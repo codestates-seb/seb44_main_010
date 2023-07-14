@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { SumData } from "../../pages/consumption/dayPage";
+import { DaySumData } from "../../pages/consumption/dayPage";
 
 export const EmptyBottomContainer = styled.div`
     width: 44vw;
     height: 23vh;
+    margin-bottom: 3rem;
 `;
 
 export const BottomContainer = styled.div`
@@ -14,6 +15,7 @@ export const BottomContainer = styled.div`
     margin-left: 3vw;
     margin-right: 3vw;
     justify-content:center;
+    margin-bottom: 3rem;
     
 `;
 
@@ -72,24 +74,24 @@ export const SumContainer = styled.div`
 `;
 
 
-export default function BottomConsumption({ sumData }: { sumData: SumData | Record<string, never>
+export default function DayBottomConsumption({ daySumData }: {daySumData: DaySumData | Record<string, never>
 }){
   
   return (
-    Object.keys(sumData).length === 0 ? <EmptyBottomContainer /> :
+    Object.keys(daySumData).length === 0 ? <EmptyBottomContainer /> :
      (
-        <BottomContainer key={sumData.date}>
+        <BottomContainer key={daySumData.date}>
           <IncomeContainer>
             <div className="수입">수입</div>
-            <div className="수입액">{sumData.income}</div>
+            <div className="수입액">{daySumData.income}</div>
           </IncomeContainer>
           <SpenditureContainer>
             <div className="지출">지출</div>
-            <div className="지출액">{sumData.expense}</div>
+            <div className="지출액">{daySumData.expense}</div>
           </SpenditureContainer>
           <SumContainer>
             <div className="합계">합계</div>
-            <div className="합계액">{sumData.total}</div>
+            <div className="합계액">{daySumData.total}</div>
           </SumContainer>
           </BottomContainer>
       )

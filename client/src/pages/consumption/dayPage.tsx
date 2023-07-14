@@ -1,6 +1,6 @@
 import ConsumptionHeader from "../../components/card/ConsumptionHeader";
 import { DayPageContainer } from "../../pages/consumption/dayPageStyled";
-import ConsumptionContainer from "../../containers/consumptionContainer";
+import DayConsumptionContainer from "../../containers/dayConsumptionContainer";//여기하는중
 import SideButtons from "../../components/button/SideButtons";
 import {
   Grid,
@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import InputContainer from "../../containers/inputContainer";
 import { dayRender } from "../../api/index";
 
-export interface SumData {
+export interface DaySumData {
   date: string;
   income: number;
   expense: number;
@@ -19,13 +19,13 @@ export interface SumData {
 }
 
 export default function DayPage() {
-
+  
   const [showInput, setShowInput] = useState(false);
   const [years, setYears] = useState(2023);
   const [month, setMonth] = useState(7);
   const [date, setDate] = useState(2);
-  const [consumptionData, setConsumptionData] = useState([]);
-  const [sumData, setSumData] = useState<SumData>({
+  const [dayConsumptionData, setDayConsumptionData] = useState([]);
+  const [daySumData, setDaySumData] = useState<DaySumData>({
     date: "",
     income: 0,
     expense: 0,
@@ -39,8 +39,8 @@ useEffect(() => {
       .then((response) => {
         // 데이터 처리 로직
         console.log(response.data);
-        setConsumptionData(response.data.paymentResponses);
-        setSumData(response.data.daySummary);
+        setDayConsumptionData(response.data.paymentResponses);
+        setDaySumData(response.data.daySummary);
       })
       .catch((error) => {
         // 에러 처리 로직
@@ -48,7 +48,7 @@ useEffect(() => {
       });
   };
   handleFetchData();
-}, [consumptionData, sumData, date, month, years]);
+}, [dayConsumptionData, daySumData, date, month, years]);
 
   return (
     <DayPageContainer>
@@ -58,11 +58,11 @@ useEffect(() => {
           {showInput ? (
             <InputContainer />
           ) : (
-            <div style={{ width: "25vw", height: "60vh", border: "1px solid" }}>
+            <div style={{ width: "25vw", height: "68vh", border: "1px solid" }}>
               자산프로필
             </div>
           )}
-          <ConsumptionContainer
+          <DayConsumptionContainer
             showInput={showInput}
             setShowInput={setShowInput}
             years={years}
@@ -71,8 +71,8 @@ useEffect(() => {
             setYears={setYears}
             setMonth={setMonth}
             setDate={setDate}
-            consumptionData={consumptionData}
-            sumData={sumData}
+            dayConsumptionData={dayConsumptionData}
+            daySumData={daySumData}
           />
         </Grid>
         <SideButtonsContainer>

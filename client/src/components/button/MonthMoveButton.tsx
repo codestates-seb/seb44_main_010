@@ -8,13 +8,12 @@ import leftYellow from "../../assets/yellowleft.svg";
 export const MoveImg = styled.img`
   height: 3vh;
   width: 2vh;
-  
   &:hover{
     cursor: pointer;
   }
 `;
 
-export function DayMoveButtonRight({ handleMoveDayRight }: { handleMoveDayRight: () => void }) {
+export function MonthMoveButtonRight({ handleMoveMonthRight }: { handleMoveMonthRight: () => void }) {
   const [imageSrc, setImageSrc] = useState(right);
 
   const handleMouseEnter = () => {
@@ -31,12 +30,12 @@ export function DayMoveButtonRight({ handleMoveDayRight }: { handleMoveDayRight:
       alt="icon"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={handleMoveDayRight}
+      onClick={handleMoveMonthRight}
     ></MoveImg>
   );
 }
 
-export function DayMoveButtonLeft({ handleMoveDayLeft }: { handleMoveDayLeft: () => void }) {
+export function MonthMoveButtonLeft({ handleMoveMonthLeft }: { handleMoveMonthLeft: () => void }) {
   const [imageSrc, setImageSrc] = useState(left);
 
   const handleMouseEnter = () => {
@@ -53,7 +52,7 @@ export function DayMoveButtonLeft({ handleMoveDayLeft }: { handleMoveDayLeft: ()
       alt="icon"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={handleMoveDayLeft}
+      onClick={handleMoveMonthLeft}
     ></MoveImg>
   );
 }
