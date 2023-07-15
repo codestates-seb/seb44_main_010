@@ -1,18 +1,15 @@
-import ConsumptionDetail from "../components/card/ConsumptionDetail";
-import TopConsumption from "../components/card/TopConsumption";
+import DayConsumptionDetail from "../components/card/DayConsumptionDetail";
+import DayTopConsumption from "../components/card/DayTopConsumption";
 import styled from "styled-components";
-import BottomConsumption from "../components/card/BottomConsumption";
+import DayBottomConsumption from "../components/card/DayBottomConsumption";
 import { useState, useRef, useEffect } from "react";
 import { Dispatch, SetStateAction } from "react";
-import { SumData } from "../pages/consumption/dayPage";
+import { DaySumData } from "../pages/consumption/dayPage";
 
-interface ConsumptionBoxProps extends React.HTMLAttributes<HTMLDivElement> {
-  dynamicHeight: string;
-}
 
 export const ConsumptionBox = styled.div<ConsumptionBoxProps>`
   width: 50vw;
-  height: ${({ dynamicHeight }) => `calc(${dynamicHeight}+ 35vh)`};
+  height: ${({ dynamicHeight }) => `calc(${dynamicHeight}+ 45vh)`};
   //65vh, 아이템 갯수에 따라서 박스의 높이가 달라져야 함
   display: flex;
   flex-direction: column;
@@ -23,7 +20,12 @@ export const ConsumptionBox = styled.div<ConsumptionBoxProps>`
   border: 1px #dddddd;
   border-radius: 3rem;
 `;
-export interface ConsumptionDataItem {
+
+interface ConsumptionBoxProps extends React.HTMLAttributes<HTMLDivElement> {
+  dynamicHeight: string;
+}
+
+export interface DayConsumptionDataItem {
     // 객체의 속성에 대한 타입 선언
     paymentId: number,
     paymentTime: string,
@@ -32,7 +34,7 @@ export interface ConsumptionDataItem {
     amount: number,
     purpose: string,
     category: string,
-    accountId: number //나중에 삭제할수도
+    accountId: number 
   }
   
 export default function ConsumptionContainer({
@@ -44,8 +46,8 @@ export default function ConsumptionContainer({
   setYears,
   setMonth,
   setDate,
-  consumptionData,
-  sumData
+  dayConsumptionData,
+  daySumData
 }: {
   showInput: boolean;
   setShowInput: React.Dispatch<React.SetStateAction<boolean>>;
@@ -55,8 +57,8 @@ export default function ConsumptionContainer({
   setYears: Dispatch<SetStateAction<number>>;
   setMonth: Dispatch<SetStateAction<number>>;
   setDate: Dispatch<SetStateAction<number>>;
-  consumptionData: ConsumptionDataItem[]; // 객체를 담은 배열 형식으로 선언
-  sumData: SumData | Record<string, never>
+  dayConsumptionData: DayConsumptionDataItem[]; // 객체를 담은 배열 형식으로 선언
+  daySumData: DaySumData | Record<string, never>
 
 }) {
   const [dynamicHeight, setDynamicHeight] = useState("0");
@@ -70,7 +72,7 @@ export default function ConsumptionContainer({
 
   return (
     <ConsumptionBox dynamicHeight={dynamicHeight}>
-      <TopConsumption
+      <DayTopConsumption
         showInput={showInput}
         setShowInput={setShowInput}
         years={years}
@@ -80,11 +82,11 @@ export default function ConsumptionContainer({
         setMonth={setMonth}
         setDate={setDate}
       />
-      <ConsumptionDetail
+      <DayConsumptionDetail
         detailBoxRef={detailBoxRef}
-        consumptionData={consumptionData}
+        dayConsumptionData={dayConsumptionData}
       />
-      <BottomConsumption sumData={sumData}/>
+      <DayBottomConsumption daySumData={daySumData}/>
     </ConsumptionBox>
   );
 }

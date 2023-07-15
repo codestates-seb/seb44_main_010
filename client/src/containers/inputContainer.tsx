@@ -59,10 +59,12 @@ export const PriceContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 64rem;
+  height: 7vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
   margin: 2rem 0rem;
+  margin-top: 3rem;
 
   .title {
     font-size: 3rem;
@@ -152,6 +154,7 @@ export const ButtonAlignment = styled.div`
   padding-left: 5rem;
   padding-right: 5rem;
   align-items: center;
+  margin-top: 3rem;
 `;
 
 export const InputThings = styled.div`
@@ -166,7 +169,7 @@ export const SignupButtonContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
-  margin-top: 4rem;
+  margin-top: 5rem;
   width: 70%;
   height: 7rem;
 
@@ -179,7 +182,6 @@ export const SignupButtonContainer = styled.div`
 
 export default function InputContainer() {
   const [expenditureSelected, setExpenditureSelected] = useState(false);
-  const [cashSelected, setCashSelected] = useState(true);
   const [category, setCategory] = useState<{
     value: string | null;
     label: string | null;
@@ -192,13 +194,10 @@ export default function InputContainer() {
     setExpenditureSelected(!expenditureSelected);
   };
 
-  const handleCashClick = () => {
-    setCashSelected(!cashSelected);
-  };
-
   const categoryOptions = [
+    { value: "현금", label: "현금" },
     { value: "상품권", label: "상품권" },
-    { value: "기프티콘" , label: "기프티콘" },
+    { value: "기프티콘", label: "기프티콘" },
     { value: "고가품", label: "고가품" },
   ];
 
@@ -215,13 +214,12 @@ export default function InputContainer() {
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
     const priceValue = isNaN(value) ? null : value; // isNaN(value)일 경우 null로 설정합니다.
-    setPrice(priceValue)
+    setPrice(priceValue);
   };
 
   const handleCancelClick = () => {
     // 각 상태값을 초기값으로 변경합니다.
     setExpenditureSelected(true);
-    setCashSelected(true);
     setCategory({ value: null, label: null });
     setContent("");
     setPrice(null);
@@ -229,22 +227,21 @@ export default function InputContainer() {
   };
   const offset = new Date().getTimezoneOffset() * 60000;
 
-
   const handleAddClick = () => {
     //데이터 객체 생성
     const Consumptiondata = {
       paymentType: expenditureSelected ? "출금" : "입금",
-      category: cashSelected ? "현금" : category?.value, //(상품권, 기프티콘, 고가품)
+      accountType: category?.value, //(현금, 상품권, 기프티콘, 고가품)
       purpose: content,
       amount: price !== null ? (expenditureSelected ? -price : price) : null,
       paymentTime: selectedDate
-      ? new Date(selectedDate.getTime() - offset).toISOString()
-      : null,
-    }
+        ? new Date(selectedDate.getTime() - offset).toISOString()
+        : null,
+    };
 
     console.log(Consumptiondata);
 
-      dayUpload(Consumptiondata)
+    dayUpload(Consumptiondata)
       .then((response) => {
         console.log("데이터 추가 성공:", response.data);
       })
@@ -258,7 +255,7 @@ export default function InputContainer() {
       <Title>내역입력</Title>
       <InputThings>
         <ButtonAlignment>
-         <AddButton
+          <AddButton
             width={15}
             height={8}
             backgroundcolor="white"
@@ -287,46 +284,17 @@ export default function InputContainer() {
             <Text>지출</Text>
           </AddButton>
         </ButtonAlignment>
-        <ButtonAlignment>
-          <AddButton
-            width={15}
-            height={8}
-            backgroundcolor="white"
-            borderRadius={50}
-          >
-            <img
-              onClick={handleCashClick}
-              src={cashSelected ? yellowBox : checkBox}
-              alt="icon"
-            ></img>
-            <Text>현금</Text>
-          </AddButton>
-          <AddButton
-            width={15}
-            height={8}
-            backgroundcolor="white"
-            borderRadius={50}
-          >
-            <img
-              onClick={handleCashClick}
-              src={cashSelected ? checkBox : yellowBox}
-              alt="icon"
-            ></img>
-            <Text>기타</Text>
-          </AddButton>
-        </ButtonAlignment>
         <CategoryContainer>
-          <div className="title">카테고리</div>
+          <div className="title">목록</div>
           <CustomSelect
             options={categoryOptions}
             value={category}
             onChange={handleCategoryChange}
-            placeholder={"카테고리를 선택하세요."}
-            isDisabled={cashSelected}
+            placeholder="목록을 선택해주세요."
           ></CustomSelect>
         </CategoryContainer>
         <CategoryContainer>
-          <div className="title">내용</div>
+          <div className="title">메모</div>
           <ContentInput
             onChange={handleContentChange}
             placeholder="내용을 입력하세요."
@@ -335,9 +303,11 @@ export default function InputContainer() {
         </CategoryContainer>
         <PriceContainer>
           <div className="title">금액</div>
-          <PriceInput onChange={handlePriceChange}
-          placeholder="금액을 입력하세요."
-          value={price !== null ? price : ""} />
+          <PriceInput
+            onChange={handlePriceChange}
+            placeholder="금액을 입력하세요."
+            value={price !== null ? price : ""}
+          />
           <div className="단위">원</div>
         </PriceContainer>
         <DateContainer>

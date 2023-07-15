@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import dot from "../../assets/Rectangle 80.svg";
 import { useEffect } from "react";
-import { ConsumptionDataItem } from "../../containers/consumptionContainer.tsx";
+import { DayConsumptionDataItem } from "../../containers/dayConsumptionContainer.tsx";
 
 const ConsumptionDetailBox = styled.div`
   width: 50vw;
@@ -66,32 +66,31 @@ const 없다 = styled.div`
   font-size: 3rem;
 `;
 
-export default function ConsumptionDetail({
+export default function DayConsumptionDetail({
   detailBoxRef,
-  consumptionData
+  dayConsumptionData
 }: {
   detailBoxRef: React.RefObject<HTMLDivElement>;
-  consumptionData: ConsumptionDataItem[]; 
+  dayConsumptionData: DayConsumptionDataItem[]; 
 }) {
 
   useEffect(() => {
+    const setBoxHeight = () => {
+      if (detailBoxRef.current) {
+        const itemHeight = 5;
+        const itemCount = dayConsumptionData.length;
+        const calculatedHeight = itemHeight * itemCount + itemHeight * 2;
+        detailBoxRef.current.style.height = `${calculatedHeight}vh`;
+      }
+    };
     setBoxHeight();
-  }, [consumptionData]);
+  }, [dayConsumptionData]);
 
-  const setBoxHeight = () => {
-    if (detailBoxRef.current) {
-      const itemHeight = 5;
-      const itemCount = consumptionData.length;
-      const calculatedHeight = itemHeight * itemCount + itemHeight * 2;
-      detailBoxRef.current.style.height = `${calculatedHeight}vh`;
-    }
-  };
-
-  return consumptionData.length === 0 ? (
+  return dayConsumptionData.length === 0 ? (
     <없다>소비 내역이 없습니다.</없다>
   ) : (
     <ConsumptionDetailBox ref={detailBoxRef}>
-      {consumptionData.map((item: ConsumptionDataItem) => (
+      {dayConsumptionData.map((item: DayConsumptionDataItem) => (
         <ConsumptionDetailContainer key={item.paymentId}>
           <NameContainer>
             <img src={dot} alt="icon"></img>

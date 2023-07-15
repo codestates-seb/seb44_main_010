@@ -1,13 +1,13 @@
 import styled from "styled-components";
-import { DayMoveButtonRight } from "../../components/button/DayMoveButton";
-import { DayMoveButtonLeft } from "../../components/button/DayMoveButton";
+import { DayMoveButtonRight } from "../button/DayMoveButton";
+import { DayMoveButtonLeft } from "../button/DayMoveButton";
 import AddButtonConsumption from "../button/AddButtonConsumption";
 import { Dispatch, SetStateAction } from "react";
 
 export const TopContainer = styled.div`
   display: flex;
   width: 44vw;
-  height: 12vh;
+  height: 24vh;
   justify-content: space-between;
   align-items: center;
   margin-left: 3vw;
@@ -19,6 +19,7 @@ export const TopContainer = styled.div`
     height: 5vh;
     align-items: center;
     margin-left: 1vw;
+    margin-bottom: 3rem;
   }
 `;
 
@@ -44,7 +45,7 @@ export const MoveDayButton = styled.div`
   }
 `;
 
-export default function TopConsumption({
+export default function DayTopConsumption({
   showInput,
   setShowInput,
   years,

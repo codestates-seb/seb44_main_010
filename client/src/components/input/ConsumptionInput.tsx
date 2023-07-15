@@ -24,7 +24,7 @@ export const PriceInput = styled.input`
   padding: 2rem 2rem;
   font-family: "SCDream", sans-serif;
 `;
-  
+
 export const CustomSelect = styled(Select)`
   width: 65rem;
   .css-art2ul-ValueContainer2 {
