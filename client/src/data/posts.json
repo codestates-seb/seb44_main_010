@@ -2,33 +2,42 @@
   "paymentResponses": [
     {
       "paymentId": 1,
-      "paymentTime": "2023-06-08T12:00:00",
+      "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "입금",
       "counterPartyName": "John Doe",
-      "amount": 1500.0,
+      "amount": 100000,
       "purpose": "Salary",
-      "category": "치약",
-      "accountId": 1
+      "category": "어도비",
+      "accountId": 3
     },
     {
       "paymentId": 2,
-      "paymentTime": "2023-06-08T12:00:00",
+      "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "입금",
       "counterPartyName": "John Doe",
-      "amount": 1500.0,
+      "amount": 3000000,
       "purpose": "Salary",
-      "category": "치약",
+      "category": "월급",
       "accountId": 1
     },
     {
       "paymentId": 3,
-      "paymentTime": "2023-06-08T12:00:00",
+      "paymentTime": "2023-07-01T12:00:00",
+      "paymentType": "출금",
+      "counterPartyName": "John Doe",
+      "amount": 15000,
+      "purpose": "Salary",
+      "category": "다이소",
+      "accountId": 2
+    },{
+      "paymentId": 1,
+      "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "입금",
       "counterPartyName": "John Doe",
-      "amount": 1500.0,
+      "amount": 100000,
       "purpose": "Salary",
-      "category": "치약",
-      "accountId": 1
+      "category": "어도비",
+      "accountId": 3
     }
   ],
   "daySummary": {
@@ -37,29 +46,6 @@
     "expense": 0.0,
     "total": 4500.0
   },
-
-  "account": [
-    {
-      "id": 1,
-      "bank_name": "기업",
-      "bank_amount": "500,000"
-    },
-    {
-      "id": 2,
-      "bank_name": "우리",
-      "bank_amount": "3,000,000"
-    },
-    {
-      "id": 3,
-      "bank_name": "국민",
-      "bank_amount": "20,000,000"
-    },
-    {
-      "id": 4,
-      "bank_name": "국민",
-      "bank_amount": "1,200,000"
-    }
-  ],
   "monthdata": [
     {
       "paymentId": 1,
@@ -169,6 +155,28 @@
       "purpose": "Salary",
       "category": "어도비",
       "accountId": 3
+    }
+  ],
+  "account": [
+    {
+      "id": 1,
+      "bank_name": "기업",
+      "bank_amount": "500,000"
+    },
+    {
+      "id": 2,
+      "bank_name": "우리",
+      "bank_amount": "3,000,000"
+    },
+    {
+      "id": 3,
+      "bank_name": "국민",
+      "bank_amount": "20,000,000"
+    },
+    {
+      "id": 4,
+      "bank_name": "국민",
+      "bank_amount": "1,200,000"
     }
   ],
   "stock": [

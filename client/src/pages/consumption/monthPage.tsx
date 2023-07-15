@@ -37,7 +37,7 @@ export default function MonthPage() {
 // 1. 서버에서 준 데이터 그대로
 useEffect(() => {
   const handleFetchData = () => {
-    falseMonthRender()
+    falseMonthRender() //MonthRender(years, month)
       .then((response) => {
         // 데이터 처리 로직
         console.log(response.data);

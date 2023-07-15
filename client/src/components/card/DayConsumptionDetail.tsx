@@ -16,7 +16,7 @@ const ConsumptionDetailBox = styled.div`
 `;
 
 const ConsumptionDetailContainer = styled.div`
-  height: 5vh;
+  height: 6vh;
   width: 40vw;
   display: flex;
   flex-direction: row;
@@ -34,7 +34,7 @@ const NameContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   height: 5vh;
-  width: 15vw;
+  width: 50%;
   img {
     margin-right: 1vh;
   }
@@ -46,9 +46,10 @@ const NameContainer = styled.div`
 const PriceContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content:center;
   align-items: flex-end;
   height: 5vh;
-  width: 10vw;
+  width: 50%;
 
   .price {
     font-size: 3rem;
@@ -66,6 +67,13 @@ const 없다 = styled.div`
   font-size: 3rem;
 `;
 
+const DayItem = styled.div`
+  display: flex;
+  flex-direction:row;
+  width:100%;
+  height:100%;
+`
+
 export default function DayConsumptionDetail({
   detailBoxRef,
   dayConsumptionData
@@ -79,7 +87,7 @@ export default function DayConsumptionDetail({
       if (detailBoxRef.current) {
         const itemHeight = 5;
         const itemCount = dayConsumptionData.length;
-        const calculatedHeight = itemHeight * itemCount + itemHeight * 2;
+        const calculatedHeight = itemHeight * itemCount + 4 * itemCount;
         detailBoxRef.current.style.height = `${calculatedHeight}vh`;
       }
     };
@@ -92,14 +100,16 @@ export default function DayConsumptionDetail({
     <ConsumptionDetailBox ref={detailBoxRef}>
       {dayConsumptionData.map((item: DayConsumptionDataItem) => (
         <ConsumptionDetailContainer key={item.paymentId}>
+          <DayItem>
           <NameContainer>
             <img src={dot} alt="icon"></img>
             <div className="title">{item.category}</div>
           </NameContainer>
           <PriceContainer>
             <div className="price">{item.amount}</div>
-            <div className="source">{item.purpose}</div>
+            <div className="source">{item.accountId}</div>
           </PriceContainer>
+          </DayItem>
         </ConsumptionDetailContainer>
       ))}
     </ConsumptionDetailBox>

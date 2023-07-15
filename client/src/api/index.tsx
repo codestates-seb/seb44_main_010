@@ -28,5 +28,9 @@ export const monthRender = (years:number, month:number) =>{
 
 //소비페이지 월별상세내역 가짜 데이터 렌더링(GET)
 export const falseMonthRender = () =>{
-  return axios.get(`http://localhost:3000/monthdata`)
+  return axios.get('http://localhost:3000/monthdata')
+}
+//소비페이지 일일상세내역 가짜 데이터 렌더링(GET)
+export const falseDayRender = () =>{
+  return axios.get('http://localhost:3000/paymentResponses')
 }

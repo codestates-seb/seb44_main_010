@@ -13,6 +13,7 @@ const ConsumptionDetailBox = styled.div`
   border-right: none;
   border-left: none;
   justify-content: center;
+  padding-top: 5rem;
 `;
 
 const ConsumptionDetailContainer = styled.div`
@@ -24,6 +25,12 @@ const ConsumptionDetailContainer = styled.div`
   justify-content: space-between;
   margin-bottom: 5rem;
   border-bottom: 1px solid #DDDDDD;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+
 
   img {
     width: 1vh;
@@ -48,6 +55,7 @@ const NameContainer = styled.div`
   justify-content: flex-start;
   height: 5vh;
   width: 50%;
+  margin-left: 5%;
   img {
     margin-right: 1vh;
   }

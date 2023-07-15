@@ -9,7 +9,8 @@ import {
 } from "../../pages/consumption/dayPageStyled";
 import { useState, useEffect } from "react";
 import InputContainer from "../../containers/inputContainer";
-import { dayRender } from "../../api/index";
+//import { dayRender } from "../../api/index";
+import { falseDayRender } from "../../api/index";
 
 export interface DaySumData {
   date: string;
@@ -35,12 +36,12 @@ export default function DayPage() {
 // 소비내역이 추가되면은 오른쪽 상세내역이 다시 렌더링되어야 함
 useEffect(() => {
   const handleFetchData = () => {
-    dayRender(years, month, date)
+    falseDayRender() //dayRender(years, month, date)
       .then((response) => {
         // 데이터 처리 로직
         console.log(response.data);
-        setDayConsumptionData(response.data.paymentResponses);
-        setDaySumData(response.data.daySummary);
+        setDayConsumptionData(response.data);
+        //setDaySumData(response.data.daySummary);
       })
       .catch((error) => {
         // 에러 처리 로직
