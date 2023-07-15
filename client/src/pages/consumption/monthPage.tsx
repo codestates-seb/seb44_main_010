@@ -8,7 +8,9 @@ import {
   SideButtonsContainer,
 } from '../../pages/consumption/monthPageStyled';
 import { useState, useEffect } from "react";
-import { monthRender } from "../../api/index";
+//import { monthRender } from "../../api/index";
+import { falseMonthRender } from "../../api/index";
+import { MonthConsumptionDataItem } from "../../containers/monthConsumptionContainer";
 
 export interface MonthSumData {
   date: string;
@@ -28,17 +30,19 @@ export default function MonthPage() {
     expense: 0,
     total: 0
   });
+  const [groupedData, setGroupedData] = useState<MonthConsumptionDataItem[][]>([]);
+
 
   
-// 소비내역이 추가되면은 오른쪽 상세내역이 다시 렌더링되어야 함
+// 1. 서버에서 준 데이터 그대로
 useEffect(() => {
   const handleFetchData = () => {
-    monthRender(years, month)
+    falseMonthRender()
       .then((response) => {
         // 데이터 처리 로직
         console.log(response.data);
-        setMonthConsumptionData(response.data.paymentResponses);
-        setMonthSumData(response.data.daySummary);
+        setMonthConsumptionData(response.data);
+        //setMonthSumData(response.data.daySummary);
       })
       .catch((error) => {
         // 에러 처리 로직
@@ -46,7 +50,27 @@ useEffect(() => {
       });
   };
   handleFetchData();
-}, [monthConsumptionData, monthSumData, month, years]);
+}, [monthConsumptionData, monthSumData, month, years]); 
+
+ //2. 날짜 기준으로 데이터 그룹핑
+ useEffect(() => {
+  const groupByDate = (data: MonthConsumptionDataItem[]): { [key: string]: MonthConsumptionDataItem[] } => {
+    return data.reduce((acc: { [key: string]: MonthConsumptionDataItem[] }, item: MonthConsumptionDataItem) => {
+      const date = item.paymentTime.split('T')[0];
+
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+
+      acc[date].push(item);
+
+      return acc;
+    }, {});
+  };
+
+  setGroupedData(Object.values(groupByDate(monthConsumptionData)));
+}, [monthConsumptionData]);
+
 
   return (
     <MonthPageContainer>
@@ -56,13 +80,14 @@ useEffect(() => {
             <div style={{ width: "25vw", height: "68vh", border: "1px solid" }}>
               자산프로필
             </div>
-          <MonthConsumptionContainer //여기하는중
+          <MonthConsumptionContainer 
             years={years}
             month={month}
             setYears={setYears}
             setMonth={setMonth}
             monthConsumptionData={monthConsumptionData}
             monthSumData={monthSumData}
+            groupedData={groupedData}
           />
         </Grid>
         <SideButtonsContainer>

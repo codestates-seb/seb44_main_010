@@ -25,3 +25,8 @@ export const dayRender = (years:number, month:number, date:number) =>{
 export const monthRender = (years:number, month:number) =>{
   return axios.get(`/consumption?years=${years}&month=${month}`)
  }; 
+
+//소비페이지 월별상세내역 가짜 데이터 렌더링(GET)
+export const falseMonthRender = () =>{
+  return axios.get(`http://localhost:3000/monthdata`)
+}
