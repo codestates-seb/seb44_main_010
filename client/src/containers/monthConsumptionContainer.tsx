@@ -42,7 +42,8 @@ export default function MonthConsumptionContainer({
   setYears,
   setMonth,
   monthConsumptionData,
-  monthSumData
+  monthSumData,
+  groupedData
 }: {
   years: number;
   month: number;
@@ -50,6 +51,7 @@ export default function MonthConsumptionContainer({
   setMonth: Dispatch<SetStateAction<number>>;
   monthConsumptionData: MonthConsumptionDataItem[]; // 객체를 담은 배열 형식으로 선언
   monthSumData: MonthSumData | Record<string, never>
+  groupedData: MonthConsumptionDataItem[][]; //2차원 배열
 
 }) {
   const [dynamicHeight, setDynamicHeight] = useState("0");
@@ -72,6 +74,7 @@ export default function MonthConsumptionContainer({
       <MonthConsumptionDetail
         detailBoxRef={detailBoxRef}
         monthConsumptionData={monthConsumptionData}
+        groupedData = {groupedData}
       />
       <MonthBottomConsumption monthSumData={monthSumData}/>
     </ConsumptionBox>

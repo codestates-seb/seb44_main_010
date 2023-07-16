@@ -74,7 +74,7 @@ export const SumContainer = styled.div`
 `;
 
 
-export default function DayBottomConsumption({ monthSumData }: {monthSumData: MonthSumData | Record<string, never>
+export default function MonthBottomConsumption({ monthSumData }: {monthSumData: MonthSumData | Record<string, never>
 }){
   
   return (

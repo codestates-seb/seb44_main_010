@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction } from "react";
 export const TopContainer = styled.div`
   display: flex;
   width: 44vw;
-  height: 24vh;
+  height: 15vh;
   justify-content: space-between;
   align-items: center;
   margin-left: 3vw;
