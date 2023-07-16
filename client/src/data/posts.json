@@ -1,43 +1,39 @@
 {
   "paymentResponses": [
     {
-      "paymentId": 1,
       "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "입금",
       "counterPartyName": "John Doe",
       "amount": 100000,
-      "purpose": "Salary",
-      "category": "어도비",
-      "accountId": 3
+      "category": "투자",
+      "purpose": "어도비",
+      "accountId": 1
     },
     {
-      "paymentId": 2,
       "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "입금",
       "counterPartyName": "John Doe",
       "amount": 3000000,
-      "purpose": "Salary",
       "category": "월급",
+      "purpose": "00컴퍼니",
       "accountId": 1
     },
     {
-      "paymentId": 3,
       "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "출금",
       "counterPartyName": "John Doe",
       "amount": 15000,
-      "purpose": "Salary",
-      "category": "다이소",
-      "accountId": 2
+      "category": "쇼핑",
+      "purpose": "다이소",
+      "accountId": 1
     },{
-      "paymentId": 1,
       "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "입금",
       "counterPartyName": "John Doe",
       "amount": 100000,
-      "purpose": "Salary",
-      "category": "어도비",
-      "accountId": 3
+      "category": "투자",
+      "purpose": "어도비",
+      "accountId": 1
     }
   ],
   "daySummary": {
@@ -48,113 +44,102 @@
   },
   "monthdata": [
     {
-      "paymentId": 1,
       "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "입금",
       "counterPartyName": "John Doe",
       "amount": 100000.0,
-      "purpose": "Salary", 
-      "category": "어도비",
-      "accountId": 3
+      "category": "투자", 
+      "purpose": "어도비",
+      "accountId": 1
     },
     {
-      "paymentId": 2,
       "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "입금",
       "counterPartyName": "John Doe",
       "amount": 3000000.0,
-      "purpose": "Salary",
       "category": "월급",
+      "purpose": "00컴퍼니",
       "accountId": 1
     },
     {
-      "paymentId": 3,
       "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "출금",
       "counterPartyName": "John Doe",
       "amount": 15000.0,
-      "purpose": "Salary",
-      "category": "다이소",
-      "accountId": 2
+      "category": "쇼핑",
+      "purpose": "다이소",
+      "accountId": 1
     },
     {
-      "paymentId": 4,
       "paymentTime": "2023-07-02T12:00:00",
       "paymentType": "출금",
       "counterPartyName": "John Doe",
       "amount": 30000.0,
-      "purpose": "Salary",
-      "category": "봉추찜닭",
-      "accountId": 2
+      "category": "식비",
+      "purpose": "봉추찜닭",
+      "accountId": 1
     },
     {
-      "paymentId": 5,
       "paymentTime": "2023-07-02T12:00:00",
       "paymentType": "출금",
       "counterPartyName": "John Doe",
       "amount": 20000.0,
-      "purpose": "Salary",
-      "category": "보험료",
+      "category": "의료",
+      "purpose": "보험료",
       "accountId": 1
     },
     {
-      "paymentId": 6,
       "paymentTime": "2023-07-03T12:00:00",
       "paymentType": "출금",
       "counterPartyName": "John Doe",
       "amount": 30000.0,
-      "purpose": "Salary",
-      "category": "나이키",
+      "category": "쇼핑",
+      "purpose": "나이키",
       "accountId": 1
     },
     {
-      "paymentId": 7,
       "paymentTime": "2023-07-03T12:00:00",
       "paymentType": "입금",
       "counterPartyName": "John Doe",
       "amount": 40000.0,
-      "purpose": "Salary",
-      "category": "구글",
-      "accountId": 3
+      "category": "투자",
+      "purpose": "구글",
+      "accountId": 1
     },
     {
-      "paymentId": 8,
       "paymentTime": "2023-07-04T12:00:00",
       "paymentType": "출금",
       "counterPartyName": "John Doe",
       "amount": 15000.0,
-      "purpose": "Salary",
-      "category": "스타벅스",
+      "category": "식비",
+      "purpose": "스타벅스",
       "accountId": 1
     },
     {
-      "paymentId": 9,
       "paymentTime": "2023-07-04T12:00:00",
       "paymentType": "출금",
       "counterPartyName": "John Doe",
       "amount": 25000.0,
-      "purpose": "Salary",
-      "category": "명동돈까스",
+      "category": "식비",
+      "purpose": "명동돈까스",
       "accountId": 1
     },
     {
-      "paymentId": 10,
       "paymentTime": "2023-07-04T12:00:00",
       "paymentType": "출금",
       "counterPartyName": "John Doe",
       "amount": 35000.0,
-      "purpose": "Salary",
-      "category": "이자카야",
+      "category": "식비",
+      "purpose": "이자카야",
       "accountId": 1
     },{
-      "paymentId": 11,
       "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "입금",
       "counterPartyName": "John Doe",
       "amount": 100000,
-      "purpose": "Salary",
-      "category": "어도비",
-      "accountId": 3
+      "category": "투자",
+      "purpose": "어도비",
+      "accountId": 1
     }
   ],
   "account": [

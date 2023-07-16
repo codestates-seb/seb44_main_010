@@ -131,7 +131,7 @@ export default function MonthConsumptionDetail({
             <DayItem>
               <NameContainer>
                 <img src={dot} alt="icon"></img>
-                <div className="title">{item.category}</div>
+                <div className="title">{item.purpose}</div>
               </NameContainer>
               <PriceContainer>
                 <div className="price">{item.amount}</div>

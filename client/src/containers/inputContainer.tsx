@@ -230,13 +230,16 @@ export default function InputContainer() {
   const handleAddClick = () => {
     //데이터 객체 생성
     const Consumptiondata = {
-      paymentType: expenditureSelected ? "출금" : "입금",
-      accountType: category?.value, //(현금, 상품권, 기프티콘, 고가품)
-      purpose: content,
-      amount: price !== null ? (expenditureSelected ? -price : price) : null,
       paymentTime: selectedDate
-        ? new Date(selectedDate.getTime() - offset).toISOString()
-        : null,
+      ? new Date(selectedDate.getTime() - offset).toISOString()
+      : null,
+      paymentType: expenditureSelected ? "출금" : "입금",
+      counterPartyName: "John Doe",
+      amount: price !== null ? (expenditureSelected ? -price : price) : null,
+      category: "투자",
+      purpose: content,
+      accountId: 1,
+      //클라이언트 입력창의 목록을 못보내고 있는 상황...
     };
 
     console.log(Consumptiondata);

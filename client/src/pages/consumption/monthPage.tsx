@@ -8,8 +8,8 @@ import {
   SideButtonsContainer,
 } from '../../pages/consumption/monthPageStyled';
 import { useState, useEffect } from "react";
-//import { monthRender } from "../../api/index";
-import { falseMonthRender } from "../../api/index";
+import { monthRender } from "../../api/index";
+//import { falseMonthRender } from "../../api/index";
 import { MonthConsumptionDataItem } from "../../containers/monthConsumptionContainer";
 
 export interface MonthSumData {
@@ -20,7 +20,8 @@ export interface MonthSumData {
 }
 
 export default function MonthPage() {
-
+  
+  const [userId, setUserId] = useState(1);
   const [years, setYears] = useState(2023);
   const [month, setMonth] = useState(7);
   const [monthConsumptionData, setMonthConsumptionData] = useState([]);
@@ -37,12 +38,12 @@ export default function MonthPage() {
 // 1. 서버에서 준 데이터 그대로
 useEffect(() => {
   const handleFetchData = () => {
-    falseMonthRender() //MonthRender(years, month)
+    monthRender(userId, month) 
       .then((response) => {
+        //console.log(response.data)
         // 데이터 처리 로직
-        console.log(response.data);
-        setMonthConsumptionData(response.data);
-        //setMonthSumData(response.data.daySummary);
+        //setMonthConsumptionData(response.data.data);
+        //setMonthSumData(response.data.data.daySummary); //monthSummary로 가나?
       })
       .catch((error) => {
         // 에러 처리 로직
@@ -50,7 +51,7 @@ useEffect(() => {
       });
   };
   handleFetchData();
-}, [monthConsumptionData, monthSumData, month, years]); 
+}, [monthConsumptionData, monthSumData, month, userId]); 
 
  //2. 날짜 기준으로 데이터 그룹핑
  useEffect(() => {

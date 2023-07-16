@@ -78,7 +78,6 @@ export default function DayBottomConsumption({ daySumData }: {daySumData: DaySum
 }){
   
   return (
-    Object.keys(daySumData).length === 0 ? <EmptyBottomContainer /> :
      (
         <BottomContainer key={daySumData.date}>
           <IncomeContainer>

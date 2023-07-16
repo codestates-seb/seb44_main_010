@@ -94,16 +94,17 @@ export default function DayConsumptionDetail({
     setBoxHeight();
   }, [dayConsumptionData]);
 
-  return dayConsumptionData.length === 0 ? (
-    <없다>소비 내역이 없습니다.</없다>
-  ) : (
+  return (
+    dayConsumptionData.length === 0  ? (
+  <없다>소비 내역이 없습니다.</없다>
+  ) : 
     <ConsumptionDetailBox ref={detailBoxRef}>
       {dayConsumptionData.map((item: DayConsumptionDataItem) => (
         <ConsumptionDetailContainer key={item.paymentId}>
           <DayItem>
           <NameContainer>
             <img src={dot} alt="icon"></img>
-            <div className="title">{item.category}</div>
+            <div className="title">{item.purpose}</div>
           </NameContainer>
           <PriceContainer>
             <div className="price">{item.amount}</div>
@@ -115,3 +116,4 @@ export default function DayConsumptionDetail({
     </ConsumptionDetailBox>
   );
 }
+

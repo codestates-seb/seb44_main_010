@@ -1,6 +1,6 @@
 import ConsumptionHeader from "../../components/card/ConsumptionHeader";
 import { DayPageContainer } from "../../pages/consumption/dayPageStyled";
-import DayConsumptionContainer from "../../containers/dayConsumptionContainer";//여기하는중
+import DayConsumptionContainer from "../../containers/dayConsumptionContainer";
 import SideButtons from "../../components/button/SideButtons";
 import {
   Grid,
@@ -9,8 +9,7 @@ import {
 } from "../../pages/consumption/dayPageStyled";
 import { useState, useEffect } from "react";
 import InputContainer from "../../containers/inputContainer";
-//import { dayRender } from "../../api/index";
-import { falseDayRender } from "../../api/index";
+import { dayRender } from "../../api/index";
 
 export interface DaySumData {
   date: string;
@@ -22,9 +21,10 @@ export interface DaySumData {
 export default function DayPage() {
   
   const [showInput, setShowInput] = useState(false);
+  const [userId, setUserId] = useState(1);
   const [years, setYears] = useState(2023);
   const [month, setMonth] = useState(7);
-  const [date, setDate] = useState(2);
+  const [date, setDate] = useState(1);
   const [dayConsumptionData, setDayConsumptionData] = useState([]);
   const [daySumData, setDaySumData] = useState<DaySumData>({
     date: "",
@@ -36,12 +36,13 @@ export default function DayPage() {
 // 소비내역이 추가되면은 오른쪽 상세내역이 다시 렌더링되어야 함
 useEffect(() => {
   const handleFetchData = () => {
-    falseDayRender() //dayRender(years, month, date)
+     dayRender(userId, month, date)
       .then((response) => {
         // 데이터 처리 로직
-        console.log(response.data);
-        setDayConsumptionData(response.data);
-        //setDaySumData(response.data.daySummary);
+        //console.log(response.data);
+        //console.log(response.data.data);
+        setDayConsumptionData(response.data.data.paymentResponses);
+        setDaySumData(response.data.data.daySummary);
       })
       .catch((error) => {
         // 에러 처리 로직
@@ -49,7 +50,7 @@ useEffect(() => {
       });
   };
   handleFetchData();
-}, [dayConsumptionData, daySumData, date, month, years]);
+}, []); //[dayConsumptionData, daySumData, date, month, userId], 입력창에 추가를 하면, 다시 렌더링이 될 수 있도록
 
   return (
     <DayPageContainer>
