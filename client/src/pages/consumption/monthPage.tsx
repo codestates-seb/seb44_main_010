@@ -9,7 +9,6 @@ import {
 } from '../../pages/consumption/monthPageStyled';
 import { useState, useEffect } from "react";
 import { monthRender } from "../../api/index";
-//import { falseMonthRender } from "../../api/index";
 import { MonthConsumptionDataItem } from "../../containers/monthConsumptionContainer";
 
 export interface MonthSumData {
