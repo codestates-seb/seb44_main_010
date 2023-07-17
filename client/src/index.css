@@ -1,0 +1,219 @@
+/* src/index.css */
+@font-face {
+  font-family: "SCDream"; /* 사용할 폰트 이름을 입력 */
+  src: url("./assets/fonts/SCDream1.otf") format("opentype");
+  font-weight: 100; /* 폰트 두께를 설정 (다운로드한 폰트 파일마다 상이함) */
+  font-style: normal; /* 필요한 경우 폰트 스타일을 설정 (예: italic) */
+}
+
+@font-face {
+  font-family: "SCDream"; /* 사용할 폰트 이름을 입력 */
+  src: url("./assets/fonts/SCDream2.otf") format("opentype");
+  font-weight: 200; /* 폰트 두께를 설정 (다운로드한 폰트 파일마다 상이함) */
+  font-style: normal; /* 필요한 경우 폰트 스타일을 설정 (예: italic) */
+}
+
+@font-face {
+  font-family: "SCDream"; /* 사용할 폰트 이름을 입력 */
+  src: url("./assets/fonts/SCDream3.otf") format("opentype");
+  font-weight: 300; /* 폰트 두께를 설정 (다운로드한 폰트 파일마다 상이함) */
+  font-style: normal; /* 필요한 경우 폰트 스타일을 설정 (예: italic) */
+}
+
+@font-face {
+  font-family: "SCDream"; /* 사용할 폰트 이름을 입력 */
+  src: url("./assets/fonts/SCDream4.otf") format("opentype");
+  font-weight: 400; /* 폰트 두께를 설정 (다운로드한 폰트 파일마다 상이함) */
+  font-style: normal; /* 필요한 경우 폰트 스타일을 설정 (예: italic) */
+}
+
+@font-face {
+  font-family: "SCDream"; /* 사용할 폰트 이름을 입력 */
+  src: url("./assets/fonts/SCDream5.otf") format("opentype");
+  font-weight: 500; /* 폰트 두께를 설정 (다운로드한 폰트 파일마다 상이함) */
+  font-style: normal; /* 필요한 경우 폰트 스타일을 설정 (예: italic) */
+}
+
+@font-face {
+  font-family: "SCDream"; /* 사용할 폰트 이름을 입력 */
+  src: url("./assets/fonts/SCDream6.otf") format("opentype");
+  font-weight: 600; /* 폰트 두께를 설정 (다운로드한 폰트 파일마다 상이함) */
+  font-style: normal; /* 필요한 경우 폰트 스타일을 설정 (예: italic) */
+}
+
+@font-face {
+  font-family: "SCDream"; /* 사용할 폰트 이름을 입력 */
+  src: url("./assets/fonts/SCDream7.otf") format("opentype");
+  font-weight: 700; /* 폰트 두께를 설정 (다운로드한 폰트 파일마다 상이함) */
+  font-style: normal; /* 필요한 경우 폰트 스타일을 설정 (예: italic) */
+}
+
+@font-face {
+  font-family: "SCDream"; /* 사용할 폰트 이름을 입력 */
+  src: url("./assets/fonts/SCDream8.otf") format("opentype");
+  font-weight: 800; /* 폰트 두께를 설정 (다운로드한 폰트 파일마다 상이함) */
+  font-style: normal; /* 필요한 경우 폰트 스타일을 설정 (예: italic) */
+}
+
+@font-face {
+  font-family: "SCDream"; /* 사용할 폰트 이름을 입력 */
+  src: url("./assets/fonts/SCDream9.otf") format("opentype");
+  font-weight: 900; /* 폰트 두께를 설정 (다운로드한 폰트 파일마다 상이함) */
+  font-style: normal; /* 필요한 경우 폰트 스타일을 설정 (예: italic) */
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  font-size: 5px;
+  font-family: "SCDream", sans-serif;
+}
+
+/* 미디어 쿼리로 페이지 크기에 따라 폰트 크기 조정 */
+@media (max-width: 1200px) {
+  html {
+    font-size: 4.5px;
+  }
+}
+
+@media (max-width: 992px) {
+  html {
+    font-size: 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 3.5px;
+  }
+}
+
+@media (max-width: 576px) {
+  html {
+    font-size: 3px;
+  }
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
