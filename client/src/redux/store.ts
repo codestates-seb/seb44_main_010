@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import loginSlice from "./loginSlice";
+import navColor from "./navColorSlice";
 
 export const store = configureStore({
   reducer: {
     loginSlice: loginSlice.reducer,
+    navColor: navColor.reducer,
   },
 });
 
