@@ -1,15 +1,11 @@
-/* body {
-  overflow-y: hidden;
-} */
-
 .main {
-  margin: 0;
   /* padding-top: 3rem; */
+  /* margin: 0; */
+  overflow-y: hidden;
   margin-top: 3rem;
-  /* overflow-y: hidden; */
 }
 .outer {
-  height: 100vh;
+  height: 99vh;
   overflow-y: auto;
 }
 
@@ -36,10 +32,4 @@
 
 .bg-pink {
   background-color: #f4cfdf;
-}
-
-.divider {
-  width: 100%;
-  height: 5px;
-  background-color: gray;
 }

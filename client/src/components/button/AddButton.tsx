@@ -9,6 +9,7 @@ interface Props {
   borderRadius?: number;
   marginBottom?: number;
   marginTop?: number;
+  marginLeft?: number;
 }
 
 export const AddButton = styled.button<Props>`
@@ -23,12 +24,20 @@ export const AddButton = styled.button<Props>`
   width: ${(props) => props.width && `${props.width}rem`};
   height: ${(props) => props.height && `${props.height}rem`};
   border-radius: ${(props) => props.borderRadius && `${props.borderRadius}`}px;
-  border: 1px solid ${(props) => (props.backgroundcolor === "yellow" ? "#FFCE0B" : "#C9C9C9")};
-  margin-bottom: ${(props) => props.marginBottom && `${props.marginBottom}rem`};
+  border: ${(props) => (props.backgroundcolor ? "1px" : null)} ${(props) => (props.backgroundcolor ? "solid" : null)} ${(props) => (props.backgroundcolor === "yellow" ? "#FFCE0B" : "#C9C9C9")};
   margin-top: ${(props) => props.marginTop && `${props.marginTop}rem`};
+  margin-bottom: ${(props) => props.marginBottom && `${props.marginBottom}rem`};
+  margin-left: ${(props) => `${props.marginLeft}rem`};
   z-index: 9999;
+
+  transition: 0.3s;
 
   & > *:first-child {
     margin-right: 3rem;
+  }
+
+  &:hover {
+    background-color: #ffce0b;
+    color: white;
   }
 `;

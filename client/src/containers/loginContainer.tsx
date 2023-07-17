@@ -84,12 +84,6 @@ export default function LoginContainer() {
     }
   }, [password]);
 
-  // // google Oauth
-  // const url = "https://f5ad-2406-5900-1009-4081-63-4cea-7956-5130.ngrok-free.app/oauth2/authorization/google";
-  // const handleOauth = () => {
-  //   window.location.href = url;
-  // };
-
   return (
     <S.Main>
       <S.Text size={5} weight={600} margintop={10} marginBottom={3}>
