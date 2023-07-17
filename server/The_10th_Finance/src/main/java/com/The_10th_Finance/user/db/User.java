@@ -6,6 +6,7 @@ import com.The_10th_Finance.audit.Audit;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
 @Entity(name = "users")
 @Table(name = "users")
 
-public class User extends Audit implements Principal {
+public class User extends Audit implements Principal, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true, updatable = false)
@@ -42,6 +43,8 @@ public class User extends Audit implements Principal {
     private UserStates userStates;
 
 
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))

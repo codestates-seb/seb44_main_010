@@ -8,6 +8,7 @@ import com.The_10th_Finance.user.db.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -16,13 +17,13 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-@Entity(name = "account")
-@Table(name = "account")
-public class Accounts extends Audit {
+@Entity(name = "property_account")
+@Table(name = "property_account")
+public class Accounts extends Audit  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "account_id", nullable = false, unique = true)
-    private Long accountId;
+    @Column(name = "id", nullable = false, unique = true)
+    private Long Id;
 
     @Column(name = "account_type", nullable = false)
     private String acoountType;
@@ -46,6 +47,9 @@ public class Accounts extends Audit {
 
     @Column(name = "card_number", nullable = false, unique = true)
     private String cardNum;
+
+    @Column(name = "account_id", nullable = false)
+    private Long accountId;
 
     public enum AccountStatement{
         ACTIVE("활성됨"),

@@ -2,18 +2,17 @@
 //(외부라이브러리,서드파티,우리가 안만든거 - asset, style - component - api, util, hook )
 import styled from "styled-components";
 import { useState } from "react";
-import Select from "react-select";
-import axios from "axios";
 import { ValueType } from "react-select";
 
 import checkBox from "../assets/checkbox.svg";
 import yellowBox from "../assets/yellow.svg";
-import Date from "../assets/svg/date.svg";
+import Dateimg from "../assets/svg/date.svg";
 
 import { AddButton } from "../components/button/AddButton";
 import { ContentInput, PriceInput } from "../components/input/ConsumptionInput";
 import DateInput from "../components/input/DateInput";
-
+import { CustomSelect } from "../components/input/ConsumptionInput";
+import { dayUpload } from "../api/index";
 
 export const InputWrapper = styled.div`
   width: 25vw;
@@ -56,26 +55,16 @@ export const CategoryContainer = styled.div`
   }
 `;
 
-export const CustomSelect = styled(Select)`
-  width: 65rem;
-  .css-art2ul-ValueContainer2 {
-    height: 7rem;
-    box-sizing: none;
-  }
-  .css-1dimb5e-singleValue {
-    overflow: visible;
-    font-size: 3rem;
-  }
-`;
-
 export const PriceContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 64rem;
+  height: 7vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
   margin: 2rem 0rem;
+  margin-top: 3rem;
 
   .title {
     font-size: 3rem;
@@ -165,7 +154,9 @@ export const ButtonAlignment = styled.div`
   padding-left: 5rem;
   padding-right: 5rem;
   align-items: center;
+  margin-top: 3rem;
 `;
+
 export const InputThings = styled.div`
   display: flex;
   flex-direction: column;
@@ -178,7 +169,7 @@ export const SignupButtonContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
-  margin-top: 4rem;
+  margin-top: 5rem;
   width: 70%;
   height: 7rem;
 
@@ -190,8 +181,7 @@ export const SignupButtonContainer = styled.div`
 `;
 
 export default function InputContainer() {
-  const [expenditureSelected, setExpenditureSelected] = useState(true);
-  const [cashSelected, setCashSelected] = useState(true);
+  const [expenditureSelected, setExpenditureSelected] = useState(false);
   const [category, setCategory] = useState<{
     value: string | null;
     label: string | null;
@@ -204,14 +194,11 @@ export default function InputContainer() {
     setExpenditureSelected(!expenditureSelected);
   };
 
-  const handleCashClick = () => {
-    setCashSelected(!cashSelected);
-  };
-
   const categoryOptions = [
-    { value: 0, label: "상품권" },
-    { value: 1, label: "기프티콘" },
-    { value: 2, label: "고가품" },
+    { value: "현금", label: "현금" },
+    { value: "상품권", label: "상품권" },
+    { value: "기프티콘", label: "기프티콘" },
+    { value: "고가품", label: "고가품" },
   ];
 
   const handleCategoryChange = (
@@ -233,35 +220,31 @@ export default function InputContainer() {
   const handleCancelClick = () => {
     // 각 상태값을 초기값으로 변경합니다.
     setExpenditureSelected(true);
-    setCashSelected(true);
     setCategory({ value: null, label: null });
     setContent("");
     setPrice(null);
     setSelectedDate(null);
   };
+  const offset = new Date().getTimezoneOffset() * 60000;
 
   const handleAddClick = () => {
     //데이터 객체 생성
-    const data = {
-      expendtiure: expenditureSelected ? 0 : 1,
-      method: cashSelected ? 0 : 1,
-      category: category?.value,
-      content: content,
-      price: price,
-      date: selectedDate ? selectedDate.toLocaleDateString("ko-KR", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit"
-      }).replace(/\./g, "/").replace(/\s/g, "").replace(/\/$/, "") : null,
+    const Consumptiondata = {
+      paymentTime: selectedDate
+      ? new Date(selectedDate.getTime() - offset).toISOString()
+      : null,
+      paymentType: expenditureSelected ? "출금" : "입금",
+      counterPartyName: "John Doe",
+      amount: price !== null ? (expenditureSelected ? -price : price) : null,
+      category: "투자",
+      purpose: content,
+      accountId: 1,
+      //클라이언트 입력창의 목록을 못보내고 있는 상황...
     };
 
-    console.log(data);
-    //POST 요청 보내기
+    console.log(Consumptiondata);
 
-    // api폴더를 따로 만들어서 관리
-    // data 이름을 구별할 수 있게 선언하기
-    axios
-      .post("/consumption/day_upload", data)
+    dayUpload(Consumptiondata)
       .then((response) => {
         console.log("데이터 추가 성공:", response.data);
       })
@@ -284,10 +267,10 @@ export default function InputContainer() {
           >
             <img
               onClick={handleExpenditureClick}
-              src={expenditureSelected ? yellowBox : checkBox}
+              src={expenditureSelected ? checkBox : yellowBox}
               alt="icon"
             ></img>
-            <Text>지출</Text>
+            <Text>수입</Text>
           </AddButton>
           <AddButton
             width={15}
@@ -298,51 +281,23 @@ export default function InputContainer() {
           >
             <img
               onClick={handleExpenditureClick}
-              src={expenditureSelected ? checkBox : yellowBox}
+              src={expenditureSelected ? yellowBox : checkBox}
               alt="icon"
             ></img>
-            <Text>수입</Text>
-          </AddButton>
-        </ButtonAlignment>
-        <ButtonAlignment>
-          <AddButton
-            width={15}
-            height={8}
-            backgroundcolor="white"
-            borderRadius={50}
-          >
-            <img
-              onClick={handleCashClick}
-              src={cashSelected ? yellowBox : checkBox}
-              alt="icon"
-            ></img>
-            <Text>현금</Text>
-          </AddButton>
-          <AddButton
-            width={15}
-            height={8}
-            backgroundcolor="white"
-            borderRadius={50}
-          >
-            <img
-              onClick={handleCashClick}
-              src={cashSelected ? checkBox : yellowBox}
-              alt="icon"
-            ></img>
-            <Text>기타</Text>
+            <Text>지출</Text>
           </AddButton>
         </ButtonAlignment>
         <CategoryContainer>
-          <div className="title">카테고리</div>
+          <div className="title">목록</div>
           <CustomSelect
             options={categoryOptions}
             value={category}
             onChange={handleCategoryChange}
-            placeholder={"카테고리를 선택하세요."}
+            placeholder="목록을 선택해주세요."
           ></CustomSelect>
         </CategoryContainer>
         <CategoryContainer>
-          <div className="title">내용</div>
+          <div className="title">메모</div>
           <ContentInput
             onChange={handleContentChange}
             placeholder="내용을 입력하세요."
@@ -351,9 +306,11 @@ export default function InputContainer() {
         </CategoryContainer>
         <PriceContainer>
           <div className="title">금액</div>
-          <PriceInput onChange={handlePriceChange}
-          placeholder="금액을 입력하세요."
-          value={price !== null ? price : ""} />
+          <PriceInput
+            onChange={handlePriceChange}
+            placeholder="금액을 입력하세요."
+            value={price !== null ? price : ""}
+          />
           <div className="단위">원</div>
         </PriceContainer>
         <DateContainer>
@@ -362,7 +319,7 @@ export default function InputContainer() {
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
           />
-          <img src={Date} alt="icon"></img>
+          <img src={Dateimg} alt="icon"></img>
         </DateContainer>
         <SignupButtonContainer>
           <AddButton

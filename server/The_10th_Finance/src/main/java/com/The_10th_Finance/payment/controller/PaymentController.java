@@ -6,11 +6,13 @@ import com.The_10th_Finance.payment.model.PaymentPatch;
 import com.The_10th_Finance.payment.model.PaymentPost;
 
 import com.The_10th_Finance.payment.service.PaymentService;
-import com.The_10th_Finance.payment.service.PaymentSumService;
+import com.The_10th_Finance.domain.paymenttransaction.PaymentSumService;
+import com.The_10th_Finance.response.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,20 +26,24 @@ public class PaymentController {
     private final PaymentSumService paymentSumService;
     private final PaymentService paymentService;
     private final PaymentMapper paymentMapper;
+    @CacheEvict(value = "monthlySumCache", key = "'customKey'")
     @PostMapping()
-    public ResponseEntity postTodo(@Valid @RequestBody PaymentPost paymentPost){
+    public Response.SuccessResponse postTodo(@Valid @RequestBody PaymentPost paymentPost){
         Payment payment =paymentService.post(paymentMapper.paymentPostToPayment(paymentPost));
-        return  new ResponseEntity(paymentMapper.paymentToPaymentResponse(payment), HttpStatus.CREATED);
+        return  new Response.SuccessResponse<>(paymentMapper.paymentToPaymentResponse(payment), HttpStatus.CREATED);
     }
+
+
+
     @PostMapping("/sum")
-    public ResponseEntity postSum(@Valid @RequestBody PaymentPost paymentPost){
+    public Response.SuccessResponse postSum(@Valid @RequestBody PaymentPost paymentPost){
         Payment payment =paymentSumService.post(paymentMapper.paymentPostToPayment(paymentPost));
-        return  new ResponseEntity(paymentMapper.paymentToPaymentResponse(payment), HttpStatus.CREATED);
+        return  new Response.SuccessResponse<>(paymentMapper.paymentToPaymentResponse(payment), HttpStatus.CREATED);
     }
     @GetMapping("/{id}")
-    public ResponseEntity getCar(@PathVariable(name = "id") @Positive Long id){
+    public Response.SuccessResponse getCar(@PathVariable(name = "id") @Positive Long id){
         Payment payment = paymentService.getOne(id);
-        return new ResponseEntity(paymentMapper.paymentToPaymentResponse(payment),HttpStatus.ACCEPTED);
+        return new Response.SuccessResponse<>(paymentMapper.paymentToPaymentResponse(payment),HttpStatus.ACCEPTED);
     }
 
 
@@ -47,10 +53,10 @@ public class PaymentController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity patchTodo(@PathVariable(name = "id") @Positive Long id,
+    public Response.SuccessResponse patchTodo(@PathVariable(name = "id") @Positive Long id,
                                     @Valid @RequestBody PaymentPatch paymentPatch) {
         Payment payment = paymentService.getOne(id);
         paymentMapper.paymentPatch(paymentPatch,payment);
-        return new ResponseEntity(paymentMapper.paymentToPaymentResponse(paymentService.post(payment)),HttpStatus.ACCEPTED);
+        return new Response.SuccessResponse<>(paymentMapper.paymentToPaymentResponse(paymentService.post(payment)),HttpStatus.ACCEPTED);
     }
 }

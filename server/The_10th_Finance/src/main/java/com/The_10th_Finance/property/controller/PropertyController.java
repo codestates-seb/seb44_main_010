@@ -5,6 +5,7 @@ import com.The_10th_Finance.property.mapper.PropertyMapper;
 import com.The_10th_Finance.property.model.PropertyPatch;
 import com.The_10th_Finance.property.model.PropertyPost;
 import com.The_10th_Finance.property.service.PropertyService;
+import com.The_10th_Finance.response.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,15 +24,15 @@ public class PropertyController {
     private final PropertyService propertyService;
 
     @PostMapping("/post")
-    public ResponseEntity postTodo(@Valid @RequestBody PropertyPost propertyPost){
+    public Response.SuccessResponse postTodo(@Valid @RequestBody PropertyPost propertyPost){
         Property property =propertyService.post(propertyMapper.propertyPostToProperty(propertyPost));
-        return  new ResponseEntity(propertyMapper.propertyToPropertyResponse(property), HttpStatus.CREATED);
+        return  new Response.SuccessResponse<>(propertyMapper.propertyToPropertyResponse(property), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getCar(@PathVariable(name = "id") @Positive Long id){
+    public Response.SuccessResponse getCar(@PathVariable(name = "id") @Positive Long id){
         Property property = propertyService.getOne(id);
-        return new ResponseEntity(propertyMapper.propertyToPropertyResponse(property),HttpStatus.ACCEPTED);
+        return new Response.SuccessResponse<>(propertyMapper.propertyToPropertyResponse(property),HttpStatus.ACCEPTED);
     }
 
 
@@ -41,11 +42,11 @@ public class PropertyController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity patchTodo(@PathVariable(name = "id") @Positive Long id,
+    public Response.SuccessResponse patchTodo(@PathVariable(name = "id") @Positive Long id,
                                    @Valid @RequestBody PropertyPatch propertyPatch) {
         Property userCash = propertyService.getOne(id);
         propertyMapper.propertyPathDto(propertyPatch,userCash);
-        return new ResponseEntity(propertyMapper.propertyToPropertyResponse(propertyService.post(userCash)),HttpStatus.ACCEPTED);
+        return new Response.SuccessResponse<>(propertyMapper.propertyToPropertyResponse(propertyService.post(userCash)),HttpStatus.ACCEPTED);
     }
 
 }

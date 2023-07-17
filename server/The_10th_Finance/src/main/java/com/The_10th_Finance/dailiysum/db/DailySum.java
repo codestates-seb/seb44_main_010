@@ -1,6 +1,6 @@
 package com.The_10th_Finance.dailiysum.db;
 
-import com.The_10th_Finance.Sumentity;
+import com.The_10th_Finance.domain.paymenttransaction.Sumentity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,15 +35,13 @@ public class DailySum  extends Sumentity {
     @Column(name = "account_id", nullable = false)
     private Long accountId;
 
-    @Column(name = "account_type", nullable = false)
-    private String accountType;
 
-    public DailySum(LocalDateTime date, BigDecimal dailyIncome, BigDecimal dailyExpense, BigDecimal dailyTotal, Long accountId,String accountType) {
+    public DailySum(LocalDateTime date, BigDecimal dailyIncome, BigDecimal dailyExpense, BigDecimal dailyTotal, Long accountId) {
         this.date = date;
         this.monthlyIncome = dailyIncome;
         this.monthlyExpense = dailyExpense;
         this.monthlyTotal = dailyTotal;
         this.accountId = accountId;
-        this.accountType = accountType;
+
     }
 }

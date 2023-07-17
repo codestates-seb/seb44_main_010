@@ -1,6 +1,6 @@
 package com.The_10th_Finance.categorysum.db;
 
-import com.The_10th_Finance.Sumentity;
+import com.The_10th_Finance.domain.paymenttransaction.Sumentity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -38,16 +38,14 @@ public class CategorySum extends Sumentity {
     @Column(name = "account_id", nullable = false)
     private Long accountId;
 
-    @Column(name = "account_type", nullable = false)
-    private String accountType;
 
-    public CategorySum(String category, LocalDateTime month, BigDecimal monthlyIncome, BigDecimal monthlyExpense, BigDecimal monthlyTotal, Long accountId,String accountType) {
+    public CategorySum(String category, LocalDateTime month, BigDecimal monthlyIncome, BigDecimal monthlyExpense, BigDecimal monthlyTotal, Long accountId) {
         this.category = category;
         this.monthly = month;
         this.monthlyIncome = monthlyIncome;
         this.monthlyExpense = monthlyExpense;
         this.monthlyTotal = monthlyTotal;
         this.accountId = accountId;
-        this.accountType =accountType;
+
     }
 }
