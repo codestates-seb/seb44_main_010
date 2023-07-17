@@ -1,6 +1,7 @@
 package com.The_10th_Finance.jwt;
 
 import com.The_10th_Finance.auth.LoginDto;
+import com.The_10th_Finance.handler.MemberAuthenticationSuccessHandler;
 import com.The_10th_Finance.user.db.User;
 import lombok.extern.slf4j.Slf4j;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
@@ -56,7 +58,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
-        super.successfulAuthentication(request, response, chain, authResult);
+
         User user = (User) authResult.getPrincipal();  // (4-1)
         String accessToken =jwtTokenizer.delegateAccessToken(user);   // (4-2)
         log.info("successfulAutentication{}",accessToken);
@@ -65,8 +67,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setHeader("Access-Control-Expose-Headers", "Authorization, Refresh");
         response.setHeader("Authorization", "Bearer " + accessToken);  // (4-4)
         response.setHeader("Refresh", refreshToken);
-        chain.doFilter(request, response);
-
+//                super.successfulAuthentication(request, response, chain, authResult);
+//        chain.doFilter(request, response);
+        this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
 
 

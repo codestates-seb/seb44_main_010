@@ -16,4 +16,8 @@ public interface DailySumRepository extends JpaRepository<DailySum,Long> {
 
     @Query("select d from daily_sum d where d.accountId=:accountIds AND month(d.date)=:month")
     Optional<List<DailySum>> findDailySumByAccountIdInAndMonth(@Param("accountIds") List<Long> accountIds, @Param("month") int month);
+    @Query("select d from daily_sum d where d.accountId=:accountIds AND month(d.date)=:month And day(d.date)=:date")
+    Optional<DailySum> findDailySumByAccountIdInAndMonthAndDate(@Param("accountIds")List<Long> accountIds, @Param("month") int month , @Param("date") int date);
+
+
 }

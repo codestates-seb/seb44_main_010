@@ -1,6 +1,7 @@
 package com.The_10th_Finance.user.controller;
 
 
+import com.The_10th_Finance.response.Response;
 import com.The_10th_Finance.user.db.User;
 import com.The_10th_Finance.user.model.UserPostDto;
 import com.The_10th_Finance.user.service.CaptchaService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -24,7 +26,6 @@ import java.util.Optional;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
     private final CaptchaService captchaService;
     private final UserService userService;
@@ -40,24 +41,29 @@ public class UserController {
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity postUser(@Valid @RequestBody UserPostDto userPostDto){
+    public Response.SuccessResponse postUser(@Valid @RequestBody UserPostDto userPostDto){
 
         User user=userService.save(userMapper.userPostDtoToUser(userPostDto));
-        return new ResponseEntity(userMapper.userToUserResponseDto(user),HttpStatus.CREATED);
+        return new Response.SuccessResponse<>(userMapper.userToUserResponseDto(user),HttpStatus.CREATED);
     }
 
 
     @GetMapping("/{email}")
-    public  ResponseEntity getUser(@PathVariable(name = "email") String email){
+    public  Response.SuccessResponse getUser(@PathVariable(name = "email") String email){
         User user = userService.findByEmail(email);
-        return new ResponseEntity(userMapper.userToUserResponseDto(user),HttpStatus.ACCEPTED);
+        return new Response.SuccessResponse<>(userMapper.userToUserResponseDto(user),HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/find")
+    public  Response.SuccessResponse getUser(){
+        List<User> user = userService.findAll2();
+        return new Response.SuccessResponse<>(userMapper.listUserTolistUserResponseDto(user),HttpStatus.ACCEPTED);
+    }
     @GetMapping("/mypage")
-    public ResponseEntity getUserInfo(){
+    public Response.SuccessResponse getUserInfo(){
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user =userService.findByEmail(email);
-        return new ResponseEntity(userMapper.userToUserResponseDto(user),HttpStatus.ACCEPTED);
+        return new Response.SuccessResponse<>(userMapper.userToUserResponseDto(user),HttpStatus.ACCEPTED);
     }
 
 //    @GetMapping("/RefreshToken")

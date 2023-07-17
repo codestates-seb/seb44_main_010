@@ -4,6 +4,7 @@ import com.The_10th_Finance.bank.db.Bank;
 import com.The_10th_Finance.bank.mapper.BankMapper;
 import com.The_10th_Finance.bank.model.BankPost;
 import com.The_10th_Finance.bank.service.BankService;
+import com.The_10th_Finance.response.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,8 +26,8 @@ public class BankController {
     private final BankService bankService;
 
     @PostMapping("/post")
-    public ResponseEntity postBank(@Valid @RequestBody BankPost bankPost){
+    public Response.SuccessResponse postBank(@Valid @RequestBody BankPost bankPost){
         Bank bank = bankService.post(bankMapper.bankPostDtoToBank(bankPost));
-        return new ResponseEntity(bankMapper.bankToBankResponse(bank),HttpStatus.CREATED);
+        return new Response.SuccessResponse<>(bankMapper.bankToBankResponse(bank),HttpStatus.CREATED);
     }
 }
