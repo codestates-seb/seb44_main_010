@@ -58,3 +58,8 @@ chatgpt:
 google:
   recaptcha:
     secret-key: 6LfdeKEmAAAAAE6DVb7hyb-hTiVTpGkNHv-pnd4k
+    
+dialogflow:
+  project-id: newagent-rukf
+  credentials-file: "C:\\Users\\user\\Downloads\\newagent-rukf-63c5448f7346.json"
+  session-id: my-fixed-session-id
