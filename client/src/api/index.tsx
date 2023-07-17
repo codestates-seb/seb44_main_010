@@ -9,6 +9,7 @@ type DayConsumptionData = {
   amount: number | null;
   paymentTime: string | null;
 };
+//입력 데이터 속성도 수정해야함
 
 //소비페이지 일일입력창 (POST)
 export const dayUpload = (dayConsumptiondata: DayConsumptionData) => {
@@ -33,7 +34,7 @@ export const dayRender = (userId: number, month: number, date: number) => {
     }
   );
 };
-//years 넣기
+
 
 //소비페이지 월별상세내역 렌더링(GET)
 export const monthRender = (userId: number, Month: number) => {
@@ -46,9 +47,9 @@ export const monthRender = (userId: number, Month: number) => {
     }
   );
 };
-//years 넣기
 
-//소비페이지 월별상세내역 가짜 데이터 렌더링(GET)
-export const falseMonthRender = () => {
-  return axios.get("http://localhost:3000/monthdata");
-};
+
+//소비페이지 캘린더 상세내역 가짜 렌더링(GET)
+export const falseCalendarRender = () =>{
+  return axios.get(`http://localhost:3000/calendarDaySummary`)
+}

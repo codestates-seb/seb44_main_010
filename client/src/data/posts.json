@@ -26,7 +26,8 @@
       "category": "쇼핑",
       "purpose": "다이소",
       "accountId": 1
-    },{
+    },
+    {
       "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "입금",
       "counterPartyName": "John Doe",
@@ -42,13 +43,54 @@
     "expense": 0.0,
     "total": 4500.0
   },
+  "calendarDaySummary": [{
+    "date": "2023-07-01T12:00:00",
+    "income": 45000.0,
+    "expense": -10000.0
+  },{
+    "date": "2023-07-02T12:00:00",
+    "income": 0.0,
+    "expense": -17000.0
+  },{
+    "date": "2023-07-03T12:00:00",
+    "income": 3000000.0,
+    "expense": 0.0
+  },{
+    "date": "2023-07-04T12:00:00",
+    "income": 0.0,
+    "expense": -100000.0
+  },{
+    "date": "2023-07-05T12:00:00",
+    "income": 10000.0,
+    "expense": -50000.0
+  },{
+    "date": "2023-07-06T12:00:00",
+    "income": 0.0,
+    "expense": -8000.0
+  },{
+    "date": "2023-07-07T12:00:00",
+    "income": -30000.0,
+    "expense": 0.0
+  },{
+    "date": "2023-07-08T12:00:00",
+    "income": 0.0,
+    "expense": 0.0
+  },{
+    "date": "2023-07-09T12:00:00",
+    "income": 0.0,
+    "expense": -2000.0
+  },{
+    "date": "2023-07-10T12:00:00",
+    "income": 0.0,
+    "expense": -4500.0
+  }],
   "monthdata": [
     {
       "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "입금",
       "counterPartyName": "John Doe",
       "amount": 100000.0,
-      "category": "투자", 
+      "category": "투자",
       "purpose": "어도비",
       "accountId": 1
     },
@@ -132,7 +174,8 @@
       "category": "식비",
       "purpose": "이자카야",
       "accountId": 1
-    },{
+    },
+    {
       "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "입금",
       "counterPartyName": "John Doe",
