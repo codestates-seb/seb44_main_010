@@ -8,6 +8,7 @@ import com.The_10th_Finance.user.db.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -16,9 +17,9 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-@Entity(name = "account")
-@Table(name = "account")
-public class Accounts extends Audit {
+@Entity(name = "property_account")
+@Table(name = "property_account")
+public class Accounts extends Audit  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id", nullable = false, unique = true)

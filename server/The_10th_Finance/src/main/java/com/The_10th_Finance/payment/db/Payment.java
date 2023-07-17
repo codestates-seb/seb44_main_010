@@ -4,6 +4,7 @@ import com.The_10th_Finance.accounts.db.Accounts;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity(name = "payment")
 @Table(name = "payment")
-public class Payment {
+public class Payment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "payment_id", nullable = false, unique = true)
@@ -28,7 +29,7 @@ public class Payment {
     //결제 수단
     private String paymentType;
 
-    @Column(name = "counter_party_name", nullable = false)
+    @Column(name = "counterparty_name", nullable = false)
     //상대이름
     private String counterPartyName;
 

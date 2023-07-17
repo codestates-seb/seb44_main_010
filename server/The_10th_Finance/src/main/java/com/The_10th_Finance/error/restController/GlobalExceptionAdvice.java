@@ -3,6 +3,7 @@ package com.The_10th_Finance.error.restController;
 
 import com.The_10th_Finance.error.BusinessLogicException;
 import com.The_10th_Finance.error.ExceptionCode;
+import com.The_10th_Finance.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -34,14 +35,9 @@ public class GlobalExceptionAdvice {
     }
 
     @ExceptionHandler
-    public ResponseEntity handleBusinessLogicException(BusinessLogicException e) {
-        System.out.println(e.getExceptionCode().getStatus());
-        System.out.println(e.getMessage());
+    public Response.ErrorResponse handleBusinessLogicException(BusinessLogicException e) {
 
-        final ErrorResponse response = ErrorResponse.of(e.getExceptionCode().getStatus(), e.getMessage());
-
-        // TODO GlobalExceptionAdvice 기능 추가 1
-        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getExceptionCode().getStatus()));
+        return new Response.ErrorResponse(e);
     }
 
     //    // TODO GlobalExceptionAdvice 기능 추가 2

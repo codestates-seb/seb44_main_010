@@ -29,7 +29,7 @@ public class Bank {
     @Column(name = "bank_location", nullable = false)
     private String bankLocation;
 
-    @Column(name = "bank_number", nullable = false)
+    @Column(name = "bank_phone_number", nullable = false)
     private String bankNumber;
 
 

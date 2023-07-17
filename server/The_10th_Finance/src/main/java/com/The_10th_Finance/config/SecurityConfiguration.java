@@ -9,6 +9,7 @@ import com.The_10th_Finance.handler.MemberAuthenticationSuccessHandler;
 import com.The_10th_Finance.jwt.JwtAuthenticationFilter;
 import com.The_10th_Finance.jwt.JwtTokenizer;
 import com.The_10th_Finance.jwt.JwtVerificationFilter;
+import com.The_10th_Finance.oauth2.OAuth2MemberSuccessHandler;
 import com.The_10th_Finance.user.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -69,16 +70,24 @@ public class SecurityConfiguration {
                 .httpBasic().disable()   // (5)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-//                .oauth2Login(oauth2 -> oauth2
-//                .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, authorityUtils, userService)))
+                .oauth2Login(oauth2 -> oauth2
+                .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, authorityUtils, userService)))
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers("/{accesstocken}/{refreshtocken}","/api/v1/chat-gpt/question").permitAll()
-                        .antMatchers("/payment/complete","/payment/sum","/account/post","/main/{userId}/{Month}").permitAll()
-                        .antMatchers("/user/profile","/user/captcha","/user/sign-up","/user/login","/user/RefreshToken").permitAll()
-                        .antMatchers("/user/emailConfirm","/property/post").permitAll()
+                        .antMatchers("/h2-console/**").permitAll()
+                        .antMatchers("/user/login").permitAll()
+                        .antMatchers("/user/find").permitAll()
+                        .antMatchers("/consumption/daily/{userId}/{month}/{date}").permitAll()
+                        .antMatchers("/consumption//monthly/{userId}/{Month}").permitAll()
+                        .antMatchers("/consumption//day_upload").permitAll()
+                        .antMatchers("/main/dailysum/{userId}/{Month}/{Date}").permitAll()
+                        .antMatchers("/{accesstocken}/{refreshtocken}").permitAll()
                         .antMatchers("/oauth2/authorization/google","oauth2/authorization/github").permitAll()
+                        .antMatchers("/payment/complete","/payment/sum","/account/post","/main/{userId}/{Month}").permitAll()
+                        .antMatchers("/user/profile","/user/captcha","/user/sign-up","/user/RefreshToken").permitAll()
+                        .antMatchers("/user/emailConfirm","/property/post").permitAll()
+                        .antMatchers("/main/daily/{userId}/{Month}/{Date}").permitAll()
                         .antMatchers("/login/oauth2/code/google","/oauth2/authorization/github").permitAll()
-                        .antMatchers("/h2-console/**","/login/error").permitAll()
+                        .antMatchers("/login/error").permitAll()
                         .antMatchers("/user/mypage").hasRole("USER")
 //                        .antMatchers(HttpMethod.OPTIONS,"/**").permitAll() // OPTIONS 요청 허
                         .anyRequest().authenticated())
@@ -103,7 +112,6 @@ public class SecurityConfiguration {
             jwtAuthenticationFilter.setFilterProcessesUrl("/user/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());  // (3) 추가
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());  // (4) 추가// (2-5)
-
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);  // (2) 추가
 
             builder.addFilter(jwtAuthenticationFilter)
