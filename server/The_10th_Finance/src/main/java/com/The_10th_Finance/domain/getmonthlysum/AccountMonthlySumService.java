@@ -102,7 +102,7 @@ public class AccountMonthlySumService {
         //*MonthlyType이란 클래스를 만들어서 추후 리펙토링 예정*
 
         //user에 대한 정보 가져오기
-        User user = userService.findById(userId);
+        User user = userService.findByUserId(userId);
         //보안상 문제가되는 것 빼고 변환해서
         UserResponseDto userResponseDto = userMapper.userToUserResponseDto(user);
 

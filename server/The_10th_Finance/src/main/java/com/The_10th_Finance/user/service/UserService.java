@@ -39,6 +39,7 @@ public class UserService {
         user.setRoles(authorityUtils.createRoles(user.getEmail()));
         String EncodePassoword = PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(user.getPassword());
         log.info("{}",EncodePassoword);
+        user.setUserId(1L);
         user.setPassword(EncodePassoword);
         return userRepository.save(user);
     }
@@ -51,6 +52,12 @@ public class UserService {
     @Transactional(readOnly = true)
     public User findByEmail(String name) {
         return userRepository.findByEmail(name).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOSUCHFOUND));
+    }
+
+
+    @Transactional(readOnly = true)
+    public User findByUserId(Long userid) {
+        return userRepository.findByUserId(userid).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOSUCHFOUND));
     }
 
     @Transactional(readOnly = true)

@@ -43,6 +43,8 @@ public class User extends Audit implements Principal, Serializable {
     private UserStates userStates;
 
 
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
