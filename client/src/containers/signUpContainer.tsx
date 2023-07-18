@@ -2,10 +2,35 @@ import * as S from "./loginSignUpStyled";
 import styled from "styled-components";
 import { Input } from "../components/input/Input";
 import { AddButton } from "../components/button/AddButton";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChangeEvent } from "react";
 import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
+
+const CertificationButton = styled.div`
+  cursor: pointer;
+  margin-left: 2rem;
+  height: 10rem;
+  width: 25rem;
+  font-size: 3rem;
+  font-weight: 300;
+  border: 1px solid #ffce0b;
+  border-radius: 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: black;
+  background-color: white;
+
+  transition: 0.3s;
+
+  &:hover {
+    color: white;
+    background-color: #ffce0b;
+  }
+`;
 
 const InputBox = styled.div`
   display: flex;
@@ -13,6 +38,8 @@ const InputBox = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
+  margin-bottom: 3rem;
+  margin-right: 6rem;
 `;
 
 const RequiredText = styled(S.Text)`
@@ -25,10 +52,15 @@ const Star = styled.div`
   font-size: 4rem;
   color: ${(props) => (props.color ? "red" : "white")};
   margin-right: 4rem;
-  margin-bottom: 3rem;
 `;
 
 export default function SignUpContainer() {
+  const [certification, setCertification] = useState(false);
+  const [confirm, setConfirm] = useState({
+    number: "",
+    value: "",
+    check: false,
+  });
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -42,6 +74,37 @@ export default function SignUpContainer() {
   });
 
   const navigate = useNavigate();
+
+  //메일인증
+  // useEffect(() => {
+  //   axios.post(`/user/emailConfirm?email=${email}`).then((res) => console.log(res.data));
+  // }, [captchaValue]);
+
+  // 인증번호를 입력하고 인증번호 확인 버튼을 눌렀을때 같으면 true, 다르면 false
+  // true값이 나오면 비밀번호, 비밀번호 확인, 가입완료 버튼 나오기
+
+  // console.log(confirm.number);
+  // console.log(confirm.value);
+  // console.log(confirm.check);
+
+  const handleConfirmNumber = () => {
+    if (isValid.isEmail && form.email !== "") {
+      setCertification(true);
+      axios.post(`/user/emailConfirm?email=${form.email}`).then((res) => {
+        setConfirm({ ...confirm, number: res.data });
+      });
+    }
+  };
+
+  const hadleCheckConfirmNumber = () => {
+    if (String(confirm.number) === String(confirm.value)) {
+      setConfirm({ ...confirm, check: true });
+    } else {
+      setConfirm({ ...confirm, check: false });
+    }
+  };
+  // console.log(confirm.number);
+  // console.log(confirm.check);
 
   const handleSignUp: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
@@ -116,31 +179,52 @@ export default function SignUpContainer() {
           * 표는 필수 항목입니다.
         </RequiredText>
         <Star color="red">*</Star>
-        <Input type="text" placeholder="이름(실명)" value={form.name} onChange={(e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, name: e.target.value })} />
+        <Input type="text" placeholder="이름(실명)" value={form.name} width={70} onChange={(e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, name: e.target.value })} />
       </InputBox>
       <InputBox>
         <Star color="red">*</Star>
-        <Input type="email" placeholder="아이디(이메일 형식)" value={form.email} onChange={(e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, email: e.target.value })} />
+        <Input type="email" placeholder="아이디(이메일 형식)" width={42} value={form.email} onChange={(e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, email: e.target.value })} />
+        <CertificationButton onClick={handleConfirmNumber}>인증번호 받기</CertificationButton>
       </InputBox>
+
       {!isValid.isEmail && (
         <S.Text size={2} weight={600} color="red" marginBottom={3}>
           아이디가 이메일 형식이 아닙니다
         </S.Text>
       )}
 
+      {certification && (
+        <InputBox>
+          <Star color="red">*</Star>
+          <Input
+            type="email"
+            placeholder="인증번호 입력"
+            width={42}
+            value={confirm.value}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              setConfirm({ ...confirm, value: e.target.value });
+            }}
+          />
+          <CertificationButton onClick={hadleCheckConfirmNumber}>인증번호 확인</CertificationButton>
+        </InputBox>
+      )}
+      {confirm.check || confirm.value === "" ? null : (
+        <S.Text size={2} weight={600} color="red" marginBottom={3}>
+          인증번호를 확인 해주세요.
+        </S.Text>
+      )}
       <InputBox>
         <Star color="red">*</Star>
-        <Input type="password" placeholder="비밀번호 (영문과 숫자 조합, 6자 이상, 15자 이하)" value={form.password} onChange={(e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, password: e.target.value })} />
+        <Input type="password" placeholder="비밀번호 (영문과 숫자 조합, 6자 이상, 15자 이하)" width={70} value={form.password} onChange={(e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, password: e.target.value })} />
       </InputBox>
       {!isValid.isPassword && (
         <S.Text size={2} weight={600} color="red" marginBottom={3}>
           비밀번호는 영문과 숫자 조합, 6자 이상,15자 이하여야 합니다.
         </S.Text>
       )}
-
       <InputBox>
         <Star color="red">*</Star>
-        <Input type="password" placeholder="비밀번호 확인" marginBottom={10} value={form.passwordConfirm} onChange={(e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, passwordConfirm: e.target.value })} />
+        <Input type="password" placeholder="비밀번호 확인" width={70} value={form.passwordConfirm} onChange={(e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, passwordConfirm: e.target.value })} />
       </InputBox>
       {!isValid.isPasswordConfirm && (
         <S.Text size={2} weight={600} color="red" marginBottom={3}>
@@ -149,7 +233,7 @@ export default function SignUpContainer() {
       )}
       <InputBox>
         <Star>*</Star>
-        <AddButton backgroundcolor="yellow" width={95} height={10} borderRadius={10} marginBottom={10} onClick={handleSignUp}>
+        <AddButton backgroundcolor="yellow" width={75} height={10} borderRadius={10} marginBottom={10} disabled={confirm.check === false} onClick={handleSignUp}>
           가입 완료
         </AddButton>
       </InputBox>

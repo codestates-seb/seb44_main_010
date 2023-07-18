@@ -37,7 +37,14 @@ export const AddButton = styled.button<Props>`
   }
 
   &:hover {
-    background-color: #ffce0b;
-    color: white;
+    ${({ disabled }) => (!disabled ? `background-color: #ffce0b;` : null)}
+    ${({ disabled }) => (!disabled ? `color: white;` : null)}
   }
+
+  ${({ disabled }) =>
+    disabled &&
+    `
+    background-color: gray;
+    cursor: not-allowed;
+  `}
 `;
