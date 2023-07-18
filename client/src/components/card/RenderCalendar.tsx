@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const  Week = styled.div`
+export const Week = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -20,62 +20,99 @@ export const EmptyCell = styled.div`
 export const Cell = styled.div`
   width: 5vw;
   height: 5vw;
-  color:#888181;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
+  color: #888181;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 2rem;
 
-  .dayCount{
+  .dayCount {
     font-size: 4rem;
-    font-weight:500;
-    color:#404040;
+    font-weight: 500;
+    color: #404040;
     margin-bottom: 2rem;
   }
 
-  .출금{
+  .출금 {
     font-size: 2.5rem;
-    margin-top:1rem;
-    color:#FF7A72;
+    margin-top: 1rem;
+    color: #ff7a72;
   }
 
-  .입금{
+  .입금 {
     font-size: 2.5rem;
-    color:#5F65FF;
+    color: #5f65ff;
   }
 `;
 
-const daysInMonth = 36;
-const startDay = 6; // 7월 1일이 토요일이므로 6으로 설정
+const daysInMonth = 37;
 
-export default function RenderCalendar(){
-    const calendar = [];
-    let dayCount = 1;
-
-    // 빈 셀 추가 (1일 이전)
-    for (let i = 0; i < startDay; i++) {
-      calendar.push(<EmptyCell key={`empty-${i}`} />);
-    }
-
-    // 날짜 셀 추가
-    while (dayCount <= daysInMonth) {
-        calendar.push(
-            <Cell key={`day-${dayCount}`}>
-              {dayCount <= 31 && <div className="dayCount">{dayCount}</div>}
-              {dayCount <= 31 && <div className="입금">입금</div>}
-              {dayCount <= 31 && <div className="출금">출금</div>}
-            </Cell>
-          );
-      dayCount++;
-    }
-
-    // 일차원 배열을 7개씩 나누어 Week 컴포넌트로 감싸기
-    const weeks = [];
-    for (let i = 0; i < calendar.length; i += 7) {
-      const week = calendar.slice(i, i + 7);
-      weeks.push(<Week key={`week-${i / 7}`}>{week}</Week>);
-    }
-
-    return weeks;
+export default function RenderCalendar({ month }: { month: number }) {
+  let startDay: number;
+  if (month === 7 || month === 4) {
+    //토
+    startDay = 6;
+  } else if (month === 9 || month === 12) {
+    //금
+    startDay = 5;
+  } else if (month === 6) {
+    //목
+    startDay = 4;
+  } else if (month === 2 || month === 3 || month === 11) {
+    //수
+    startDay = 3;
+  } else if (month === 8) {
+    //화
+    startDay = 2;
+  } else if (month === 5) {
+    startDay = 1; //월
+  } else {
+    startDay = 0; //일
   }
+
+  const calendar = [];
+  let dayCount = 1;
+
+  // 빈 셀 추가 (1일 이전)
+  for (let i = 0; i < startDay; i++) {
+    calendar.push(<EmptyCell key={`empty-${i}`} />);
+  }
+
+  // 날짜 셀 추가
+  while (dayCount <= daysInMonth) {
+    if (
+      month === 1 ||
+      month === 3 ||
+      month === 5 ||
+      month === 7 ||
+      month === 8 ||
+      month === 10 ||
+      month === 12
+        ? dayCount <= 31
+        : month === 2
+        ? dayCount <= 28
+        : dayCount <= 30
+    ) {
+      calendar.push(
+        <Cell key={`day-${dayCount}`}>
+          <div className="dayCount">{dayCount}</div>
+          <div className="입금">입금</div>
+          <div className="출금">출금</div>
+        </Cell>
+      );
+    } else {
+      calendar.push(<EmptyCell key={`empty-${dayCount}`} />);
+    }
+    dayCount++;
+  }
+
+  // 일차원 배열을 7개씩 나누어 Week 컴포넌트로 감싸기
+  const weeks = [];
+  for (let i = 0; i < calendar.length; i += 7) {
+    const week = calendar.slice(i, i + 7);
+    weeks.push(<Week key={`week-${i / 7}`}>{week}</Week>);
+  }
+
+  return weeks;
+}

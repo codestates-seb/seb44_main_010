@@ -34,8 +34,8 @@ export default function CalendarContainer({
   return (
     <ConsumptionBox>
       <CalendarTop month={month} setMonth={setMonth}/>
-      <CalendarDetail />
-      <CalendarBottom />
+      <CalendarDetail month={month}/>
+      <CalendarBottom month={month}/>
     </ConsumptionBox>
   );
 }

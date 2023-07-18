@@ -32,7 +32,10 @@ export const Days = styled.div`
   height: 54vh;
 `;
 
-export default function CalendarDetail() {
+interface CalendarDetailProps {
+  month: number;
+}
+export default function CalendarDetail({month}:CalendarDetailProps) {
 
   return (
     <CalendarBox>
@@ -45,7 +48,7 @@ export default function CalendarDetail() {
         <div className="weekday">금</div>
         <div className="weekday">토</div>
       </Weekdays>
-      <Days>{renderCalendar()}</Days>
+      <Days>{renderCalendar({ month })}</Days>
     </CalendarBox>
   );
 }

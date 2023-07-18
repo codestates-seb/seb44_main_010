@@ -1,5 +1,5 @@
 {
-  "paymentResponses": [
+  "paymentResponses": [ //날짜별 소비내역 (1일것 밖에)
     {
       "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "입금",
@@ -37,13 +37,13 @@
       "accountId": 1
     }
   ],
-  "daySummary": {
+  "daySummary": { //하루 합계
     "date": "2023-06-08T12:00:00",
     "income": 4500.0,
     "expense": 0.0,
     "total": 4500.0
   },
-  "calendarDaySummary": [{
+  "calendarDaySummary": [{ //달력아래 -1200원
     "date": "2023-07-01T12:00:00",
     "income": 45000.0,
     "expense": -10000.0
@@ -84,7 +84,7 @@
     "income": 0.0,
     "expense": -4500.0
   }],
-  "monthdata": [
+  "monthdata": [ //월별데이터 (날짜가 여러개인 일별데이터)
     {
       "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "입금",

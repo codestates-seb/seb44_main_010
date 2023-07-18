@@ -70,8 +70,11 @@ export const SumContainer = styled.div`
     color: #ff554b;
   }
 `;
+interface CalendarDetailProps {
+  month: number;
+}
 
-export default function CalendarBottom(){
+export default function CalendarBottom({month}:CalendarDetailProps){
   
   return (
      (
