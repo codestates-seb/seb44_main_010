@@ -1,5 +1,7 @@
 import styled from "styled-components";
+import {useState} from "react";
 import Car from "../../assets/Car.svg";
+import CarContainer from "../../containers/CashContainer";
 
 const Main = styled.div`
   display: flex;
@@ -29,10 +31,21 @@ const Title = styled.div`
   font-size: 3rem;
 `;
 export default function AddCar() {
+  const [modal, setModal] = useState(false);
+
+  const toggleModal = () => {
+    setModal(!modal);
+  };
+
+  const closeModal = () => {
+    setModal(false); // 모달 상태를 false로 업데이트하여 닫음
+  };
+
   return (
-    <Main>
+    <Main onClick={toggleModal}>
       <CarImg src={Car}></CarImg>
       <Title>자동차 추가하기</Title>
+      {modal && <CarContainer closeModal={closeModal} />}
     </Main>
   );
 }
