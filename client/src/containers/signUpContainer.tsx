@@ -75,14 +75,6 @@ export default function SignUpContainer() {
 
   const navigate = useNavigate();
 
-  //메일인증
-  // useEffect(() => {
-  //   axios.post(`/user/emailConfirm?email=${email}`).then((res) => console.log(res.data));
-  // }, [captchaValue]);
-
-  // 인증번호를 입력하고 인증번호 확인 버튼을 눌렀을때 같으면 true, 다르면 false
-  // true값이 나오면 비밀번호, 비밀번호 확인, 가입완료 버튼 나오기
-
   // console.log(confirm.number);
   // console.log(confirm.value);
   // console.log(confirm.check);
@@ -97,14 +89,15 @@ export default function SignUpContainer() {
   };
 
   const hadleCheckConfirmNumber = () => {
-    if (String(confirm.number) === String(confirm.value)) {
+    if (String(confirm.number) === String(confirm.value) && confirm.value !== "") {
       setConfirm({ ...confirm, check: true });
-    } else {
+    } else if (String(confirm.number) !== String(confirm.value)) {
       setConfirm({ ...confirm, check: false });
     }
   };
-  // console.log(confirm.number);
-  // console.log(confirm.check);
+
+  console.log(confirm.value);
+  console.log(confirm.check);
 
   const handleSignUp: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
@@ -184,7 +177,7 @@ export default function SignUpContainer() {
       <InputBox>
         <Star color="red">*</Star>
         <Input type="email" placeholder="아이디(이메일 형식)" width={42} value={form.email} onChange={(e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, email: e.target.value })} />
-        <CertificationButton onClick={handleConfirmNumber}>인증번호 받기</CertificationButton>
+        <CertificationButton onClick={handleConfirmNumber}>이메일 인증하기</CertificationButton>
       </InputBox>
 
       {!isValid.isEmail && (

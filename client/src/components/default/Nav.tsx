@@ -172,6 +172,7 @@ export default function Nav() {
     deleteLocalstorage("acessToken");
     deleteLocalstorage("refreshToken");
     deleteLocalstorage("userId");
+    dispatch(mainColor());
     navigate("/");
   };
 

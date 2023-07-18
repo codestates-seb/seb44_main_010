@@ -10,12 +10,15 @@ import MonthPage from "../src/pages/consumption/monthPage";
 import CalendarPage from "../src/pages/consumption/calendarPage";
 import SummaryPage from "../src/pages/consumption/summaryPage";
 import ErrorPage from "../src/pages/error/404Page";
+import Nav from "./components/default/Nav";
 
 export default function ContentWithFooter() {
   const location = useLocation();
   const showFooter = location.pathname !== "/";
+  const showNav = location.pathname !== "/completed";
   return (
     <>
+      {showNav && <Nav />}
       <Routes>
         {/*서비스 소개페이지 */}
         <Route path="/" element={<IntroductionPage />}></Route>

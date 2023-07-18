@@ -3,11 +3,18 @@ import * as S from "./loginCompletedPageStyled";
 import { AddButton } from "../../components/button/AddButton";
 import { useNavigate } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const LoginCompletedPage: React.FC = () => {
   const [useName, setUseName] = useState("");
 
   const navigate = useNavigate();
+
+  // 로그인 유무에 따라서 페이지가 나올지 안나올지(?)
+  const isLogin = useSelector((state: RootState) => {
+    return state.loginSlice.isLogined;
+  });
 
   useEffect(() => {
     axios
