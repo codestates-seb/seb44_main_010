@@ -16,7 +16,6 @@ export interface CalendarData {
   date: string;
   income: number;
   expense: number;
-  total: number;
 }
 
 export interface CalendarContainerProps {
@@ -30,12 +29,11 @@ export default function CalendarContainer({
   month,
   setMonth
 }: CalendarContainerProps) {
-  console.log(JulyData);
   return (
     <ConsumptionBox>
       <CalendarTop month={month} setMonth={setMonth}/>
-      <CalendarDetail />
-      <CalendarBottom />
+      <CalendarDetail month={month} JulyData={JulyData}/>
+      <CalendarBottom month={month}/>
     </ConsumptionBox>
   );
 }

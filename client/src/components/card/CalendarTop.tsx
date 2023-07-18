@@ -44,6 +44,7 @@ interface MonthOption {
     value: number;
     label: string;
   }
+  
 export default function CalendarTop({ month, setMonth }: CalendarTopProps) {
 
    const handleChangeMonth = (selectedOption: ValueType<MonthOption, false>) => {

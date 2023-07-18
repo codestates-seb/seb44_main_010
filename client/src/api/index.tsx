@@ -49,7 +49,7 @@ export const monthRender = (userId: number, Month: number) => {
 };
 
 
-//소비페이지 캘린더 상세내역 가짜 렌더링(GET)
+//소비페이지 캘린더 상세내역 가짜렌더링(GET)
 export const falseCalendarRender = () =>{
   return axios.get(`http://localhost:3000/calendarDaySummary`)
 }
