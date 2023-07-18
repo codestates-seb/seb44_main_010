@@ -53,3 +53,8 @@ export const monthRender = (userId: number, Month: number) => {
 export const falseCalendarRender = () =>{
   return axios.get(`http://localhost:3000/calendarDaySummary`)
 }
+
+//소비페이지 요약 상세내역 가짜렌더링(GET)
+export const falseSummaryRender = () =>{
+  return axios.get(`http://localhost:3000/monthdata`)
+}

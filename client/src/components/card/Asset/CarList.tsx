@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import axios from "axios";
 import {useState, useEffect, useRef} from "react";
-import DeleteIcon from "../../assets/delete.svg";
-import YellowLeft from "../../assets/yellowleft.svg";
-import YellowRight from "../../assets/yellowright.svg";
+import DeleteIcon from "../../../assets/delete.svg";
+import YellowLeft from "../../../assets/yellowleft.svg";
+import YellowRight from "../../../assets/yellowright.svg";
 
 interface Item {
   id: number;
-  bank_name: string;
-  bank_amount: number;
+  car_name: string;
+  car_amount: number;
 }
 
 const Main = styled.div`
@@ -17,12 +17,12 @@ const Main = styled.div`
   width: 100%;
 `;
 
-const SavingAccountList = styled.div`
+const CarList = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-const SavingAccountContainer = styled.div`
+const CarContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,7 +40,7 @@ const Top = styled.div`
   display: flex;
 `;
 
-const BankName = styled.div`
+const CarName = styled.div`
   font-size: 4rem;
   margin: 2rem;
   color: #414141;
@@ -56,15 +56,8 @@ const Delete = styled.div`
   margin-left: 10rem;
 `;
 
-const BankAmount = styled.div`
+const CarAmount = styled.div`
   font-size: 4rem;
-`;
-
-const EmptyText = styled.div`
-  font-size: 3rem;
-  text-align: center;
-  margin-top: 5rem;
-  margin-bottom: 5rem;
 `;
 
 const PageButton = styled.div`
@@ -83,11 +76,11 @@ const RightButton = styled.img`
   margin-left: 5rem;
 `;
 
-export default function SavingAccount() {
+export default function Car() {
   const [data, setData] = useState<Item[]>([]);
   const [displayedData, setDisplayedData] = useState<Item[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const SavingAccountBoxRef = useRef<HTMLDivElement>(null);
+  const CarBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     getData();
@@ -101,7 +94,7 @@ export default function SavingAccount() {
 
   const getData = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/account");
+      const response = await axios.get("http://localhost:3000/car");
       const data = response.data;
       setData(data);
     } catch (error) {
@@ -111,7 +104,7 @@ export default function SavingAccount() {
 
   const handleDelete = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:3000/account/${id}`);
+      await axios.delete(`http://localhost:3000/car/${id}`);
       getData();
     } catch (error) {
       console.log(error);
@@ -130,23 +123,23 @@ export default function SavingAccount() {
     }
   };
 
+  if (data.length === 0) {
+    return null;
+  }
+
   return (
-    <Main ref={SavingAccountBoxRef}>
-      {displayedData.length > 0 ? (
-        <SavingAccountList>
-          {displayedData.map((item: Item) => (
-            <SavingAccountContainer key={item.id}>
-              <Top>
-                <BankName>{item.bank_name}</BankName>
-                <Delete onClick={() => handleDelete(item.id)} />
-              </Top>
-              <BankAmount>{item.bank_amount}원</BankAmount>
-            </SavingAccountContainer>
-          ))}
-        </SavingAccountList>
-      ) : (
-        <EmptyText>표시할 내용이 없습니다.</EmptyText>
-      )}
+    <Main ref={CarBoxRef}>
+      <CarList>
+        {displayedData.map((item: Item) => (
+          <CarContainer key={item.id}>
+            <Top>
+              <CarName>{item.car_name}</CarName>
+              <Delete onClick={() => handleDelete(item.id)} />
+            </Top>
+            <CarAmount>{item.car_amount}원</CarAmount>
+          </CarContainer>
+        ))}
+      </CarList>
       <PageButton>
         <LeftButton src={YellowLeft} alt="Left" onClick={handlePrevious} />
         <RightButton src={YellowRight} alt="Right" onClick={handleNext} />

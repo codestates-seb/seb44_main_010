@@ -1,14 +1,14 @@
 import * as S from "../../pages/asset/assetPageStyled";
-import AssetHeader from "../../components/card/AssetHeader";
+import AssetHeader from "../../components/card/Asset/AssetHeader";
 import AssetProfileContainer from "../../containers/assetProfileContainer";
-import SavingAccount from "../../components/card/SavingAccount";
-import Stock from "../../components/card/Stock";
-import Property from "../../components/card/PropertyList";
-import Car from "../../components/card/CarList";
-import Cash from "../../components/card/CashList";
-import AddProperty from "../../components/card/AddProperty";
-import AddCar from "../../components/card/AddCar";
-import AddCash from "../../components/card/AddCash";
+import SavingAccount from "../../components/card/Asset/SavingAccount";
+import Stock from "../../components/card/Asset/Stock";
+import Property from "../../components/card/Asset/PropertyList";
+import Car from "../../components/card/Asset/CarList";
+import Cash from "../../components/card/Asset/CashList";
+import AddProperty from "../../components/card/Asset/AddProperty";
+import AddCar from "../../components/card/Asset/AddCar";
+import AddCash from "../../components/card/Asset/AddCash";
 
 export default function AssetPage() {
   return (

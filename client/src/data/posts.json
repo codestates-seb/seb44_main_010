@@ -185,6 +185,17 @@
       "accountId": 1
     }
   ],
+    "SummaryChartdata": {
+        "categoryincomeSumsMap": {
+            "기타": 4500.00,
+            "월급": 3500.00,
+            "투자": 4500.00
+        },
+        "categoryexpenseSumsMap": {
+            "주거": -4500.00,
+            "식비": -9000.00
+        }
+    },
   "account": [
     {
       "id": 1,

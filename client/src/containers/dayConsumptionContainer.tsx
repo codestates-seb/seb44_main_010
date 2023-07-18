@@ -1,7 +1,7 @@
-import DayConsumptionDetail from "../components/card/DayConsumptionDetail";
-import DayTopConsumption from "../components/card/DayTopConsumption";
+import DayConsumptionDetail from "../components/card/C.Day/DayConsumptionDetail";
+import DayTopConsumption from "../components/card/C.Day/DayTopConsumption";
 import styled from "styled-components";
-import DayBottomConsumption from "../components/card/DayBottomConsumption";
+import DayBottomConsumption from "../components/card/C.Day/DayBottomConsumption";
 import { useState, useRef, useEffect } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { DaySumData } from "../pages/consumption/dayPage";

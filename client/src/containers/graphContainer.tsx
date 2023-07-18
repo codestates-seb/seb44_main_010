@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import BarChart from "../components/card/BarChart";
+import BarChart from "../components/chart/BarChart";
 
 export const GraphBox = styled.div`
   width: 40vw;

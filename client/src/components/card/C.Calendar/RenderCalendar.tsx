@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CalendarDetailProps } from "../card/CalendarDetail";
+import { CalendarDetailProps } from "./CalendarDetail";
 
 export const Week = styled.div`
   display: flex;
