@@ -13,8 +13,6 @@ export const ContentContainer = styled.div`
   flex-direction: row;
   margin-top: 17vh;
   position: relative;
-  border: 1px solid;
-  width: 80vw;
   justify-content: space-between;
 `;
 
