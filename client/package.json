@@ -26,6 +26,7 @@
     "styled-components": "^6.0.2"
   },
   "devDependencies": {
+    "@types/chart.js": "^2.9.37",
     "@types/react": "^18.0.37",
     "@types/react-datepicker": "^4.11.2",
     "@types/react-dom": "^18.0.11",

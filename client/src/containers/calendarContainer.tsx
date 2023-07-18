@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import CalendarTop from "../components/card/CalendarTop";
-import CalendarDetail from "../components/card/CalendarDetail";
-import CalendarBottom from "../components/card/CalendarBottom";
+import CalendarTop from "../components/card/C.Calendar/CalendarTop";
+import CalendarDetail from "../components/card/C.Calendar/CalendarDetail";
+import CalendarBottom from "../components/card/C.Calendar/CalendarBottom";
 
 export const ConsumptionBox = styled.div`
   width: 50vw;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { DaySumData } from "../../pages/consumption/dayPage";
+import { MonthSumData } from "../../../pages/consumption/monthPage";
 
 export const EmptyBottomContainer = styled.div`
     width: 44vw;
@@ -74,23 +74,24 @@ export const SumContainer = styled.div`
 `;
 
 
-export default function DayBottomConsumption({ daySumData }: {daySumData: DaySumData | Record<string, never>
+export default function MonthBottomConsumption({ monthSumData }: {monthSumData: MonthSumData | Record<string, never>
 }){
   
   return (
+    Object.keys(monthSumData).length === 0 ? <EmptyBottomContainer /> :
      (
-        <BottomContainer key={daySumData.date}>
+        <BottomContainer key={monthSumData.date}>
           <IncomeContainer>
             <div className="수입">수입</div>
-            <div className="수입액">{daySumData.income}</div>
+            <div className="수입액">{monthSumData.income}</div>
           </IncomeContainer>
           <SpenditureContainer>
             <div className="지출">지출</div>
-            <div className="지출액">{daySumData.expense}</div>
+            <div className="지출액">{monthSumData.expense}</div>
           </SpenditureContainer>
           <SumContainer>
             <div className="합계">합계</div>
-            <div className="합계액">{daySumData.total}</div>
+            <div className="합계액">{monthSumData.total}</div>
           </SumContainer>
           </BottomContainer>
       )

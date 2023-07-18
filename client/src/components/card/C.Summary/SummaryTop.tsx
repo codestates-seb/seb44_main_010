@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { MonthMoveButtonRight } from "../button/MonthMoveButton";
-import { MonthMoveButtonLeft } from "../button/MonthMoveButton";
+import { MonthMoveButtonRight } from "../../button/MonthMoveButton";
+import { MonthMoveButtonLeft } from "../../button/MonthMoveButton";
 import { Dispatch, SetStateAction } from "react";
 
 export const TopContainer = styled.div`
@@ -44,7 +44,7 @@ export const MoveMonthButton = styled.div`
   }
 `;
 
-export default function MonthTopConsumption({
+export default function SummaryTop({
   years,
   month,
   setYears,

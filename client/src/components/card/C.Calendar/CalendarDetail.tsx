@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import renderCalendar from "../card/RenderCalendar";
-import { CalendarData } from "../../containers/calendarContainer";
+import renderCalendar from "./RenderCalendar";
+import { CalendarData } from "../../../containers/calendarContainer";
 
 export const CalendarBox = styled.div`
   width: 50vw;

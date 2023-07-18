@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {useState} from "react";
-import Cash from "../../assets/Cash.svg";
-import CashContainer from "../../containers/CashContainer";
+import Property from "../../../assets/Property.svg";
+import PropertyContainer from "../../../containers/PropertyContainer";
 
 const Main = styled.div`
   display: flex;
@@ -23,15 +23,16 @@ const Main = styled.div`
   }
 `;
 
-const CashImg = styled.img`
+const PropertyImg = styled.img`
   width: 10vw;
   height: 10vh;
 `;
+
 const Title = styled.div`
   font-size: 3rem;
 `;
 
-export default function AddCar() {
+export default function AddProperty() {
   const [modal, setModal] = useState(false);
 
   const toggleModal = () => {
@@ -44,9 +45,9 @@ export default function AddCar() {
 
   return (
     <Main onClick={toggleModal}>
-      <CashImg src={Cash}></CashImg>
-      <Title>현금 추가하기</Title>
-      {modal && <CashContainer closeModal={closeModal} />}
+      <PropertyImg src={Property}></PropertyImg>
+      <Title>부동산 추가하기</Title>
+      {modal && <PropertyContainer closeModal={closeModal} />}
     </Main>
   );
 }

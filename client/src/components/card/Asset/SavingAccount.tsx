@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import axios from "axios";
 import {useState, useEffect, useRef} from "react";
-import DeleteIcon from "../../assets/delete.svg";
-import YellowLeft from "../../assets/yellowleft.svg";
-import YellowRight from "../../assets/yellowright.svg";
+import DeleteIcon from "../../../assets/delete.svg";
+import YellowLeft from "../../../assets/yellowleft.svg";
+import YellowRight from "../../../assets/yellowright.svg";
 
 interface Item {
   id: number;
-  stock_name: string;
-  stock_amount: number;
+  bank_name: string;
+  bank_amount: number;
 }
 
 const Main = styled.div`
@@ -17,12 +17,12 @@ const Main = styled.div`
   width: 100%;
 `;
 
-const StockList = styled.div`
+const SavingAccountList = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-const StockContainer = styled.div`
+const SavingAccountContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,7 +40,7 @@ const Top = styled.div`
   display: flex;
 `;
 
-const StockName = styled.div`
+const BankName = styled.div`
   font-size: 4rem;
   margin: 2rem;
   color: #414141;
@@ -56,7 +56,7 @@ const Delete = styled.div`
   margin-left: 10rem;
 `;
 
-const StockAmount = styled.div`
+const BankAmount = styled.div`
   font-size: 4rem;
 `;
 
@@ -83,11 +83,11 @@ const RightButton = styled.img`
   margin-left: 5rem;
 `;
 
-export default function Stock() {
+export default function SavingAccount() {
   const [data, setData] = useState<Item[]>([]);
   const [displayedData, setDisplayedData] = useState<Item[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const StockBoxRef = useRef<HTMLDivElement>(null);
+  const SavingAccountBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     getData();
@@ -101,7 +101,7 @@ export default function Stock() {
 
   const getData = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/stock");
+      const response = await axios.get("http://localhost:3000/account");
       const data = response.data;
       setData(data);
     } catch (error) {
@@ -111,7 +111,7 @@ export default function Stock() {
 
   const handleDelete = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:3000/stock/${id}`);
+      await axios.delete(`http://localhost:3000/account/${id}`);
       getData();
     } catch (error) {
       console.log(error);
@@ -131,19 +131,19 @@ export default function Stock() {
   };
 
   return (
-    <Main ref={StockBoxRef}>
+    <Main ref={SavingAccountBoxRef}>
       {displayedData.length > 0 ? (
-        <StockList>
+        <SavingAccountList>
           {displayedData.map((item: Item) => (
-            <StockContainer key={item.id}>
+            <SavingAccountContainer key={item.id}>
               <Top>
-                <StockName>{item.stock_name}</StockName>
+                <BankName>{item.bank_name}</BankName>
                 <Delete onClick={() => handleDelete(item.id)} />
               </Top>
-              <StockAmount>{item.stock_amount}원</StockAmount>
-            </StockContainer>
+              <BankAmount>{item.bank_amount}원</BankAmount>
+            </SavingAccountContainer>
           ))}
-        </StockList>
+        </SavingAccountList>
       ) : (
         <EmptyText>표시할 내용이 없습니다.</EmptyText>
       )}

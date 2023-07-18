@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { DayMoveButtonRight } from "../button/DayMoveButton";
-import { DayMoveButtonLeft } from "../button/DayMoveButton";
-import AddButtonConsumption from "../button/AddButtonConsumption";
+import { DayMoveButtonRight } from "../../button/DayMoveButton";
+import { DayMoveButtonLeft } from "../../button/DayMoveButton";
+import AddButtonConsumption from "../../button/AddButtonConsumption";
 import { Dispatch, SetStateAction } from "react";
 
 export const TopContainer = styled.div`

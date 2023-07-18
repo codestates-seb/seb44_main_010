@@ -1,4 +1,4 @@
-import ConsumptionHeader from "../../components/card/ConsumptionHeader";
+import ConsumptionHeader from "../../components/card/C.Day/ConsumptionHeader";
 import { DayPageContainer } from "../../pages/consumption/dayPageStyled";
 import DayConsumptionContainer from "../../containers/dayConsumptionContainer";
 import SideButtons from "../../components/button/SideButtons";
