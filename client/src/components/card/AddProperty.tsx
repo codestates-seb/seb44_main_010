@@ -1,5 +1,7 @@
 import styled from "styled-components";
+import {useState} from "react";
 import Property from "../../assets/Property.svg";
+import PropertyContainer from "../../containers/PropertyContainer";
 
 const Main = styled.div`
   display: flex;
@@ -25,14 +27,27 @@ const PropertyImg = styled.img`
   width: 10vw;
   height: 10vh;
 `;
+
 const Title = styled.div`
   font-size: 3rem;
 `;
+
 export default function AddProperty() {
+  const [modal, setModal] = useState(false);
+
+  const toggleModal = () => {
+    setModal(!modal);
+  };
+
+  const closeModal = () => {
+    setModal(false); // 모달 상태를 false로 업데이트하여 닫음
+  };
+
   return (
-    <Main>
+    <Main onClick={toggleModal}>
       <PropertyImg src={Property}></PropertyImg>
       <Title>부동산 추가하기</Title>
+      {modal && <PropertyContainer closeModal={closeModal} />}
     </Main>
   );
 }

@@ -1,6 +1,6 @@
 package com.The_10th_Finance.monthlysum.db;
 
-import com.The_10th_Finance.Sumentity;
+import com.The_10th_Finance.domain.paymenttransaction.Sumentity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,15 +35,12 @@ public class MonthlySum extends Sumentity {
     @Column(name = "account_id", nullable = false)
     private Long accountId;
 
-    @Column(name = "account_type", nullable = false)
-    private String accountType;
 
-    public MonthlySum(LocalDateTime date, BigDecimal monthlyIncome, BigDecimal monthlyExpense, BigDecimal monthlyTotal, Long accountId,String accountType) {
+    public MonthlySum(LocalDateTime date, BigDecimal monthlyIncome, BigDecimal monthlyExpense, BigDecimal monthlyTotal, Long accountId) {
         this.date = date;
         this.monthlyIncome = monthlyIncome;
         this.monthlyExpense = monthlyExpense;
         this.monthlyTotal = monthlyTotal;
         this.accountId = accountId;
-        this.accountType = accountType;
     }
 }

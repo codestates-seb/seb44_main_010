@@ -1,62 +1,190 @@
 {
-  "posts": [
+  "paymentResponses": [ 
     {
-      "id": 1,
-      "title": "버거킹",
-      "price": "-11,900",
-      "source": "국민은행"
+      "paymentTime": "2023-07-01T12:00:00",
+      "paymentType": "입금",
+      "counterPartyName": "John Doe",
+      "amount": 100000,
+      "category": "투자",
+      "purpose": "어도비",
+      "accountId": 1
     },
     {
-      "id": 2,
-      "title": "사무용품",
-      "price": "-38,000",
-      "source": "현금"
+      "paymentTime": "2023-07-01T12:00:00",
+      "paymentType": "입금",
+      "counterPartyName": "John Doe",
+      "amount": 3000000,
+      "category": "월급",
+      "purpose": "00컴퍼니",
+      "accountId": 1
     },
     {
-      "id": 3,
-      "title": "도서구입",
-      "price": "-50,000",
-      "source": "현금"
+      "paymentTime": "2023-07-01T12:00:00",
+      "paymentType": "출금",
+      "counterPartyName": "John Doe",
+      "amount": 15000,
+      "category": "쇼핑",
+      "purpose": "다이소",
+      "accountId": 1
     },
     {
-      "id": 4,
-      "title": "월급",
-      "price": "2,500,000",
-      "source": "농협은행"
-    },{
-      "id": 1,
-      "title": "버거킹",
-      "price": "-11,900",
-      "source": "국민은행"
-    },
-    {
-      "id": 2,
-      "title": "사무용품",
-      "price": "-38,000",
-      "source": "현금"
-    },
-    {
-      "id": 3,
-      "title": "도서구입",
-      "price": "-50,000",
-      "source": "현금"
-    },
-    {
-      "id": 4,
-      "title": "월급",
-      "price": "2,500,000",
-      "source": "농협은행"
+      "paymentTime": "2023-07-01T12:00:00",
+      "paymentType": "입금",
+      "counterPartyName": "John Doe",
+      "amount": 100000,
+      "category": "투자",
+      "purpose": "어도비",
+      "accountId": 1
     }
   ],
-  "daySum":[
-  {
-    "id": 1,
-    "수입":"2,500,000",
-    "지출":"99,900",
-    "합계":"2,400,100"
-  }
+  "daySummary": { 
+    "date": "2023-06-08T12:00:00",
+    "income": 4500.0,
+    "expense": 0.0,
+    "total": 4500.0
+  },
+  "calendarDaySummary": [{ 
+    "date": "2023-07-01T12:00:00",
+    "income": 45000.0,
+    "expense": -10000.0
+  },{
+    "date": "2023-07-02T12:00:00",
+    "income": 0.0,
+    "expense": -17000.0
+  },{
+    "date": "2023-07-03T12:00:00",
+    "income": 3000000.0,
+    "expense": 0.0
+  },{
+    "date": "2023-07-04T12:00:00",
+    "income": 0.0,
+    "expense": -100000.0
+  },{
+    "date": "2023-07-05T12:00:00",
+    "income": 10000.0,
+    "expense": -50000.0
+  },{
+    "date": "2023-07-06T12:00:00",
+    "income": 0.0,
+    "expense": -8000.0
+  },{
+    "date": "2023-07-07T12:00:00",
+    "income": -30000.0,
+    "expense": 0.0
+  },{
+    "date": "2023-07-08T12:00:00",
+    "income": 0.0,
+    "expense": 0.0
+  },{
+    "date": "2023-07-09T12:00:00",
+    "income": 0.0,
+    "expense": -2000.0
+  },{
+    "date": "2023-07-10T12:00:00",
+    "income": 0.0,
+    "expense": -4500.0
+  }],
+  "monthdata": [ 
+    {
+      "paymentTime": "2023-07-01T12:00:00",
+      "paymentType": "입금",
+      "counterPartyName": "John Doe",
+      "amount": 100000.0,
+      "category": "투자",
+      "purpose": "어도비",
+      "accountId": 1
+    },
+    {
+      "paymentTime": "2023-07-01T12:00:00",
+      "paymentType": "입금",
+      "counterPartyName": "John Doe",
+      "amount": 3000000.0,
+      "category": "월급",
+      "purpose": "00컴퍼니",
+      "accountId": 1
+    },
+    {
+      "paymentTime": "2023-07-01T12:00:00",
+      "paymentType": "출금",
+      "counterPartyName": "John Doe",
+      "amount": 15000.0,
+      "category": "쇼핑",
+      "purpose": "다이소",
+      "accountId": 1
+    },
+    {
+      "paymentTime": "2023-07-02T12:00:00",
+      "paymentType": "출금",
+      "counterPartyName": "John Doe",
+      "amount": 30000.0,
+      "category": "식비",
+      "purpose": "봉추찜닭",
+      "accountId": 1
+    },
+    {
+      "paymentTime": "2023-07-02T12:00:00",
+      "paymentType": "출금",
+      "counterPartyName": "John Doe",
+      "amount": 20000.0,
+      "category": "의료",
+      "purpose": "보험료",
+      "accountId": 1
+    },
+    {
+      "paymentTime": "2023-07-03T12:00:00",
+      "paymentType": "출금",
+      "counterPartyName": "John Doe",
+      "amount": 30000.0,
+      "category": "쇼핑",
+      "purpose": "나이키",
+      "accountId": 1
+    },
+    {
+      "paymentTime": "2023-07-03T12:00:00",
+      "paymentType": "입금",
+      "counterPartyName": "John Doe",
+      "amount": 40000.0,
+      "category": "투자",
+      "purpose": "구글",
+      "accountId": 1
+    },
+    {
+      "paymentTime": "2023-07-04T12:00:00",
+      "paymentType": "출금",
+      "counterPartyName": "John Doe",
+      "amount": 15000.0,
+      "category": "식비",
+      "purpose": "스타벅스",
+      "accountId": 1
+    },
+    {
+      "paymentTime": "2023-07-04T12:00:00",
+      "paymentType": "출금",
+      "counterPartyName": "John Doe",
+      "amount": 25000.0,
+      "category": "식비",
+      "purpose": "명동돈까스",
+      "accountId": 1
+    },
+    {
+      "paymentTime": "2023-07-04T12:00:00",
+      "paymentType": "출금",
+      "counterPartyName": "John Doe",
+      "amount": 35000.0,
+      "category": "식비",
+      "purpose": "이자카야",
+      "accountId": 1
+    },
+    {
+      "paymentTime": "2023-07-01T12:00:00",
+      "paymentType": "입금",
+      "counterPartyName": "John Doe",
+      "amount": 100000,
+      "category": "투자",
+      "purpose": "어도비",
+      "accountId": 1
+    }
   ],
-
   "account": [
     {
       "id": 1,

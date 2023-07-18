@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import Select from "react-select";
 
 export const ContentInput = styled.textarea`
   width: 60rem;
@@ -23,5 +24,16 @@ export const PriceInput = styled.input`
   padding: 2rem 2rem;
   font-family: "SCDream", sans-serif;
 `;
-  
+
+export const CustomSelect = styled(Select)`
+  width: 65rem;
+  .css-art2ul-ValueContainer2 {
+    height: 7rem;
+    box-sizing: none;
+  }
+  .css-1dimb5e-singleValue {
+    overflow: visible;
+    font-size: 3rem;
+  }
+`;
 

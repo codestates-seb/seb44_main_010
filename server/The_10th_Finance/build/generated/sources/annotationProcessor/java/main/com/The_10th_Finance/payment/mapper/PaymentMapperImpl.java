@@ -6,13 +6,15 @@ import com.The_10th_Finance.payment.model.PaymentPatch;
 import com.The_10th_Finance.payment.model.PaymentPost;
 import com.The_10th_Finance.payment.model.PaymentResponse;
 import com.The_10th_Finance.payment.model.PaymentResponse.PaymentResponseBuilder;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-07-10T14:23:46+0900",
-    comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.1.1.jar, environment: Java 11.0.18 (Azul Systems, Inc.)"
+    date = "2023-07-13T08:28:36+0900",
+    comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.1.1.jar, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 @Component
 public class PaymentMapperImpl implements PaymentMapper {
@@ -68,5 +70,19 @@ public class PaymentMapperImpl implements PaymentMapper {
         payment.setAmount( paymentPatch.getAmount() );
         payment.setPurpose( paymentPatch.getPurpose() );
         payment.setCategory( paymentPatch.getCategory() );
+    }
+
+    @Override
+    public List<PaymentResponse> paymentListToPaymentResponseList(List<Payment> paymentList) {
+        if ( paymentList == null ) {
+            return null;
+        }
+
+        List<PaymentResponse> list = new ArrayList<PaymentResponse>( paymentList.size() );
+        for ( Payment payment : paymentList ) {
+            list.add( paymentToPaymentResponse( payment ) );
+        }
+
+        return list;
     }
 }
