@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import renderCalendar from "../card/RenderCalendar";
+import { CalendarData } from "../../containers/calendarContainer";
 
 export const CalendarBox = styled.div`
   width: 50vw;
@@ -32,10 +33,11 @@ export const Days = styled.div`
   height: 54vh;
 `;
 
-interface CalendarDetailProps {
+export interface CalendarDetailProps {
   month: number;
+  JulyData: CalendarData[];
 }
-export default function CalendarDetail({month}:CalendarDetailProps) {
+export default function CalendarDetail({month, JulyData}:CalendarDetailProps) {
 
   return (
     <CalendarBox>
@@ -48,7 +50,7 @@ export default function CalendarDetail({month}:CalendarDetailProps) {
         <div className="weekday">금</div>
         <div className="weekday">토</div>
       </Weekdays>
-      <Days>{renderCalendar({ month })}</Days>
+      <Days>{renderCalendar({ month, JulyData })}</Days>
     </CalendarBox>
   );
 }

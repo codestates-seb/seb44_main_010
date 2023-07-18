@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { CalendarDetailProps } from "../card/CalendarDetail";
 
 export const Week = styled.div`
   display: flex;
@@ -48,7 +49,7 @@ export const Cell = styled.div`
 
 const daysInMonth = 37;
 
-export default function RenderCalendar({ month }: { month: number }) {
+export default function RenderCalendar({month, JulyData}:CalendarDetailProps) {
   let startDay: number;
   if (month === 7 || month === 4) {
     //토
@@ -79,8 +80,13 @@ export default function RenderCalendar({ month }: { month: number }) {
     calendar.push(<EmptyCell key={`empty-${i}`} />);
   }
 
+
   // 날짜 셀 추가
   while (dayCount <= daysInMonth) {
+
+    let income = 0;
+    let expense = 0;
+    
     if (
       month === 1 ||
       month === 3 ||
@@ -94,11 +100,19 @@ export default function RenderCalendar({ month }: { month: number }) {
         ? dayCount <= 28
         : dayCount <= 30
     ) {
+      const currentDate = new Date(`2023-${month.toString().padStart(2, "0")}-${dayCount.toString().padStart(2, "0")}T12:00:00`);
+      const matchingData = JulyData.find(data => new Date(data.date).getDate() === currentDate.getDate());
+
+      if (matchingData) {
+        income = matchingData.income;
+        expense = matchingData.expense;
+      }
+
       calendar.push(
         <Cell key={`day-${dayCount}`}>
           <div className="dayCount">{dayCount}</div>
-          <div className="입금">입금</div>
-          <div className="출금">출금</div>
+          <div className="입금">{income}</div>
+          <div className="출금">{expense}</div>
         </Cell>
       );
     } else {
