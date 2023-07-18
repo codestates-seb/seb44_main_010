@@ -13,6 +13,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Getter
 public class AccountsPost {
+
+
     @NotBlank
     private String acoountType;
 

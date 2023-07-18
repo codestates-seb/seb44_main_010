@@ -1,6 +1,7 @@
 package com.The_10th_Finance.domain.getdailysum;
 
 import com.The_10th_Finance.domain.getdailysum.DaySummary;
+import com.The_10th_Finance.payment.model.PaymentBankResponse;
 import com.The_10th_Finance.payment.model.PaymentResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class DailyPaymentResponse {
-    private List<PaymentResponse> paymentResponses;
+    private List<PaymentBankResponse> paymentResponses;
     private DaySummary daySummary;
 }

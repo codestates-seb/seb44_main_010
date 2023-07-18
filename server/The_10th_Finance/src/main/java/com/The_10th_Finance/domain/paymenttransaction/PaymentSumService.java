@@ -1,5 +1,6 @@
 package com.The_10th_Finance.domain.paymenttransaction;
 
+import com.The_10th_Finance.accounts.db.Accounts;
 import com.The_10th_Finance.domain.paymenttransaction.Sumentity;
 import com.The_10th_Finance.accounts.service.AccountsService;
 import com.The_10th_Finance.categorysum.db.CategorySum;
@@ -43,6 +44,18 @@ public class PaymentSumService {
 //                               .orElseGet(()->createNewCategorySum(payment));
     @Transactional
     public Payment post(Payment paymentPostToPayment) {
+
+        //계좌에서 돈뺴기 or 돈 더하기
+        Accounts accounts = accountsService.getOne(paymentPostToPayment.getAccountId());
+        BigDecimal amount = accounts.getBalance().add(paymentPostToPayment.getAmount());
+        if (amount.compareTo(BigDecimal.ZERO) >= 0) {
+            // 금액이 0보다 크면 계정의 잔액을 업데이트합니다.
+            accounts.setBalance(amount);
+            accountsService.post(accounts); // 잔액 업데이트를 반영하도록 accounts 객체를 저장합니다. 이 부분은 당신의 서비스 클래스에 따라 조정이 필요합니다.
+        } else {
+            // 금액이 0 이하라면 예외를 발생시킵니다.
+            throw new IllegalArgumentException("계정의 잔액은 0 이상이어야 합니다.");
+        }
 
         //결제 내역이 들어올 경우 결제내역 먼저 저장
         Payment payment = paymentRepository.save(paymentPostToPayment);

@@ -19,7 +19,7 @@ public class UserPostDto {
     @Email
     private String email;
 
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,15}$",   message = "Password must be at least 8 characters long and contain at least one digit, one upper case letter, one lower case letter, and one special character")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,15}$",   message = "Password must be at least 8 characters long and contain at least one digit, one lower case letter")
     private String password;
 
 

@@ -1,8 +1,7 @@
 package com.The_10th_Finance.domain.getmonthlysum;
 
-import com.The_10th_Finance.accounts.db.Accounts;
-import com.The_10th_Finance.accounts.model.AccountsResponseDto;
-import com.The_10th_Finance.accounts.service.AccountsService;
+import com.The_10th_Finance.accounts.model.AccountsBankResponse;
+import com.The_10th_Finance.accounts.service.AccountBankService;
 import com.The_10th_Finance.error.BusinessLogicException;
 import com.The_10th_Finance.error.ExceptionCode;
 import com.The_10th_Finance.monthlysum.db.MonthlySum;
@@ -28,31 +27,33 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AccountMonthlySumService {
     private final UserService userService;
-    private final AccountsService accountsService;
+    private final AccountBankService accountBankService;
     private final MonthlySumService monthlySumService;
     private final PropertyService propertyService;
 
     private final UserMapper userMapper;
 
 
-    private static List<Long> getAccountIdln(List<AccountsResponseDto> accountsList) {
+    private static List<Long> getAccountIdln(List<AccountsBankResponse> accountsList) {
         return accountsList.stream()
-                .map(AccountsResponseDto::getAccountId)
+                .map(AccountsBankResponse::getAccountId)
                 .collect(Collectors.toList());
     }
-    private static Map<Long, String> getAccountIdToAccountTypeMap(List<AccountsResponseDto> accountsList) {
+    private static Map<Long, String> getAccountIdToAccountTypeMap(List<AccountsBankResponse> accountsList) {
         return accountsList.stream()
-                .collect(Collectors.toMap(AccountsResponseDto::getAccountId, AccountsResponseDto::getAcoountType));
+                .collect(Collectors.toMap(AccountsBankResponse::getAccountId, AccountsBankResponse::getAcoountType));
     }
-    private static BigDecimal getMonthlySum(Map<Long, String> accountsList,List<MonthlySum> monthlySums, BigDecimal[] currentMonthsum, BigDecimal[] previousMonthSum,int currentMonth) {
-        BigDecimal currentTotal=BigDecimal.ZERO,previousTotal=BigDecimal.ZERO;
+    private static BigDecimal getMonthlySum(Map<Long, String> accountsList,List<MonthlySum> monthlySums, BigDecimal[] currentMonthsum, BigDecimal[] previousMonthSum,int currentMonth,BigDecimal[] MonthSum) {
+        BigDecimal currentTotal=BigDecimal.ZERO,previousTotal=BigDecimal.ZERO,currentIncome=BigDecimal.ZERO,currentExpense=BigDecimal.ZERO;
         for (MonthlySum monthlySum : monthlySums) {
             String accountType = accountsList.get(monthlySum.getAccountId());
             int month = monthlySum.getDate().getMonthValue();
 
             // Current month
             if(month == currentMonth) {
-                currentTotal=currentTotal.add(monthlySum.getMonthlyTotal());
+                MonthSum[2]=MonthSum[2].add(monthlySum.getMonthlyTotal());
+                MonthSum[0]=MonthSum[0].add(monthlySum.getMonthlyIncome());
+                MonthSum[1]=MonthSum[1].add(monthlySum.getMonthlyExpense());
                 if (accountType.equals("입출금")) currentMonthsum[0] = currentMonthsum[0].add(monthlySum.getMonthlyTotal());
                 else if (accountType.equals("증권")) currentMonthsum[1] = currentMonthsum[1].add(monthlySum.getMonthlyTotal());
                 else if (accountType.equals("현금")) currentMonthsum[2] = currentMonthsum[2].add(monthlySum.getMonthlyTotal());
@@ -67,7 +68,7 @@ public class AccountMonthlySumService {
                 else throw new BusinessLogicException(ExceptionCode.NOTYPE);
             }
         }
-        return currentTotal.subtract(previousTotal);
+        return MonthSum[2].subtract(previousTotal);
     }
 //    private static void getMonthlySum(List<MonthlySum> monthlySums, BigDecimal[] currentMonthTypes, BigDecimal[] previousMonthTypes,int currentMonth,MonthSummary monthSummary) {
 //        for (MonthlySum monthlySum : monthlySums) {
@@ -120,7 +121,7 @@ public class AccountMonthlySumService {
 
 
     public MonthlyResponseDto makeCacheData(Long userId,int month){
-        List<AccountsResponseDto> accountsList = accountsService.getMyAccount(userId);
+        List<AccountsBankResponse> accountsList = accountBankService.getMyAccountAndBank(userId);
         Map<Long,String> mapping = getAccountIdToAccountTypeMap(accountsList);
         //계좌ID를 리스트화하기
         List<Long> accountId = getAccountIdln(accountsList);
@@ -132,7 +133,8 @@ public class AccountMonthlySumService {
         //Type에 맞게 분류해서 한달 총합 계산하기
         BigDecimal[] currentMonthTypes = {BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
         BigDecimal[] previousMonthTypes = {BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
-        BigDecimal minus = getMonthlySum(mapping,monthlySums, currentMonthTypes,previousMonthTypes,month);
+        BigDecimal[] MonthSum = {BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
+        BigDecimal minus = getMonthlySum(mapping,monthlySums, currentMonthTypes,previousMonthTypes,month,MonthSum);
 
         return MonthlyResponseDto.builder()
                 .accountsList(accountsList)
@@ -140,6 +142,7 @@ public class AccountMonthlySumService {
                 .jungunAccount(currentMonthTypes[1].subtract(previousMonthTypes[1]))
                 .aashAccount(currentMonthTypes[2].subtract(previousMonthTypes[2]))
                 .prviousMinCurrent(minus)
+                .monthSum(MonthSum)
                 .build();
     }
 }

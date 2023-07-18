@@ -1,10 +1,7 @@
 package com.The_10th_Finance.domain.getdailysum;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class DaySummary {
     private LocalDateTime date;
     private BigDecimal income=BigDecimal.ZERO;

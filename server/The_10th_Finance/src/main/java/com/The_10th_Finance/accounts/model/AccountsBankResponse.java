@@ -3,14 +3,13 @@ package com.The_10th_Finance.accounts.model;
 import com.The_10th_Finance.accounts.db.Accounts;
 import lombok.*;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountsResponseDto implements Serializable {
+@Builder
+public class AccountsBankResponse {
     private Long accountId;
 
     private String acoountType;
@@ -21,7 +20,7 @@ public class AccountsResponseDto implements Serializable {
 
     private Long userId;
 
-    private Long bankId;
+    private String bankname;
 
     private String accountNum;
 
