@@ -1,11 +1,14 @@
 import * as S from "./loginSignUpStyled";
 import { styled } from "styled-components";
-import { Input } from "../components/input/Input";
-import { AddButton } from "../components/button/AddButton";
-import { ReactComponent as Google } from "../assets/svg/google.svg";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
+import ReCAPTCHA from "react-google-recaptcha";
+
+import { Input } from "../components/input/Input";
+import { AddButton } from "../components/button/AddButton";
+// import { ReactComponent as Google } from "../assets/svg/google.svg";
+
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { login } from "../redux/loginSlice";
@@ -17,6 +20,12 @@ const Form = styled.form`
   align-items: center;
 `;
 
+const CaptchaBox = styled.div`
+  margin-bottom: 3rem;
+`;
+
+const API_KEY = "6LeeeS0nAAAAAOmWGttGqobyMy0ltORyOnLvIA3H";
+
 export default function LoginContainer() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,6 +33,11 @@ export default function LoginContainer() {
     isEmail: false,
     isPassword: false,
   });
+  const [captchaValue, setCaptchaValue] = useState("");
+  const [captchaSuccess, setCaptchaSuccess] = useState("");
+
+  // console.log(captchaValue);
+
   const dispatch = useDispatch();
   const isLogined = useSelector((state: RootState) => {
     return state.loginSlice.isLogined;
@@ -36,28 +50,58 @@ export default function LoginContainer() {
 
   const handleLogin: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    axios
-      .post("/user/login", {
-        userName: email,
-        password: password,
-      })
-      .then((res) => {
-        const acessToken: string | undefined = res.headers.authorization;
-        const refreshToken: string | undefined = res.headers.refresh;
-        const userId = res.data.userId;
-        if (typeof acessToken === "string" && typeof refreshToken === "string") {
-          dispatch(login({ acessToken, refreshToken }));
-          setLocalStorage("acessToken", acessToken);
-          setLocalStorage("refreshToken", refreshToken);
-          setLocalStorage(userId, userId);
-        } else {
-          window.alert("로그인에 실패하였습니다.");
-        }
-      })
-      .catch((err) => {
-        const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
-        window.alert(errMessage);
-      });
+
+    if (!captchaValue) {
+      window.alert("reCAPTCHA를 완료해 주세요.");
+      return;
+    }
+
+    if (captchaSuccess === "success") {
+      axios
+        .post("/user/login", {
+          userName: email,
+          password: password,
+        })
+        .then((res) => {
+          const acessToken: string | undefined = res.headers.authorization;
+          const refreshToken: string | undefined = res.headers.refresh;
+          const userId = res.data.userId;
+          if (typeof acessToken === "string" && typeof refreshToken === "string") {
+            dispatch(login({ acessToken, refreshToken }));
+            setLocalStorage("acessToken", acessToken);
+            setLocalStorage("refreshToken", refreshToken);
+            setLocalStorage(userId, userId);
+          } else {
+            window.alert("로그인에 실패하였습니다.");
+          }
+        })
+        .catch((err) => {
+          const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
+          window.alert(errMessage);
+        });
+    } else {
+      window.alert("reCAPTCHA 인증에 실패하였습니다. 다시 시도해주세요.");
+    }
+  };
+
+  const handleCaptcha = (value: string | null) => {
+    if (typeof value === "string") {
+      setCaptchaValue(value);
+      axios
+        .post(`/user/captcha?token=${value}`)
+        .then((res) => {
+          console.log(res.data);
+          setCaptchaSuccess(res.data);
+        })
+        .catch((err) => {
+          const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
+          console.error(errMessage);
+        });
+    }
+  };
+
+  const handleCaptchaExpired = () => {
+    setCaptchaSuccess("");
   };
 
   useEffect(() => {
@@ -97,6 +141,8 @@ export default function LoginContainer() {
         <Input
           type="email"
           placeholder="이메일을 입력해주세요."
+          width={70}
+          marginBottom={3}
           value={email}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setEmail(e.target.value);
@@ -110,6 +156,8 @@ export default function LoginContainer() {
         <Input
           type="password"
           placeholder="비밀번호를 입력해주세요."
+          width={70}
+          marginBottom={3}
           value={password}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setPassword(e.target.value);
@@ -120,15 +168,26 @@ export default function LoginContainer() {
             비밀번호는 영문과 숫자 조합, 6자 이상,15자 이하여야 합니다.
           </S.Text>
         )}
-        <AddButton backgroundcolor="yellow" width={95} height={10} borderRadius={10} marginBottom={3}>
-          로그인
-        </AddButton>
+        <CaptchaBox>
+          <ReCAPTCHA sitekey={API_KEY} onChange={handleCaptcha} onExpired={handleCaptchaExpired} />
+        </CaptchaBox>
+        {captchaSuccess === "success" ? (
+          <AddButton backgroundcolor="yellow" width={95} height={10} borderRadius={10} marginBottom={3}>
+            로그인
+          </AddButton>
+        ) : null}
       </Form>
-
-      <AddButton width={95} height={10} borderRadius={10} marginBottom={9}>
-        <Google />
+      {/* <AddButton
+        width={95}
+        height={10}
+        borderRadius={10}
+        marginBottom={9}
+        onClick={() => {
+          handleTest;
+        }}
+      >
         구글아이디로그인
-      </AddButton>
+      </AddButton> */}
       <S.Text
         size={3}
         weight={300}

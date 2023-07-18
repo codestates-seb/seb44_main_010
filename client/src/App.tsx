@@ -5,7 +5,7 @@ import Nav from "../src/components/default/Nav";
 import ContentWithFooter from "./ContentWithFooter";
 import axios from "axios";
 
-axios.defaults.baseURL = "https://b0f6-2406-5900-1009-4081-20b9-b2c7-1dad-3c7f.ngrok-free.app";
+axios.defaults.baseURL = "https://861d-2406-5900-1009-4081-7d39-ee1-c7ed-8353.ngrok-free.app";
 axios.defaults.withCredentials = true;
 
 function App() {

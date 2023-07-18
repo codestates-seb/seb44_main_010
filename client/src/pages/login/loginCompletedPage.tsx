@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as S from "./loginCompletedPageStyled";
 import { AddButton } from "../../components/button/AddButton";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 const LoginCompletedPage: React.FC = () => {
   const [useName, setUseName] = useState("");
@@ -10,7 +10,13 @@ const LoginCompletedPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("/completed").then((res) => setUseName(res.data.userName));
+    axios
+      .get("/completed")
+      .then((res) => setUseName(res.data.userName))
+      .catch((err) => {
+        const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
+        window.alert(errMessage);
+      });
   }, []);
 
   return (
