@@ -8,13 +8,11 @@ import { SummarySumData } from "../../../pages/consumption/summaryPage";
 export const SummaryBox = styled.div`
   width: 50vw;
   height: 60vh;
-  border: 1px solid;
 `;
 
 export const ChartBox = styled.div`
   width: 50vw;
   height: 45vh;
-  border: 1px solid;
   display: flex;
   flex-direction: row;
   justify-content: center;
