@@ -1,10 +1,12 @@
-import { useState } from 'react';
-import BudgetInput from './BudgetInput';
+import { useState } from "react";
+import BudgetInput from "./BudgetInput";
+import { SummarySumDataProps } from "../card/C.Summary/SummaryBottom";
+import BudgetChart from "../chart/BudgetChart";
 
-const BudgetInputBox = () => {
+const BudgetInputBox = ({ summarySumData }: SummarySumDataProps) => {
   const [savedBudget, setSavedBudget] = useState(0);
 
-  const handleSaveBudget = (budget:number) => {
+  const handleSaveBudget = (budget: number) => {
     setSavedBudget(budget);
   };
 
@@ -13,6 +15,7 @@ const BudgetInputBox = () => {
       <h1>예산 입력</h1>
       <BudgetInput onSave={handleSaveBudget} />
       <p>저장된 예산: {savedBudget}원</p>
+      <BudgetChart summarySumData={summarySumData} savedBudget={savedBudget}/>
     </div>
   );
 };

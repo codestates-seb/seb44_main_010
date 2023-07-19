@@ -8,8 +8,12 @@ import {
 } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
-import { CategoryData } from "../../pages/consumption/summaryPage";
 
+const Main = styled.div`
+  display: flex;
+  align-items: center;
+  width: 50%;
+`;
 const options: ChartOptions<"doughnut"> = {
   plugins: {
     legend: {
@@ -52,49 +56,30 @@ const options: ChartOptions<"doughnut"> = {
 };
 
 export const DoughnutContainer = styled.div`
-  width: 65rem;
-  height: 65rem;
+  width: 55rem;
+  height: 55rem;
   margin: 0 auto;
+  margin-top: 10rem;
 `;
 
-export interface CategoryDataProps {
-  categoryData: CategoryData;
-}
-
-export default function ExpenseChart({ categoryData }: CategoryDataProps) {
+export default function AssetDoughnutChart() {
   const data = {
-    labels: ["식비", "주거", "쇼핑", "문화", "교통", "의료", "기타"],
+    labels: ["입출금", "증권", "기타"],
     datasets: [
       {
         label: "test",
-        data: [
-          categoryData.categoryexpenseSumsMap.식비,
-          categoryData.categoryexpenseSumsMap.주거,
-          categoryData.categoryexpenseSumsMap.쇼핑,
-          categoryData.categoryexpenseSumsMap.문화,
-          categoryData.categoryexpenseSumsMap.교통,
-          categoryData.categoryexpenseSumsMap.의료,
-          categoryData.categoryexpenseSumsMap.기타,
-        ],
-        backgroundColor: [
-          "rgb(168, 216, 234)",
-          "rgb(170, 150, 218)",
-          "rgb(252, 186, 211)",
-          "rgb(255, 255, 210)",
-          "rgb(120, 193, 243)",
-          "rgb(155, 232, 216)",
-          "rgb(248, 253, 207)",
-        ],
-        borderWidth: 1,
+        data: [40, 20, 35],
+        backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+        borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
+        circumference: 180,
+        rotation: 270,
       },
     ],
   };
 
   return (
-    <>
-      <DoughnutContainer>
-        <Doughnut data={data} options={options} />
-      </DoughnutContainer>
-    </>
+    <Main>
+      <Doughnut data={data} options={options} />
+    </Main>
   );
 }

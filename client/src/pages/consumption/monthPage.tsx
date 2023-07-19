@@ -20,7 +20,7 @@ export interface MonthSumData {
 
 export default function MonthPage() {
   
-  const [userId, setUserId] = useState(1);
+  //const [userId, setUserId] = useState(1);
   const [years, setYears] = useState(2023);
   const [month, setMonth] = useState(7);
   const [monthConsumptionData, setMonthConsumptionData] = useState([]);
@@ -37,12 +37,10 @@ export default function MonthPage() {
 // 1. 서버에서 준 데이터 그대로
 useEffect(() => {
   const handleFetchData = () => {
-    monthRender(userId, month) 
+    monthRender(1, month) 
       .then((response) => {
-        //console.log(response.data)
-        // 데이터 처리 로직
-        //setMonthConsumptionData(response.data.data);
-        //setMonthSumData(response.data.data.daySummary); //monthSummary로 가나?
+        setMonthConsumptionData(response.data.data);
+        setMonthSumData(response.data.data.monthSummary); 
       })
       .catch((error) => {
         // 에러 처리 로직
@@ -50,7 +48,7 @@ useEffect(() => {
       });
   };
   handleFetchData();
-}, [monthConsumptionData, monthSumData, month, userId]); 
+}, [month]); 
 
  //2. 날짜 기준으로 데이터 그룹핑
  useEffect(() => {

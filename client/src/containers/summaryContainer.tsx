@@ -3,6 +3,7 @@ import SummaryTop from "../components/card/C.Summary/SummaryTop";
 import SummaryDetail from "../components/card/C.Summary/SummaryDetail";
 import SummaryBottom from "../components/card/C.Summary/SummaryBottom";
 import { SummarySumData } from "../pages/consumption/summaryPage";
+import { CategoryData } from "../pages/consumption/summaryPage";
 
 export const ConsumptionBox = styled.div`
   width: 50vw;
@@ -24,7 +25,7 @@ export interface MonthData {
 }
 
 export interface SummaryContainerProps {
-  JulyData: MonthData[];
+  categoryData:CategoryData;
   month: number;
   setMonth: React.Dispatch<React.SetStateAction<number>>;
   years: number;
@@ -33,18 +34,18 @@ export interface SummaryContainerProps {
 }
 
 export default function SummaryContainer({
-  JulyData,
+  categoryData,
   month,
   setMonth,
   years,
   setYears,
-  summarySumData
+  summarySumData,
 }: SummaryContainerProps) {
   return (
     <ConsumptionBox>
       <SummaryTop years={years} setYears={setYears} month={month} setMonth={setMonth} />
-      <SummaryDetail JulyData={JulyData} summarySumData={summarySumData}/>
-      <SummaryBottom />
+      <SummaryDetail categoryData={categoryData} summarySumData={summarySumData}/>
+      <SummaryBottom summarySumData={summarySumData}/>
     </ConsumptionBox>
   );
 }

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { CalendarSumData } from "../../../pages/consumption/calendarPage";
 
 export const EmptyBottomContainer = styled.div`
   width: 44vw;
@@ -71,25 +72,25 @@ export const SumContainer = styled.div`
   }
 `;
 interface CalendarDetailProps {
-  month: number;
+  calendarSumData: CalendarSumData;
 }
 
-export default function CalendarBottom({month}:CalendarDetailProps){
+export default function CalendarBottom({calendarSumData}:CalendarDetailProps){
   
   return (
      (
         <BottomContainer>
           <IncomeContainer>
             <div className="수입">수입</div>
-            <div className="수입액">10000</div>
+            <div className="수입액">{calendarSumData.income}</div>
           </IncomeContainer>
           <SpenditureContainer>
             <div className="지출">지출</div>
-            <div className="지출액">10000</div>
+            <div className="지출액">{calendarSumData.expense}</div>
           </SpenditureContainer>
           <SumContainer>
             <div className="합계">합계</div>
-            <div className="합계액">0</div>
+            <div className="합계액">{calendarSumData.total}</div>
           </SumContainer>
           </BottomContainer>
       )

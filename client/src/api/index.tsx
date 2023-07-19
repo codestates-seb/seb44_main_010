@@ -3,13 +3,13 @@
 import axios from "axios";
 
 type DayConsumptionData = {
-  paymentType: string;
-  accountType: string | null;
-  purpose: string;
-  amount: number | null;
   paymentTime: string | null;
+  paymentType: string | null;
+  amount: number | null;
+  category:string | null;
+  purpose: string | null;
+  accountId: number | null;
 };
-//입력 데이터 속성도 수정해야함
 
 //소비페이지 일일입력창 (POST)
 export const dayUpload = (dayConsumptiondata: DayConsumptionData) => {
@@ -48,13 +48,24 @@ export const monthRender = (userId: number, Month: number) => {
   );
 };
 
-
-//소비페이지 캘린더 상세내역 가짜렌더링(GET)
-export const falseCalendarRender = () =>{
-  return axios.get(`http://localhost:3000/calendarDaySummary`)
+//소비페이지 월별합계 렌더링(GET)
+export const monthSum = (userId: number, Month: number) =>{
+  return axios.get(`/consumption/profile/${userId}/${Month}`)
 }
 
-//소비페이지 요약 상세내역 가짜렌더링(GET)
-export const falseSummaryRender = () =>{
-  return axios.get(`http://localhost:3000/monthdata`)
+
+//소비페이지 캘린더상세내역 렌더링(GET)
+export const calendarRender = (userId: number, Month: number) =>{
+  return axios.get(`/consumption/calender/${userId}/${Month}`)
 }
+
+//소비페이지 요약상세내역 렌더링(GET)
+export const summaryRender = (userId: number, Month: number) =>{
+  return axios.get(`/consumption/category/${userId}/${Month}`)
+}
+
+
+// 보내는 모든 요청 헤더에 아래 내용을 보내기
+/*
+Authorization:Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoia2trZkBnbWFpbC5jb20iLCJzdWIiOiJra2tmQGdtYWlsLmNvbSIsImlhdCI6MTY4OTc1MTIzNSwiZXhwIjoxNjg5NzUxMjk1fQ.lmd1bLFPFc2EPQZkL5rxnIfQgHZLC8_yHPjy6C3zgRNcvk31I8Vof3yfTFIWF8G-
+*/

@@ -8,7 +8,16 @@ import {
   SideButtonsContainer,
 } from "../../pages/consumption/calendarPageStyled";
 import { useState, useEffect } from "react";
-import { falseSummaryRender } from "../../api/index";
+import { summaryRender } from "../../api/index";
+
+export interface CategoryData {
+  categoryincomeSumsMap: { [category: string]: number };
+  categoryexpenseSumsMap: { [category: string]: number };
+}
+
+export interface SummaryChartdata {
+  SummaryChartdata: CategoryData;
+}
 
 export interface SummarySumData {
   date: string;
@@ -20,7 +29,11 @@ export interface SummarySumData {
 export default function SummaryPage() {
   const [years, setYears] = useState<number>(2023);
   const [month, setMonth] = useState<number>(7);
-  const [JulyData, setJulyData] = useState([]);
+  const [categoryData, setCategoryData] = useState<CategoryData>({
+    categoryincomeSumsMap: {},
+    categoryexpenseSumsMap: {},
+  });
+  
   const [summarySumData, setSummarySumData] = useState<SummarySumData>({
     date: "",
     income: 0,
@@ -29,13 +42,13 @@ export default function SummaryPage() {
   });
   useEffect(() => {
     const handleFetchData = () => {
-      falseSummaryRender()
+      summaryRender(1, month)
         .then((response) => {
           // 데이터 처리 로직
           //console.log(response.data);
           //console.log(response.data.data);
-          setJulyData(response.data);
-          //setCalendarSumData(response.data.data.daySummary);
+          setCategoryData(response.data.SummaryChartdata);
+          setSummarySumData(response.data.data.daySummary);
         })
         .catch((error) => {
           // 에러 처리 로직
@@ -43,7 +56,7 @@ export default function SummaryPage() {
         });
     };
     handleFetchData();
-  }, []);
+  }, [month]);
 
   return (
     <DayPageContainer>
@@ -58,7 +71,7 @@ export default function SummaryPage() {
             setYears={setYears}
             month={month}
             setMonth={setMonth}
-            JulyData={JulyData}
+            categoryData={categoryData}
             summarySumData={summarySumData}
           />
         </Grid>
