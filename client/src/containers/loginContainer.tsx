@@ -24,7 +24,7 @@ const CaptchaBox = styled.div`
   margin-bottom: 3rem;
 `;
 
-const API_KEY = "6LeeeS0nAAAAAOmWGttGqobyMy0ltORyOnLvIA3H";
+const API_KEY = import.meta.env.VITE_RECAPTCHA_API_KEY;
 
 export default function LoginContainer() {
   const [email, setEmail] = useState("");
