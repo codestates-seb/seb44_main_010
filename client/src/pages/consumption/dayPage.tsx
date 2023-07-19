@@ -21,7 +21,7 @@ export interface DaySumData {
 export default function DayPage() {
   
   const [showInput, setShowInput] = useState(false);
-  const [userId, setUserId] = useState(1);
+  //const [userId, setUserId] = useState(1);
   const [years, setYears] = useState(2023);
   const [month, setMonth] = useState(7);
   const [date, setDate] = useState(1);
@@ -36,7 +36,7 @@ export default function DayPage() {
 // 소비내역이 추가되면은 오른쪽 상세내역이 다시 렌더링되어야 함
 useEffect(() => {
   const handleFetchData = () => {
-     dayRender(userId, month, date)
+     dayRender(1, month, date)
       .then((response) => {
         // 데이터 처리 로직
         //console.log(response.data);
@@ -50,7 +50,7 @@ useEffect(() => {
       });
   };
   handleFetchData();
-}, []); //[dayConsumptionData, daySumData, date, month, userId], 입력창에 추가를 하면, 다시 렌더링이 될 수 있도록
+}, [date, month]); 
 
   return (
     <DayPageContainer>

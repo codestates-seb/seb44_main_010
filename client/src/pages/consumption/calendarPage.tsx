@@ -8,7 +8,7 @@ import {
   SideButtonsContainer,
 } from "../../pages/consumption/calendarPageStyled";
 import { useState, useEffect } from "react";
-import { falseCalendarRender } from "../../api/index";
+import { calendarRender } from "../../api/index";
 import GraphContainer from "../../containers/graphContainer";
 import { RightContainer } from "./calendarPageStyled";
 
@@ -30,13 +30,13 @@ export default function CalenderPage() {
   });
   useEffect(() => {
     const handleFetchData = () => {
-      falseCalendarRender()
+      calendarRender(1,month)
         .then((response) => {
           // 데이터 처리 로직
           //console.log(response.data);
           //console.log(response.data.data);
-          setJulyData(response.data);
-          //setCalendarSumData(response.data.data.daySummary);
+          setJulyData(response.data.calendarDaySummary);
+          setCalendarSumData(response.data.data.daySummary);
         })
         .catch((error) => {
           // 에러 처리 로직
@@ -44,7 +44,7 @@ export default function CalenderPage() {
         });
     };
     handleFetchData();
-  }, []);
+  }, [month]);
 
   return (
     <DayPageContainer>
@@ -59,6 +59,7 @@ export default function CalenderPage() {
               JulyData={JulyData}
               month={month}
               setMonth={setMonth}
+              calendarSumData={calendarSumData}
             />
             <GraphContainer />
           </RightContainer>

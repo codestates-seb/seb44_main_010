@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { MonthData } from "../../../containers/summaryContainer";
 import IncomeChart from "../../chart/IncomeChart";
 import ExpenseChart from "../../chart/ExpenseChart";
 import SumBox from "./SumBox";
 import { SummarySumData } from "../../../pages/consumption/summaryPage";
+import { CategoryData } from "../../../pages/consumption/summaryPage";
 
 export const SummaryBox = styled.div`
   width: 50vw;
@@ -20,16 +20,18 @@ export const ChartBox = styled.div`
 `;
 
 export interface SummaryDetailProps {
-  JulyData: MonthData[];
+  categoryData :CategoryData;
   summarySumData: SummarySumData;
 }
 
-export default function SummaryDetail({ JulyData, summarySumData }: SummaryDetailProps) {
+export default function SummaryDetail({ categoryData, summarySumData }: SummaryDetailProps) {
+  
+  
   return (
     <SummaryBox>
       <ChartBox>
-        <IncomeChart />
-        <ExpenseChart />
+        <IncomeChart categoryData={categoryData}/>
+        <ExpenseChart categoryData={categoryData}/>
       </ChartBox>
       <SumBox summarySumData={summarySumData}/>
     </SummaryBox>

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Select, { ValueType } from "react-select";
+import Select from "react-select";
 
 const TitleContainer = styled.div`
   width: 100%;
@@ -44,6 +44,10 @@ interface MonthOption {
     value: number;
     label: string;
   }
+
+  type ValueType<OptionType, IsMulti = false> = IsMulti extends true
+  ? OptionType[]
+  : OptionType | null;
   
 export default function CalendarTop({ month, setMonth }: CalendarTopProps) {
 

@@ -1,7 +1,7 @@
 import styled from "styled-components";
-//import BudgetChart from "../../chart/BudgetChart";
 import { TextStyled } from "../../default/TextStyled";
 import BudgetInputBox from "../../input/BudgetInputBox";
+import { SummarySumData } from "../../../pages/consumption/summaryPage";
 
 export const BottomBox = styled.div`
   width: 50vw;
@@ -12,7 +12,11 @@ export const Top = styled.div`
   flex-direction: row;
 `;
 
-export default function SummaryBottom() {
+export interface SummarySumDataProps{
+ summarySumData:SummarySumData;
+}
+
+export default function SummaryBottom({summarySumData}:SummarySumDataProps) {
 
   return (
     <BottomBox>
@@ -20,7 +24,7 @@ export default function SummaryBottom() {
         <TextStyled size={7} weight={500} color={"#414141"}>
           예산
         </TextStyled>
-        <BudgetInputBox />
+        <BudgetInputBox summarySumData={summarySumData}/>
       </Top>
     </BottomBox>
   );
