@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import 소비배경 from "../../../assets/소비배경.svg";
+import 소비배경 from "../../../assets/소비배경.svg";
 
 const Main = styled.div`
   display: flex;
@@ -49,4 +49,3 @@ export default function ConsumptionHeader() {
     </Main>
   );
 }
-
