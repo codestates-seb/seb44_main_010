@@ -33,7 +33,7 @@ const LoginCompletedPage: React.FC = () => {
     <S.Main>
       <S.Container>
         <S.Title fontsize={20} fontweight={700} color="black">
-          채명수
+          {/* 채명수 */}
           {useName}
           <span>님,</span>
         </S.Title>
