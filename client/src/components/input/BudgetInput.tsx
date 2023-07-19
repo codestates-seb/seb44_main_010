@@ -1,10 +1,20 @@
-import { useState } from "react";
+import styled from "styled-components";
+import React, { useState } from "react";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 interface BudgetInputProps {
+  placeholder: string;
   onSave: (budget: number) => void;
 }
 
-const BudgetInput: React.FC<BudgetInputProps> = ({ onSave }) => {
+export const Container = styled.div`
+  display:flex;
+  flex-direction:row;
+
+`
+
+const BudgetInput: React.FC<BudgetInputProps> = ({ placeholder, onSave }) => {
   const [budget, setBudget] = useState<number>(0);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,15 +27,17 @@ const BudgetInput: React.FC<BudgetInputProps> = ({ onSave }) => {
   };
 
   return (
-    <div>
-      <input
+    <Container>
+      <TextField
         type="number"
         value={budget}
         onChange={handleInputChange}
-        placeholder="예산을 입력하세요"
+        placeholder={placeholder}
       />
-      <button onClick={handleSaveClick}>등록</button>
-    </div>
+      <Button variant="contained" color="primary" onClick={handleSaveClick}>
+        등록
+      </Button>
+    </Container>
   );
 };
 

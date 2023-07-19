@@ -8,7 +8,7 @@ import {
   SideButtonsContainer,
 } from "../../pages/consumption/calendarPageStyled";
 import { useState, useEffect } from "react";
-import { summaryRender } from "../../api/index";
+import { summaryRender ,monthSumRender} from "../../api/index";
 
 export interface CategoryData {
   categoryincomeSumsMap: { [category: string]: number };
@@ -19,12 +19,7 @@ export interface SummaryChartdata {
   SummaryChartdata: CategoryData;
 }
 
-export interface SummarySumData {
-  date: string;
-  income: number;
-  expense: number;
-  total: number;
-}
+export type SummarySumData = [number, number, number];
 
 export default function SummaryPage() {
   const [years, setYears] = useState<number>(2023);
@@ -34,12 +29,8 @@ export default function SummaryPage() {
     categoryexpenseSumsMap: {},
   });
   
-  const [summarySumData, setSummarySumData] = useState<SummarySumData>({
-    date: "",
-    income: 0,
-    expense: 0,
-    total: 0,
-  });
+  const [summarySumData, setSummarySumData] = useState<SummarySumData>([0,0,0]);
+
   useEffect(() => {
     const handleFetchData = () => {
       summaryRender(1, month)
@@ -48,7 +39,6 @@ export default function SummaryPage() {
           //console.log(response.data);
           //console.log(response.data.data);
           setCategoryData(response.data.SummaryChartdata);
-          setSummarySumData(response.data.data.daySummary);
         })
         .catch((error) => {
           // 에러 처리 로직
@@ -57,6 +47,19 @@ export default function SummaryPage() {
     };
     handleFetchData();
   }, [month]);
+
+  useEffect(()=>{
+    const handleSumData = ()=>{
+      monthSumRender(1,month)
+      .then((response)=>{
+        setSummarySumData(response.data.monthSum);
+      })
+      .catch((error)=>{
+        console.log(error);
+      })
+    };
+    handleSumData();
+  })
 
   return (
     <DayPageContainer>
