@@ -11,26 +11,29 @@ const LoginCompletedPage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  // 로그인 유무에 따라서 페이지가 나올지 안나올지(?)
   const isLogin = useSelector((state: RootState) => {
     return state.loginSlice.isLogined;
   });
 
   useEffect(() => {
-    axios
-      .get("/completed")
-      .then((res) => setUseName(res.data.userName))
-      .catch((err) => {
-        const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
-        window.alert(errMessage);
-      });
-  }, []);
+    if (!isLogin) {
+      navigate("/");
+    } else {
+      axios
+        .get("/completed")
+        .then((res) => setUseName(res.data.userName))
+        .catch((err) => {
+          const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
+          window.alert(errMessage);
+        });
+    }
+  }, [isLogin, navigate]);
 
   return (
     <S.Main>
       <S.Container>
         <S.Title fontsize={20} fontweight={700} color="black">
-          채명수
+          {/* 채명수 */}
           {useName}
           <span>님,</span>
         </S.Title>
