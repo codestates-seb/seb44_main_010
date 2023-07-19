@@ -96,8 +96,8 @@ export default function SignUpContainer() {
     }
   };
 
-  console.log(confirm.value);
-  console.log(confirm.check);
+  // console.log(confirm.value);
+  // console.log(confirm.check);
 
   const handleSignUp: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
