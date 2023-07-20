@@ -4,7 +4,7 @@ export const AssetPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 19rem;
+  margin-top: 12rem;
   margin-bottom: 19rem;
 `;
 

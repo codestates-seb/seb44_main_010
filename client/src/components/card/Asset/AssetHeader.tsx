@@ -10,10 +10,12 @@ const Main = styled.div`
 `;
 
 const AssetHeaderBox = styled.div`
-  height: 15vh;
-  width: 100vw;
+  height: 36rem;
+  width: 384rem;
   background-image: url(${자산배경});
-  background-size: contain;
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
 `;
