@@ -12,14 +12,14 @@ const Main = styled.div`
 `;
 
 const AssetHeaderBox = styled.div`
-  height: 15vh; /* Try increasing the height if needed */
+  height: 36rem;
+  width: 384rem;
   background-image: url(${자산배경});
   background-position: center;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
-  background-size: contain; /* Keep only one background-size property */
   display: flex;
   align-items: center;
-  border: 1px solid;
 `;
 
 const WordsContainer = styled.div`
