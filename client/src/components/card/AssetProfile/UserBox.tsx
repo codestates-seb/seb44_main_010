@@ -1,4 +1,6 @@
-import {styled} from "styled-components";
+import { useSelector } from "react-redux";
+import { styled } from "styled-components";
+import { RootState } from "../../../redux/store";
 
 const Main = styled.div`
   display: flex;
@@ -45,12 +47,17 @@ const Text = styled.div`
 `;
 
 export default function UserBox() {
+  const profileName = useSelector((state: RootState) => {
+    return state.proFile.data.userResponseDto.name;
+  });
+  // const accountsList = profileName?.accountsList;
+  // console.log(profileName);
   return (
     <Main>
       <UserContainer>
         <UserImg>프로필 사진</UserImg>
         <Title>
-          <UserName>OOO님</UserName>
+          <UserName>{profileName}님</UserName>
           <Text>좋은 하루 되세요!</Text>
         </Title>
       </UserContainer>
