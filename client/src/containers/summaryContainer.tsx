@@ -7,7 +7,7 @@ import { CategoryData } from "../pages/consumption/summaryPage";
 
 export const ConsumptionBox = styled.div`
   width: 50vw;
-  height: 100vh;
+  height: 110vh;
   border: 1px solid #dddddd;
   display: flex;
   flex-direction: column;

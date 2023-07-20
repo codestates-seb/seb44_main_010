@@ -80,20 +80,20 @@ export default function SumBox({
   summarySumData: SummarySumData;
 }) {
   return (
-    <Container key={summarySumData.date}>
+    <Container>
       <SmallContainer>
         <IncomeContainer>
           <div className="수입">수입</div>
-          <div className="수입액">{summarySumData.income}</div>
+          <div className="수입액">{summarySumData[0]}</div>
         </IncomeContainer>
         <SpenditureContainer>
           <div className="지출">지출</div>
-          <div className="지출액">{summarySumData.expense}</div>
+          <div className="지출액">{summarySumData[1]}</div>
         </SpenditureContainer>
       </SmallContainer>
       <SumContainer>
         <div className="합계">합계</div>
-        <div className="합계액">{summarySumData.total}</div>
+        <div className="합계액">{summarySumData[2]}</div>
       </SumContainer>
     </Container>
   );

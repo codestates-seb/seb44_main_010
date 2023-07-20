@@ -49,19 +49,31 @@ export const monthRender = (userId: number, Month: number) => {
 };
 
 //소비페이지 월별합계 렌더링(GET)
-export const monthSum = (userId: number, Month: number) =>{
-  return axios.get(`/consumption/profile/${userId}/${Month}`)
+export const monthSumRender = (userId: number, Month: number) =>{
+  return axios.get(`/consumption/profile/${userId}/${Month}`,{
+    headers: {
+      "ngrok-skip-browser-warning": true,
+    },
+  })
 }
 
 
 //소비페이지 캘린더상세내역 렌더링(GET)
 export const calendarRender = (userId: number, Month: number) =>{
-  return axios.get(`/consumption/calender/${userId}/${Month}`)
+  return axios.get(`/consumption/calender/${userId}/${Month}`,{
+    headers: {
+      "ngrok-skip-browser-warning": true,
+    },
+  })
 }
 
 //소비페이지 요약상세내역 렌더링(GET)
 export const summaryRender = (userId: number, Month: number) =>{
-  return axios.get(`/consumption/category/${userId}/${Month}`)
+  return axios.get(`/consumption/category/${userId}/${Month}`,{
+    headers: {
+      "ngrok-skip-browser-warning": true,
+    },
+  })
 }
 
 

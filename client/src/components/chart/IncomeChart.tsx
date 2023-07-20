@@ -78,7 +78,7 @@ export default function IncomeChart({ categoryData }:CategoryDataProps) {
           "rgb(252, 227, 138)",
           "rgb(149, 225, 211)",
         ],
-        borderWidth: 1,
+        borderWidth: 2,
       },
     ],
   };

@@ -2,22 +2,20 @@ import { Bar } from 'react-chartjs-2';
 import { SummarySumData } from '../../pages/consumption/summaryPage';
 
 export interface BudgetChartProps {
-  summarySumData:SummarySumData;
-  savedBudget: number,
+  summarySumData: SummarySumData;
+  savedBudget: number;
 }
 
-const BudgetChart = ({ summarySumData ,savedBudget }:BudgetChartProps) => {
-  
-
+const BudgetChart = ({ summarySumData, savedBudget }: BudgetChartProps) => {
   const chartData = {
-    labels: ['예산', '지출'],
+    labels: ['예산 (만원)', '지출 (만원)'],
     datasets: [
       {
         label: '예산 대비 지출',
-        data: [summarySumData.expense, savedBudget],
+        data: [savedBudget, summarySumData.expense],
         backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 99, 132, 0.6)'],
         borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
-        borderWidth: 1,
+        borderWidth: 2,
       },
     ],
   };
@@ -30,7 +28,7 @@ const BudgetChart = ({ summarySumData ,savedBudget }:BudgetChartProps) => {
       },
     },
   };
-  
+
   return <Bar data={chartData} options={chartOptions} />;
 };
 

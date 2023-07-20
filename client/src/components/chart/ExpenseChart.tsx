@@ -85,7 +85,7 @@ export default function ExpenseChart({ categoryData }: CategoryDataProps) {
           "rgb(155, 232, 216)",
           "rgb(248, 253, 207)",
         ],
-        borderWidth: 1,
+        borderWidth: 2,
       },
     ],
   };
