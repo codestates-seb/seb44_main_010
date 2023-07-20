@@ -1,12 +1,13 @@
 import { Bar } from "react-chartjs-2";
-import { SummarySumData } from "../../pages/consumption/summaryPage";
+
+export type SummarySumData = [number, number, number];
 
 export interface BudgetChartProps {
   summarySumData: SummarySumData;
   savedBudget: number;
 }
 
-const BudgetChart = ({ summarySumData, savedBudget }: BudgetChartProps) => {
+export default function BudgetChart({ summarySumData, savedBudget }: BudgetChartProps){
   const chartData = {
     labels: ["예산 (만원)", "지출 (만원)"],
     datasets: [
@@ -32,6 +33,4 @@ const BudgetChart = ({ summarySumData, savedBudget }: BudgetChartProps) => {
   };
 
   return <Bar data={chartData} options={chartOptions} />;
-};
-
-export default BudgetChart;
+}

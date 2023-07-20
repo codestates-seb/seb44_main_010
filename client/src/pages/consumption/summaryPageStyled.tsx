@@ -17,7 +17,7 @@ export const Grid = styled.div`
 export const ContentContainer = styled.div`
 display:flex;
 flex-direction:row;
-margin-top: 17vh;
+margin-top: 25rem;
 position: relative; // 부모 컨테이너를 기준으로 position 설정
 `;
 

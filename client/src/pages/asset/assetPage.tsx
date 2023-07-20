@@ -12,8 +12,9 @@ import AddCash from "../../components/card/Asset/AddCash";
 
 export default function AssetPage() {
   return (
+    <>
+    <AssetHeader />
     <S.AssetPageContainer>
-      <AssetHeader />
       <S.ContentContainer>
         <AssetProfileContainer />
         <S.Grid>
@@ -35,5 +36,6 @@ export default function AssetPage() {
         </S.Grid>
       </S.ContentContainer>
     </S.AssetPageContainer>
+    </>
   );
 }

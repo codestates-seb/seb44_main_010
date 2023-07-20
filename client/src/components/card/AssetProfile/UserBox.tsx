@@ -15,7 +15,6 @@ const UserContainer = styled.div`
   display: flex;
   justify-content: space-around;
   width: 20vw;
-  margin: 5rem;
   height: 15vh;
   border: 1px solid;
 `;

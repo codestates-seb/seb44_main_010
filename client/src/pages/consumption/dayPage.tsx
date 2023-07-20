@@ -19,7 +19,6 @@ export interface DaySumData {
 }
 
 export default function DayPage() {
-  
   const [showInput, setShowInput] = useState(false);
   //const [userId, setUserId] = useState(1);
   const [years, setYears] = useState(2023);
@@ -30,57 +29,61 @@ export default function DayPage() {
     date: "",
     income: 0,
     expense: 0,
-    total: 0
+    total: 0,
   });
 
-// 소비내역이 추가되면은 오른쪽 상세내역이 다시 렌더링되어야 함
-useEffect(() => {
-  const handleFetchData = () => {
-     dayRender(1, month, date)
-      .then((response) => {
-        // 데이터 처리 로직
-        //console.log(response.data);
-        //console.log(response.data.data);
-        setDayConsumptionData(response.data.data.paymentResponses);
-        setDaySumData(response.data.data.daySummary);
-      })
-      .catch((error) => {
-        // 에러 처리 로직
-        console.log(error);
-      });
-  };
-  handleFetchData();
-}, [date, month]); 
+  // 소비내역이 추가되면은 오른쪽 상세내역이 다시 렌더링되어야 함
+  useEffect(() => {
+    const handleFetchData = () => {
+      dayRender(1, month, date)
+        .then((response) => {
+          // 데이터 처리 로직
+          //console.log(response.data);
+          //console.log(response.data.data);
+          setDayConsumptionData(response.data.data.paymentResponses);
+          setDaySumData(response.data.data.daySummary);
+        })
+        .catch((error) => {
+          // 에러 처리 로직
+          console.log(error);
+        });
+    };
+    handleFetchData();
+  }, [date, month]);
 
   return (
-    <DayPageContainer>
+    <>
       <ConsumptionHeader />
-      <ContentContainer>
-        <Grid>
-          {showInput ? (
-            <InputContainer />
-          ) : (
-            <div style={{ width: "25vw", height: "68vh", border: "1px solid" }}>
-              자산프로필
-            </div>
-          )}
-          <DayConsumptionContainer
-            showInput={showInput}
-            setShowInput={setShowInput}
-            years={years}
-            month={month}
-            date={date}
-            setYears={setYears}
-            setMonth={setMonth}
-            setDate={setDate}
-            dayConsumptionData={dayConsumptionData}
-            daySumData={daySumData}
-          />
-        </Grid>
-        <SideButtonsContainer>
-          <SideButtons />
-        </SideButtonsContainer>
-      </ContentContainer>
-    </DayPageContainer>
+      <DayPageContainer>
+        <ContentContainer>
+          <Grid>
+            {showInput ? (
+              <InputContainer />
+            ) : (
+              <div
+                style={{ width: "25vw", height: "68vh", border: "1px solid" }}
+              >
+                자산프로필
+              </div>
+            )}
+            <DayConsumptionContainer
+              showInput={showInput}
+              setShowInput={setShowInput}
+              years={years}
+              month={month}
+              date={date}
+              setYears={setYears}
+              setMonth={setMonth}
+              setDate={setDate}
+              dayConsumptionData={dayConsumptionData}
+              daySumData={daySumData}
+            />
+          </Grid>
+          <SideButtonsContainer>
+            <SideButtons />
+          </SideButtonsContainer>
+        </ContentContainer>
+      </DayPageContainer>
+    </>
   );
 }
