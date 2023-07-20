@@ -82,15 +82,15 @@ export default function CalendarBottom({calendarSumData}:CalendarDetailProps){
         <BottomContainer>
           <IncomeContainer>
             <div className="수입">수입</div>
-            <div className="수입액">{calendarSumData.income}</div>
+            <div className="수입액">{calendarSumData[0]}</div>
           </IncomeContainer>
           <SpenditureContainer>
             <div className="지출">지출</div>
-            <div className="지출액">{calendarSumData.expense}</div>
+            <div className="지출액">{calendarSumData[1]}</div>
           </SpenditureContainer>
           <SumContainer>
             <div className="합계">합계</div>
-            <div className="합계액">{calendarSumData.total}</div>
+            <div className="합계액">{calendarSumData[2]}</div>
           </SumContainer>
           </BottomContainer>
       )

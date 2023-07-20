@@ -7,13 +7,13 @@ const Main = styled.div`
   align-items: center;
   position: fixed;
   z-index: 5;
-  margin: 0;
-  padding: 0;
+  margin-top: -20rem; //
+  max-height: 10rem;
 `;
 
 const AssetHeaderBox = styled.div`
   height: 36rem;
-  width: 384rem;
+  width: 100vw;
   background-image: url(${자산배경});
   background-position: center;
   background-size: 100% 100%;
@@ -26,7 +26,8 @@ const WordsContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: 10vw;
+  margin-left: 30rem;
+  margin-top: 10rem;
 
   .자산 {
     font-size: 7rem;
