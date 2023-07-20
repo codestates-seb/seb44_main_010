@@ -5,6 +5,7 @@ const Main = styled.div`
   justify-content: center;
   align-items: center;
   width: 90%;
+  height: 10vh;
 `;
 
 const TotalContainer = styled.div`
@@ -21,14 +22,15 @@ const Title = styled.div`
 `;
 
 const TotalName = styled.div`
-  font-size: 7rem;
+  font-size: 5rem;
   font-weight: 600;
   text-align: center;
   color: #3f74b2;
+  margin-bottom: 2rem;
 `;
 
 const TotalAsset = styled.div`
-  font-size: 7rem;
+  font-size: 5rem;
   font-weight: 600;
   color: #414141;
 `;
