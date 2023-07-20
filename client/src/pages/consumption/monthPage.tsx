@@ -71,8 +71,9 @@ useEffect(() => {
 
 
   return (
+    <>
+    <ConsumptionHeader />
     <MonthPageContainer>
-      <ConsumptionHeader />
       <ContentContainer>
         <Grid>
             <div style={{ width: "25vw", height: "68vh", border: "1px solid" }}>
@@ -93,5 +94,6 @@ useEffect(() => {
         </SideButtonsContainer>
       </ContentContainer>
     </MonthPageContainer>
+    </>
   );
 }

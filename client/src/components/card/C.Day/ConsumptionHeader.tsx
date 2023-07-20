@@ -7,14 +7,16 @@ const Main = styled.div`
   align-items: center;
   position: fixed;
   z-index: 5;
+  max-height: 10rem;
 `;
 
 const ComsumptionHeaderBox = styled.div`
-  height: 15vh; /* Try increasing the height if needed */
-  min-width: 100vw;
+  height: 36rem;
+  width: 100vw;
   background-image: url(${소비배경});
   background-position: center;
-  background-size: contain; /* Keep only one background-size property */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
 `;
@@ -23,7 +25,8 @@ const WordsContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: 10vw;
+  margin-left: 30rem;
+  margin-top: 10rem;
 
   .소비 {
     font-size: 7rem;

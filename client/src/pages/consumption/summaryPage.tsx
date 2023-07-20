@@ -6,7 +6,7 @@ import {
   Grid,
   ContentContainer,
   SideButtonsContainer,
-} from "../../pages/consumption/calendarPageStyled";
+} from "../../pages/consumption/summaryPageStyled";
 import { useState, useEffect } from "react";
 import { summaryRender ,monthSumRender} from "../../api/index";
 
@@ -28,7 +28,6 @@ export default function SummaryPage() {
     categoryincomeSumsMap: {},
     categoryexpenseSumsMap: {},
   });
-  
   const [summarySumData, setSummarySumData] = useState<SummarySumData>([0,0,0]);
 
   useEffect(() => {
@@ -62,8 +61,9 @@ export default function SummaryPage() {
   })
 
   return (
+    <>
+    <ConsumptionHeader />
     <DayPageContainer>
-      <ConsumptionHeader />
       <ContentContainer>
         <Grid>
           <div style={{ width: "25vw", height: "68vh", border: "1px solid" }}>
@@ -83,5 +83,6 @@ export default function SummaryPage() {
         </SideButtonsContainer>
       </ContentContainer>
     </DayPageContainer>
+    </>
   );
 }

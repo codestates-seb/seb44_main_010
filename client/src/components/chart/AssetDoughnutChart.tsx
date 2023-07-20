@@ -7,6 +7,7 @@ import {
   ChartOptions,
 } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Main = styled.div`
