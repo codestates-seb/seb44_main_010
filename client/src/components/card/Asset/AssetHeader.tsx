@@ -7,6 +7,8 @@ const Main = styled.div`
   align-items: center;
   position: fixed;
   z-index: 5;
+  margin: 0;
+  padding: 0;
 `;
 
 const AssetHeaderBox = styled.div`

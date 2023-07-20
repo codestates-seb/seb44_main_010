@@ -4,17 +4,20 @@ const Main = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid #e1e1e1;
   border-radius: 3rem;
-  width: 90%;
+  width: 20vw;
   background-color: #ffffff;
+  border: 1px solid;
+  height: 15vh;
 `;
 
 const UserContainer = styled.div`
   display: flex;
   justify-content: space-around;
-  width: 50vw;
+  width: 20vw;
   margin: 5rem;
+  height: 15vh;
+  border: 1px solid;
 `;
 
 const UserImg = styled.div`

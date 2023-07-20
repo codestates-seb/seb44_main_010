@@ -7,6 +7,7 @@ const Main = styled.div`
   border: 2px solid #e1e1e1;
   border-radius: 10rem;
   width: 90%;
+  height: 8vh;
   background-color: #ffeb9b;
 `;
 
@@ -14,7 +15,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-around;
   width: 50vw;
-  margin: 4rem;
+  margin: 1rem;
 `;
 
 const Img = styled.div`

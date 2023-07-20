@@ -10,10 +10,11 @@ const Main = styled.div`
 `;
 
 const ComsumptionHeaderBox = styled.div`
-  height: 15vh;
-  width: 100vw;
+  height: 15vh; /* Try increasing the height if needed */
+  min-width: 100vw;
   background-image: url(${소비배경});
-  background-size: contain;
+  background-position: center;
+  background-size: contain; /* Keep only one background-size property */
   display: flex;
   align-items: center;
 `;
