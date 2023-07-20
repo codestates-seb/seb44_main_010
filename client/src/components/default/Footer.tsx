@@ -16,7 +16,7 @@ const FooterBox = styled.div`
   width: 80%;
   /* height: 80%; */
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   color: #c8c8c8;
   font-weight: 300;
 `;
