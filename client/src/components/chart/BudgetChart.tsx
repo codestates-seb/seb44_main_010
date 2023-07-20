@@ -12,7 +12,7 @@ const BudgetChart = ({ summarySumData, savedBudget }: BudgetChartProps) => {
     datasets: [
       {
         label: '예산 대비 지출',
-        data: [savedBudget, summarySumData.expense],
+        data: [savedBudget, summarySumData[1]],
         backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 99, 132, 0.6)'],
         borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
         borderWidth: 2,

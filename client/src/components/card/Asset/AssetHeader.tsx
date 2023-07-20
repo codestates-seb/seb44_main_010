@@ -7,15 +7,19 @@ const Main = styled.div`
   align-items: center;
   position: fixed;
   z-index: 5;
+  margin: 0;
+  padding: 0;
 `;
 
 const AssetHeaderBox = styled.div`
-  height: 15vh;
-  width: 100vw;
+  height: 15vh; /* Try increasing the height if needed */
   background-image: url(${자산배경});
-  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain; /* Keep only one background-size property */
   display: flex;
   align-items: center;
+  border: 1px solid;
 `;
 
 const WordsContainer = styled.div`
