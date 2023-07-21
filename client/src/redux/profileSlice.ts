@@ -21,10 +21,19 @@ const profile = createSlice({
       },
     },
     states: "",
+    monthlyResponseDto: {
+      accountsList: [],
+      etc: "",
+      input: "",
+      monthSum: [],
+      prviousMinCurrnet: "",
+      stock: "",
+      total: "",
+    },
   },
   reducers: {
-    addProfile(state, actions) {
-      Object.assign(state, actions.payload);
+    addProfile(state, action) {
+      state.data = action.payload;
     },
   },
 });

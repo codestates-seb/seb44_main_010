@@ -152,7 +152,7 @@ video {
   font-family: "SCDream", sans-serif;
 }
 
-/* 미디어 쿼리로 페이지 크기에 따라 폰트 크기 조정 */
+/* 미디어 쿼리로 페이지 가로 크기에 따라 폰트 크기 조정 */
 @media (max-width: 1200px) {
   html {
     font-size: 4.5px;
@@ -176,6 +176,31 @@ video {
     font-size: 3px;
   }
 }
+
+/* 미디어 쿼리로 페이지 세로 크기에 따라 폰트 크기 조정 */
+/* @media (max-height: 1080px) {
+  html {
+    font-size: 4.5px;
+  }
+}
+
+@media (max-height: 900px) {
+  html {
+    font-size: 4px;
+  }
+}
+
+@media (max-height: 720px) {
+  html {
+    font-size: 3.5px;
+  }
+}
+
+@media (max-height: 600px) {
+  html {
+    font-size: 3px;
+  }
+} */
 
 /* HTML5 display-role reset for older browsers */
 article,

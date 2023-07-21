@@ -1,4 +1,4 @@
-import {styled} from "styled-components";
+import { styled } from "styled-components";
 
 const Main = styled.div`
   display: flex;
@@ -7,8 +7,9 @@ const Main = styled.div`
   border: 2px solid #e1e1e1;
   border-radius: 10rem;
   width: 90%;
-  height: 8vh;
+  /* height: 8vh; */
   background-color: #ffeb9b;
+  margin-bottom: 2rem;
 `;
 
 const Container = styled.div`
@@ -43,11 +44,11 @@ const Contents = styled.div`
 `;
 
 const Total = styled.div`
-  font-size: 6rem;
+  font-size: 5rem;
   text-align: center;
   color: #ff4040;
-  margin-bottom: 2rem;
-  font-weight: 600;
+  /* margin-bottom: 2rem; */
+  font-weight: 500;
 `;
 
 const Text = styled.div`
@@ -66,7 +67,7 @@ export default function SavingAccountBox() {
         </Title>
         <Contents>
           <Total>400,000원</Total>
-          <Text>지난 달보다 -100,000원</Text>
+          {/* <Text>지난 달보다 -100,000원</Text> */}
         </Contents>
       </Container>
     </Main>

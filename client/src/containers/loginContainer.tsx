@@ -24,8 +24,9 @@ const CaptchaBox = styled.div`
   margin-bottom: 3rem;
 `;
 
+const API_KEY = "6LdwszsnAAAAALN8_5ZRSwACts9StQCnOqmS_VrP";
 // const API_KEY = "6LeeeS0nAAAAAOmWGttGqobyMy0ltORyOnLvIA3H";
-const API_KEY = import.meta.env.VITE_RECAPTCHA_API_KEY;
+// const API_KEY = import.meta.env.VITE_RECAPTCHA_API_KEY;
 
 // 6LeeeS0nAAAAAOmWGttGqobyMy0ltORyOnLvIA3H
 
@@ -68,12 +69,16 @@ export default function LoginContainer() {
         .then((res) => {
           const acessToken: string | undefined = res.headers.authorization;
           const refreshToken: string | undefined = res.headers.refresh;
+          const userName = res.data.username;
           const userId = res.data.userId;
+          // console.log(res.headers);
+          console.log(res.data);
           if (typeof acessToken === "string" && typeof refreshToken === "string") {
             dispatch(login({ acessToken, refreshToken }));
             setLocalStorage("acessToken", acessToken);
             setLocalStorage("refreshToken", refreshToken);
-            setLocalStorage(userId, userId);
+            setLocalStorage("username", userName);
+            setLocalStorage("userId", userId);
           } else {
             window.alert("로그인에 실패하였습니다.");
           }
@@ -93,7 +98,7 @@ export default function LoginContainer() {
       axios
         .post(`/user/captcha?token=${value}`)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           setCaptchaSuccess(res.data);
         })
         .catch((err) => {
