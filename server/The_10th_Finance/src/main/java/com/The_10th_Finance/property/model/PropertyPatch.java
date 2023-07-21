@@ -20,9 +20,6 @@ public class PropertyPatch {
 
     private BigDecimal amount;
 
-    @Pattern(regexp = "차|현금|부동산")
-    private String propertyType;
-
 
 
 }

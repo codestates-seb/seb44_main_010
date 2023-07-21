@@ -22,7 +22,7 @@ public class Property implements Serializable {
     @Column(name = "property_id", nullable = false, unique = true)
     private Long propertyId;
 
-    @Column(name = "title", nullable = false, unique = true)
+    @Column(name = "title", nullable = false)
     private String title;
 
     @Column(name = "content", nullable = false)

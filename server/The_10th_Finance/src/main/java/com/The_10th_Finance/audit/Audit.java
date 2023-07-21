@@ -1,6 +1,7 @@
 package com.The_10th_Finance.audit;
 
 import lombok.Getter;
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -29,6 +30,7 @@ public class Audit  {
     @LastModifiedBy
     private String modifiedBy;
 
-    @Column(nullable = false, columnDefinition = "boolean default false")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    @Column(nullable = false)
     private Boolean deleted = false;
 }

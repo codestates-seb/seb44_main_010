@@ -23,7 +23,7 @@ public class Accounts extends Audit  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
-    private Long Id;
+    private Long accountId;
 
     @Column(name = "account_type", nullable = false)
     private String acoountType;
@@ -48,14 +48,11 @@ public class Accounts extends Audit  {
     @Column(name = "card_number", nullable = false, unique = true)
     private String cardNum;
 
-    @Column(name = "account_id", nullable = false)
-    private Long accountId;
-
     public enum AccountStatement{
+
         ACTIVE("활성됨"),
         NOACTIVE("비활성"),
         BLOCKED("휴먼계정");
-
         @Getter
         private String states;
 
