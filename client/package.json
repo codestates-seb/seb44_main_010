@@ -16,8 +16,9 @@
     "@reduxjs/toolkit": "^1.9.5",
     "@types/react-select": "^5.0.1",
     "axios": "^1.4.0",
-    "chart.js": "^4.3.0",
+    "chart.js": "^3.7.0",
     "date-fns": "^2.30.0",
+    "faker": "^4.1.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-datepicker": "^4.15.0",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@types/chart.js": "^2.9.37",
+    "@types/faker": "^5.5.9",
     "@types/react": "^18.0.37",
     "@types/react-datepicker": "^4.11.2",
     "@types/react-dom": "^18.0.11",
