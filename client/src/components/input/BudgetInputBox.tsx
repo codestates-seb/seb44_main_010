@@ -8,6 +8,7 @@ import BudgetChart from "../chart/BudgetChart";
 const InputBox = styled.div`
   display: flex;
   flex-direction: column;
+ 
 `;
 
 const Wrapper = styled.div`

@@ -34,8 +34,11 @@ export default function BudgetChart({ summarySumData, savedBudget }: BudgetChart
         type: 'linear', // Use category scale for the y-axis to center the bars
       },
     },
-
   };
 
-  return <Bar key={savedBudget} data={data} options={options} />;
+  return (
+    <div style={{ width: "80rem", height: "35rem" }}>
+      <Bar key={savedBudget} data={data} options={options} />
+    </div>
+  );
 }
