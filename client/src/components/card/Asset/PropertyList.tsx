@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import axios from "axios";
 import {useState, useEffect, useRef} from "react";
-import DeleteIcon from "../../assets/delete.svg";
-import YellowLeft from "../../assets/yellowleft.svg";
-import YellowRight from "../../assets/yellowright.svg";
+import DeleteIcon from "../../../assets/delete.svg";
+import YellowLeft from "../../../assets/yellowleft.svg";
+import YellowRight from "../../../assets/yellowright.svg";
 
 interface Item {
   id: number;
-  car_name: string;
-  car_amount: number;
+  property_name: string;
+  property_amount: number;
 }
 
 const Main = styled.div`
@@ -17,12 +17,12 @@ const Main = styled.div`
   width: 100%;
 `;
 
-const CarList = styled.div`
+const PropertyList = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-const CarContainer = styled.div`
+const PropertyContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,7 +40,7 @@ const Top = styled.div`
   display: flex;
 `;
 
-const CarName = styled.div`
+const PropertyName = styled.div`
   font-size: 4rem;
   margin: 2rem;
   color: #414141;
@@ -56,7 +56,7 @@ const Delete = styled.div`
   margin-left: 10rem;
 `;
 
-const CarAmount = styled.div`
+const PropertyAmount = styled.div`
   font-size: 4rem;
 `;
 
@@ -76,11 +76,11 @@ const RightButton = styled.img`
   margin-left: 5rem;
 `;
 
-export default function Car() {
+export default function Property() {
   const [data, setData] = useState<Item[]>([]);
   const [displayedData, setDisplayedData] = useState<Item[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const CarBoxRef = useRef<HTMLDivElement>(null);
+  const PropertyBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     getData();
@@ -94,7 +94,7 @@ export default function Car() {
 
   const getData = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/car");
+      const response = await axios.get("http://localhost:3000/property");
       const data = response.data;
       setData(data);
     } catch (error) {
@@ -104,7 +104,7 @@ export default function Car() {
 
   const handleDelete = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:3000/car/${id}`);
+      await axios.delete(`http://localhost:3000/property/${id}`);
       getData();
     } catch (error) {
       console.log(error);
@@ -128,18 +128,18 @@ export default function Car() {
   }
 
   return (
-    <Main ref={CarBoxRef}>
-      <CarList>
+    <Main ref={PropertyBoxRef}>
+      <PropertyList>
         {displayedData.map((item: Item) => (
-          <CarContainer key={item.id}>
+          <PropertyContainer key={item.id}>
             <Top>
-              <CarName>{item.car_name}</CarName>
+              <PropertyName>{item.property_name}</PropertyName>
               <Delete onClick={() => handleDelete(item.id)} />
             </Top>
-            <CarAmount>{item.car_amount}원</CarAmount>
-          </CarContainer>
+            <PropertyAmount>{item.property_amount}원</PropertyAmount>
+          </PropertyContainer>
         ))}
-      </CarList>
+      </PropertyList>
       <PageButton>
         <LeftButton src={YellowLeft} alt="Left" onClick={handlePrevious} />
         <RightButton src={YellowRight} alt="Right" onClick={handleNext} />

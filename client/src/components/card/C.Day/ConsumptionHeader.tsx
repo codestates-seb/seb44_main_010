@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import 자산배경 from "../../assets/자산배경.svg";
+import 소비배경 from "../../../assets/소비배경.svg";
 
 const Main = styled.div`
   display: flex;
@@ -7,13 +7,16 @@ const Main = styled.div`
   align-items: center;
   position: fixed;
   z-index: 5;
+  max-height: 10rem;
 `;
 
-const AssetHeaderBox = styled.div`
-  height: 15vh;
+const ComsumptionHeaderBox = styled.div`
+  height: 36rem;
   width: 100vw;
-  background-image: url(${자산배경});
-  background-size: contain;
+  background-image: url(${소비배경});
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
 `;
@@ -22,9 +25,10 @@ const WordsContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: 10vw;
+  margin-left: 30rem;
+  margin-top: 10rem;
 
-  .자산 {
+  .소비 {
     font-size: 7rem;
     color: #4073b2;
     font-weight: 500;
@@ -37,15 +41,15 @@ const WordsContainer = styled.div`
   }
 `;
 
-export default function AssetHeader() {
+export default function ConsumptionHeader() {
   return (
     <Main>
-      <AssetHeaderBox>
+      <ComsumptionHeaderBox>
         <WordsContainer>
-          <div className="자산">자산</div>
-          <div className="알아봐요">나의 자산을 관리해봐요</div>
+          <div className="소비">소비</div>
+          <div className="알아봐요">나만의 소비패턴 알아봐요</div>
         </WordsContainer>
-      </AssetHeaderBox>
+      </ComsumptionHeaderBox>
     </Main>
   );
 }

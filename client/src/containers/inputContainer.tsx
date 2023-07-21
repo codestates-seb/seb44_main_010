@@ -1,9 +1,6 @@
-// import 순서 한번만 다시 불러주세욥
 //(외부라이브러리,서드파티,우리가 안만든거 - asset, style - component - api, util, hook )
 import styled from "styled-components";
 import { useState } from "react";
-import { ValueType } from "react-select";
-
 import checkBox from "../assets/checkbox.svg";
 import yellowBox from "../assets/yellow.svg";
 import Dateimg from "../assets/svg/date.svg";
@@ -11,7 +8,7 @@ import Dateimg from "../assets/svg/date.svg";
 import { AddButton } from "../components/button/AddButton";
 import { ContentInput, PriceInput } from "../components/input/ConsumptionInput";
 import DateInput from "../components/input/DateInput";
-import { CustomSelect } from "../components/input/ConsumptionInput";
+import { CustomSelect } from "../components/input/ConsumptionInput"; 
 import { dayUpload } from "../api/index";
 
 export const InputWrapper = styled.div`
@@ -180,12 +177,11 @@ export const SignupButtonContainer = styled.div`
   }
 `;
 
+type OptionType = { value: string; label: string };
+
 export default function InputContainer() {
   const [expenditureSelected, setExpenditureSelected] = useState(false);
-  const [category, setCategory] = useState<{
-    value: string | null;
-    label: string | null;
-  }>({ value: null, label: null });
+  const [category, setCategory] = useState<OptionType | null>(null);
   const [content, setContent] = useState("");
   const [price, setPrice] = useState<number | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -194,19 +190,23 @@ export default function InputContainer() {
     setExpenditureSelected(!expenditureSelected);
   };
 
-  const categoryOptions = [
-    { value: "현금", label: "현금" },
-    { value: "상품권", label: "상품권" },
-    { value: "기프티콘", label: "기프티콘" },
-    { value: "고가품", label: "고가품" },
+  const categoryOptions: OptionType[] = [
+    { value: "월급", label: "월급" },
+    { value: "투자", label: "투자" },
+    { value: "식비", label: "식비" },
+    { value: "주거", label: "주거" },
+    { value: "쇼핑", label: "쇼핑" },
+    { value: "문화", label: "문화" },
+    { value: "교통", label: "교통" },
+    { value: "의료", label: "의료" },
+    { value: "기타", label: "기타" },
   ];
 
-  const handleCategoryChange = (
-    newValue: ValueType<{ value: string | null; label: string | null }, false>
-  ) => {
-    setCategory(newValue as { value: string | null; label: string | null });
+  const handleCategoryChange = (option: OptionType | null) => {
+    setCategory(option);
   };
-
+  
+  
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
@@ -220,11 +220,12 @@ export default function InputContainer() {
   const handleCancelClick = () => {
     // 각 상태값을 초기값으로 변경합니다.
     setExpenditureSelected(true);
-    setCategory({ value: null, label: null });
+    setCategory(null);
     setContent("");
     setPrice(null);
     setSelectedDate(null);
   };
+
   const offset = new Date().getTimezoneOffset() * 60000;
 
   const handleAddClick = () => {
@@ -236,13 +237,13 @@ export default function InputContainer() {
       paymentType: expenditureSelected ? "출금" : "입금",
       counterPartyName: "John Doe",
       amount: price !== null ? (expenditureSelected ? -price : price) : null,
-      category: "투자",
+      category: category?.value || "",
       purpose: content,
       accountId: 1,
       //클라이언트 입력창의 목록을 못보내고 있는 상황...
+      //피그마의 목록을 서버의 카테고리와 동기화 시키기
+      // 수입 - 카테고리 3개, 지출 - 카데고리 7개
     };
-
-    console.log(Consumptiondata);
 
     dayUpload(Consumptiondata)
       .then((response) => {
@@ -288,12 +289,12 @@ export default function InputContainer() {
           </AddButton>
         </ButtonAlignment>
         <CategoryContainer>
-          <div className="title">목록</div>
+          <div className="title">카테고리</div>
           <CustomSelect
             options={categoryOptions}
             value={category}
-            onChange={handleCategoryChange}
-            placeholder="목록을 선택해주세요."
+            placeholder="카테고리를 선택해주세요."
+            onChange={(option: OptionType | null) => handleCategoryChange(option)}
           ></CustomSelect>
         </CategoryContainer>
         <CategoryContainer>

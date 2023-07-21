@@ -171,7 +171,10 @@ export default function Nav() {
     dispatch(logout());
     deleteLocalstorage("acessToken");
     deleteLocalstorage("refreshToken");
+    deleteLocalstorage("username");
     deleteLocalstorage("userId");
+    deleteLocalstorage("_grecaptcha");
+    dispatch(mainColor());
     navigate("/");
   };
 

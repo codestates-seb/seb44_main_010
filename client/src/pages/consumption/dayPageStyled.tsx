@@ -18,8 +18,8 @@ export const Grid = styled.div`
 export const ContentContainer = styled.div`
 display:flex;
 flex-direction:row;
-margin-top: 17vh;
 position: relative; // 부모 컨테이너를 기준으로 position 설정
+margin-top: 25rem;
 `;
 
 export const SideButtonsContainer = styled.div`

@@ -1,19 +1,21 @@
 import styled from "styled-components";
+ 
 
 export const AssetPageContainer = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-top: 19rem;
-  margin-bottom: 19rem;
+  justify-content: center;
+  margin-top: 40rem;
+  margin-bottom: 12rem;
+  width: 100vw;
 `;
 
 export const ContentContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 17vh;
   position: relative;
   justify-content: space-between;
+  margin-top: 5rem;
 `;
 
 export const Grid = styled.div`

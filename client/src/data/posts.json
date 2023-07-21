@@ -1,5 +1,5 @@
 {
-  "paymentResponses": [
+  "paymentResponses": [ 
     {
       "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "입금",
@@ -37,13 +37,13 @@
       "accountId": 1
     }
   ],
-  "daySummary": {
+  "daySummary": { 
     "date": "2023-06-08T12:00:00",
     "income": 4500.0,
     "expense": 0.0,
     "total": 4500.0
   },
-  "calendarDaySummary": [{
+  "calendarDaySummary": [{ 
     "date": "2023-07-01T12:00:00",
     "income": 45000.0,
     "expense": -10000.0
@@ -84,7 +84,7 @@
     "income": 0.0,
     "expense": -4500.0
   }],
-  "monthdata": [
+  "monthdata": [ 
     {
       "paymentTime": "2023-07-01T12:00:00",
       "paymentType": "입금",
@@ -185,6 +185,17 @@
       "accountId": 1
     }
   ],
+    "SummaryChartdata": {
+        "categoryincomeSumsMap": {
+            "기타": 4500.00,
+            "월급": 3500.00,
+            "투자": 4500.00
+        },
+        "categoryexpenseSumsMap": {
+            "주거": -4500.00,
+            "식비": -9000.00
+        }
+    },
   "account": [
     {
       "id": 1,

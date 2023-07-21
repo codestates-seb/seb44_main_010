@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import axios from "axios";
 import {useState, useEffect, useRef} from "react";
-import DeleteIcon from "../../assets/delete.svg";
-import YellowLeft from "../../assets/yellowleft.svg";
-import YellowRight from "../../assets/yellowright.svg";
+import DeleteIcon from "../../../assets/delete.svg";
+import YellowLeft from "../../../assets/yellowleft.svg";
+import YellowRight from "../../../assets/yellowright.svg";
 
 interface Item {
   id: number;

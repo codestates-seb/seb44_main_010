@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {useState} from "react";
-import Car from "../../assets/Car.svg";
-import CarContainer from "../../containers/CashContainer";
+import Car from "../../../assets/Car.svg";
+import CarContainer from "../../../containers/CashContainer";
 
 const Main = styled.div`
   display: flex;

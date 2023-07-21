@@ -1,7 +1,7 @@
 import {styled} from "styled-components";
 import UserBox from "../components/card/AssetProfile/UserBox";
 import TotalAssetsBox from "../components/card/AssetProfile/TotalAssetsBox";
-import AssetDoughnutChart from "../components/card/AssetProfile/AssetDoughnutChart";
+import AssetDoughnutChart from "../components/chart/AssetDoughnutChart";
 import SavingAccountBox from "../components/card/AssetProfile/SavingAccountBox";
 import StockBox from "../components/card/AssetProfile/StockBox";
 import EtcBox from "../components/card/AssetProfile/EtcBox";
@@ -12,7 +12,7 @@ const ProfileContainer = styled.div`
   align-items: center;
   flex-direction: column;
   width: 25vw;
-  height: 100%;
+  height: 68vh;
   border: 2px solid #e1e1e1;
   border-radius: 3rem;
   background-color: #f5f5ee;

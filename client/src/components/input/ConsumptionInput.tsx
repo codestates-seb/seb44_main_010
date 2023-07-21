@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import Select from "react-select";
+import Select, { Props as SelectProps } from 'react-select';
 
 export const ContentInput = styled.textarea`
   width: 60rem;
@@ -25,7 +25,13 @@ export const PriceInput = styled.input`
   font-family: "SCDream", sans-serif;
 `;
 
-export const CustomSelect = styled(Select)`
+// OptionType 타입 정의
+type OptionType = { value: string; label: string };
+
+// CustomSelect 컴포넌트 타입 선언
+type CustomSelectProps = SelectProps<OptionType, false>;
+
+export const CustomSelect = styled(Select)<CustomSelectProps>`
   width: 65rem;
   .css-art2ul-ValueContainer2 {
     height: 7rem;
@@ -36,4 +42,3 @@ export const CustomSelect = styled(Select)`
     font-size: 3rem;
   }
 `;
-

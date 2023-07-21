@@ -13,7 +13,7 @@ export const Main = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  margin-bottom: -20rem;
+  /* margin-bottom: -20rem; */
 `;
 
 export const Container = styled.div`
@@ -22,7 +22,7 @@ export const Container = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
-  height: 80%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

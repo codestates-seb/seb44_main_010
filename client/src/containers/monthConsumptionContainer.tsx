@@ -1,7 +1,7 @@
-import MonthConsumptionDetail from "../components/card/MonthComsumptionDetail";
-import MonthTopConsumption from "../components/card/MonthTopConsumption";
+import MonthConsumptionDetail from "../components/card/C.Month/MonthComsumptionDetail";
+import MonthTopConsumption from "../components/card/C.Month/MonthTopConsumption";
 import styled from "styled-components";
-import MonthBottomConsumption from "../components/card/MonthBottomConsumption";
+import MonthBottomConsumption from "../components/card/C.Month/MonthBottomConsumption";
 import { useState, useRef, useEffect } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { MonthSumData } from "../pages/consumption/monthPage";
