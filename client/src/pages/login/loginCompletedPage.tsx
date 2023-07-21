@@ -15,6 +15,10 @@ const LoginCompletedPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const reduxTest = useSelector((state: RootState) => {
+    return state.proFile;
+  });
+
   const isLogin = useSelector((state: RootState) => {
     return state.loginSlice.isLogined;
   });
@@ -23,13 +27,18 @@ const LoginCompletedPage: React.FC = () => {
     if (!isLogin) {
       navigate("/");
     } else {
-      axios
-        .get("/completed")
-        .then((res) => setUseName(res.data.userName))
-        .catch((err) => {
-          const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
-          window.alert(errMessage);
-        });
+      // axios
+      //   .get("/user/login")
+      //   .then((res) => {
+      //     console.log(res.data);
+      //     // setUseName(res.data.username);
+      //   })
+      //   .catch((err) => {
+      //     const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
+      //     window.alert(errMessage);
+      //   });
+
+      setUseName(getLocalstorage("username"));
     }
   }, [isLogin, navigate]);
 
@@ -37,9 +46,24 @@ const LoginCompletedPage: React.FC = () => {
     const currentData = new Date();
     const currentMonth = currentData.getMonth() + 1;
     const userId = getLocalstorage("userId");
-    axios.get(`/asset/profile/${userId}/${currentMonth}`).then((res) => {
-      dispatch(addProfile(res.data));
-    });
+    const acessToken = getLocalstorage("acessToken");
+
+    axios.defaults.headers.common["Authorization"] = acessToken;
+    axios
+      .get(`/asset/myInfo/${userId}/${currentMonth}`, {
+        headers: {
+          "ngrok-skip-browser-warning": true,
+        },
+      })
+      .then((res) => {
+        dispatch(addProfile(res.data));
+        console.log(res.data);
+        console.log(reduxTest);
+      })
+      .catch((err) => {
+        const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
+        window.alert(errMessage);
+      });
 
     navigate("/");
   };

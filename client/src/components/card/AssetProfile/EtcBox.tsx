@@ -1,4 +1,4 @@
-import {styled} from "styled-components";
+import { styled } from "styled-components";
 
 const Main = styled.div`
   display: flex;
@@ -14,7 +14,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-around;
   width: 50vw;
-  margin: 4rem;
+  margin: 1rem;
 `;
 
 const Img = styled.div`
@@ -42,11 +42,11 @@ const Contents = styled.div`
 `;
 
 const Total = styled.div`
-  font-size: 6rem;
+  font-size: 5rem;
   text-align: center;
   color: #ff4040;
-  margin-bottom: 2rem;
-  font-weight: 600;
+  /* margin-bottom: 2rem; */
+  font-weight: 500;
 `;
 
 const Text = styled.div`
@@ -65,7 +65,7 @@ export default function EtcBox() {
         </Title>
         <Contents>
           <Total>350,000원</Total>
-          <Text>지난 달보다 -10,000원</Text>
+          {/* <Text>지난 달보다 -10,000원</Text> */}
         </Contents>
       </Container>
     </Main>

@@ -3,22 +3,23 @@ import { styled } from "styled-components";
 import { RootState } from "../../../redux/store";
 
 const Main = styled.div`
+  /* border: 1px solid; */
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 3rem;
   width: 20vw;
   background-color: #ffffff;
-  border: 1px solid;
   height: 15vh;
 `;
 
 const UserContainer = styled.div`
+  /* border: 1px solid; */
   display: flex;
   justify-content: space-around;
+  align-items: center;
   width: 20vw;
   height: 15vh;
-  border: 1px solid;
 `;
 
 const UserImg = styled.div`
