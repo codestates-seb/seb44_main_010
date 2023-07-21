@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-07-18T17:49:26+0900",
+    date = "2023-07-21T11:35:48+0900",
     comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.1.1.jar, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 @Component
@@ -61,6 +61,5 @@ public class PropertyMapperImpl implements PropertyMapper {
         property.setTitle( propertyPatch.getTitle() );
         property.setContent( propertyPatch.getContent() );
         property.setAmount( propertyPatch.getAmount() );
-        property.setPropertyType( propertyPatch.getPropertyType() );
     }
 }

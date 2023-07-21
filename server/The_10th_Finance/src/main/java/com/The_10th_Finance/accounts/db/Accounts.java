@@ -49,10 +49,10 @@ public class Accounts extends Audit  {
     private String cardNum;
 
     public enum AccountStatement{
+
         ACTIVE("활성됨"),
         NOACTIVE("비활성"),
         BLOCKED("휴먼계정");
-
         @Getter
         private String states;
 

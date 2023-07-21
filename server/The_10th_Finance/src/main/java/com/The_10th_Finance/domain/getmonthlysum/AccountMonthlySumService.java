@@ -2,6 +2,7 @@ package com.The_10th_Finance.domain.getmonthlysum;
 
 import com.The_10th_Finance.accounts.model.AccountsBankResponse;
 import com.The_10th_Finance.accounts.service.AccountBankService;
+import com.The_10th_Finance.cashpay.service.CashPaymentService;
 import com.The_10th_Finance.error.BusinessLogicException;
 import com.The_10th_Finance.error.ExceptionCode;
 import com.The_10th_Finance.monthlysum.db.MonthlySum;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,7 +32,7 @@ public class AccountMonthlySumService {
     private final AccountBankService accountBankService;
     private final MonthlySumService monthlySumService;
     private final PropertyService propertyService;
-
+    private final CashPaymentService cashPaymentService;
     private final UserMapper userMapper;
 
 
@@ -68,7 +70,7 @@ public class AccountMonthlySumService {
                 else throw new BusinessLogicException(ExceptionCode.NOTYPE);
             }
         }
-        return MonthSum[2].subtract(previousTotal);
+        return previousTotal;
     }
 //    private static void getMonthlySum(List<MonthlySum> monthlySums, BigDecimal[] currentMonthTypes, BigDecimal[] previousMonthTypes,int currentMonth,MonthSummary monthSummary) {
 //        for (MonthlySum monthlySum : monthlySums) {
@@ -103,15 +105,26 @@ public class AccountMonthlySumService {
         //*MonthlyType이란 클래스를 만들어서 추후 리펙토링 예정*
 
         //user에 대한 정보 가져오기
-        User user = userService.findByUserId(userId);
+        User user = userService.findById(userId);
+        log.info("{}",user.getName());
         //보안상 문제가되는 것 빼고 변환해서
         UserResponseDto userResponseDto = userMapper.userToUserResponseDto(user);
 
         //부동산, 차들 가져오기
-        Property property = propertyService.getByUserid(userId);
+        List<Property> property = propertyService.getByUserid(userId);
+        BigDecimal etc = BigDecimal.ZERO;
+        BigDecimal sum = BigDecimal.ZERO;
+
+        if(property!=null){
+            for(Property property1:property) {
+                etc = etc.add(property1.getAmount());
+            }
+        }
 
         MonthlyResponseDto monthlyResponseDto = makeCacheData(userId,month);
-
+        monthlyResponseDto.setEtc(etc);
+        monthlyResponseDto.setTotal(monthlyResponseDto.getTotal().add(etc));
+        
         return MonthlyResoponse.builder()
                 .userResponseDto(userResponseDto)
                 .propertyResponse(property)
@@ -121,7 +134,12 @@ public class AccountMonthlySumService {
 
 
     public MonthlyResponseDto makeCacheData(Long userId,int month){
-        List<AccountsBankResponse> accountsList = accountBankService.getMyAccountAndBank(userId);
+        Long moneyId = propertyService.getMoney(userId);
+        Map<String, BigDecimal> map = new HashMap<>();
+        if(moneyId!=null){
+             map= cashPaymentService.getMonthSum(month,moneyId);
+        }
+        List<AccountsBankResponse> accountsList = accountBankService.getMyAccountAndBank(1L);
         Map<Long,String> mapping = getAccountIdToAccountTypeMap(accountsList);
         //계좌ID를 리스트화하기
         List<Long> accountId = getAccountIdln(accountsList);
@@ -134,14 +152,19 @@ public class AccountMonthlySumService {
         BigDecimal[] currentMonthTypes = {BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
         BigDecimal[] previousMonthTypes = {BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
         BigDecimal[] MonthSum = {BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
-        BigDecimal minus = getMonthlySum(mapping,monthlySums, currentMonthTypes,previousMonthTypes,month,MonthSum);
-
+        BigDecimal previous = getMonthlySum(mapping,monthlySums, currentMonthTypes,previousMonthTypes,month,MonthSum);
+        MonthSum[0]=MonthSum[0].add(map.get("total_income")!=null?map.get("total_income"):BigDecimal.ZERO);
+        MonthSum[1]=MonthSum[1].add(map.get("total_expenses")!=null?map.get("total_expenses"):BigDecimal.ZERO);
+        MonthSum[2]=MonthSum[2].add(map.get("total")!=null?map.get("total"):BigDecimal.ZERO);
+        BigDecimal A = new BigDecimal("30000000.00");
+        BigDecimal B = new BigDecimal("10000000.00");
+        BigDecimal sum = A.add(B);
         return MonthlyResponseDto.builder()
                 .accountsList(accountsList)
-                .inputAccount(currentMonthTypes[0].subtract(previousMonthTypes[0]))
-                .jungunAccount(currentMonthTypes[1].subtract(previousMonthTypes[1]))
-                .aashAccount(currentMonthTypes[2].subtract(previousMonthTypes[2]))
-                .prviousMinCurrent(minus)
+                .input(A)
+                .stock(B)
+                .total(sum)
+                .prviousMinCurrent(previous)
                 .monthSum(MonthSum)
                 .build();
     }

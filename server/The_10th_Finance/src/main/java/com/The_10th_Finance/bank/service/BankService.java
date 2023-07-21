@@ -23,6 +23,6 @@ public class BankService {
 
     @Transactional(readOnly = true)
     public String getOne(Long bankId){
-        return bankRepository.findBankNameByBankId(bankId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOSUCHFOUND));
+        return bankRepository.findBankNameByBankId(bankId).orElse("");
     }
 }

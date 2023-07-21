@@ -25,7 +25,6 @@ public class AccountBankService {
     public List<AccountsBankResponse> getMyAccountAndBank(Long userId) {
 //            return accountsRepository.findMyAccount(userId).map(ds->accountsMapper.listAccountToListAccountResponseDto(ds)).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOSUCHFOUND));
         List<Accounts> accounts = accountsRepository.findMyAccount(userId).get();
-        log.info("{}",accounts.get(0).getAccountId());
         List<AccountsBankResponse> accountsBankRespons = new ArrayList<>();
         for (Accounts accounts1 : accounts) {
             AccountsBankResponse accountsBankResponse = AccountsBankResponse.builder().accountId(accounts1.getAccountId())
