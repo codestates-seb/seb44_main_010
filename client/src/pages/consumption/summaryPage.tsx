@@ -40,6 +40,7 @@ export default function SummaryPage() {
           //console.log(response.data);
           //console.log(response.data.data);
           setCategoryData(response.data.data);
+          setUserId(1); //userId는 로그인 유저에 따라 달라질 것임
         })
         .catch((error) => {
           // 에러 처리 로직

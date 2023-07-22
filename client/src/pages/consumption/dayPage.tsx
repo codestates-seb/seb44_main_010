@@ -74,6 +74,7 @@ export default function DayPage() {
         setDayConsumptionData(response.data.data.paymentResponses); //계좌 결제내역
         setCashConsumptionData(response.data.data.cashPayments); //현금 결제내역
         setDaySumData(response.data.data.daySummary); //일일 합계
+        setUserId(1); //userId는 로그인 유저에 따라 달라질 것임
       })
       .catch((error) => {
         // 에러 처리 로직

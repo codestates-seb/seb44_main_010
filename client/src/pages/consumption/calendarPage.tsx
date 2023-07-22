@@ -34,6 +34,7 @@ export default function CalenderPage() {
           setCalenderData(response.data.data.daySummaries);
           // 캘린더 현금 결제내역
           setCashCalenderData(response.data.data.cashDailySums)
+          setUserId(1); //userId는 로그인 유저에 따라 달라질 것임
         })
         .catch((error) => {
           console.log(error);

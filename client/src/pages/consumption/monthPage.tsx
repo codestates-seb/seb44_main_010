@@ -66,7 +66,8 @@ export default function MonthPage() {
           //console.log(response.data.data)
           //console.log(response.data.data.paymentBankResponses)
           setMonthConsumptionData(response.data.data.paymentBankResponses);
-          setCashMonthConsumptionData(response.data.data.cashPayments)
+          setCashMonthConsumptionData(response.data.data.cashPayments);
+          setUserId(1); //userId는 로그인 유저에 따라 달라질 것임
         }
         catch(error) {
           // 에러 처리 로직

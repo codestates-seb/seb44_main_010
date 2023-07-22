@@ -86,6 +86,8 @@ export default function RenderCalendar({month, calenderData, cashCalenderData}:C
 
     let income = 0;
     let expense = 0;
+    let cashIncome = 0;
+    let cashExpense = 0;
     
     if (
       month === 1 ||
@@ -102,17 +104,20 @@ export default function RenderCalendar({month, calenderData, cashCalenderData}:C
     ) {
       const currentDate = new Date(`2023-${month.toString().padStart(2, "0")}-${dayCount.toString().padStart(2, "0")}T12:00:00`);
       const matchingData = calenderData.find(data => new Date(data.date).getDate() === currentDate.getDate());
+      const cashMatchingData = cashCalenderData.find(data => new Date(data.date).getDate() === currentDate.getDate());
 
-      if (matchingData) {
-        income = matchingData.income;
-        expense = matchingData.expense;
+      if (matchingData || cashMatchingData) {
+        income = matchingData?.income || 0;
+        expense = matchingData?.expense || 0;
+        cashIncome = Number(cashMatchingData?.monthlyIncome) || 0;
+        cashExpense = Number(cashMatchingData?.monthlyExpense) || 0;
       }
 
       calendar.push(
         <Cell key={`day-${dayCount}`}>
           <div className="dayCount">{dayCount}</div>
-          <div className="입금">{income === 0 ? null : `+${income}`}</div>
-          <div className="출금">{expense === 0 ? null : expense}</div>
+          <div className="입금">{income + cashIncome === 0 ? null : `+${income + cashIncome}`}</div>
+          <div className="출금">{expense + cashExpense === 0 ? null : `${expense + cashExpense}`}</div>
         </Cell>
       );
     } else {
