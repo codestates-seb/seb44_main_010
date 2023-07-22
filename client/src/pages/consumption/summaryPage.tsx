@@ -22,6 +22,7 @@ export interface SummaryChartdata {
 export type SummarySumData = [number, number, number];
 
 export default function SummaryPage() {
+  const [userId, setUserId] = useState(1);
   const [years, setYears] = useState<number>(2023);
   const [month, setMonth] = useState<number>(7);
   const [categoryData, setCategoryData] = useState<CategoryData>({
@@ -30,14 +31,15 @@ export default function SummaryPage() {
   });
   const [summarySumData, setSummarySumData] = useState<SummarySumData>([0,0,0]);
 
+  //1. 카테고리 상세내역
   useEffect(() => {
     const handleFetchData = () => {
-      summaryRender(1, month)
+      summaryRender(userId, month)
         .then((response) => {
           // 데이터 처리 로직
           //console.log(response.data);
           //console.log(response.data.data);
-          setCategoryData(response.data.SummaryChartdata);
+          setCategoryData(response.data.data);
         })
         .catch((error) => {
           // 에러 처리 로직
@@ -45,20 +47,21 @@ export default function SummaryPage() {
         });
     };
     handleFetchData();
-  }, [month]);
+  }, [userId,month]);
 
+  //2. 월별 합계 상세내역
   useEffect(()=>{
     const handleSumData = ()=>{
-      monthSumRender(1,month)
+      monthSumRender(userId, month)
       .then((response)=>{
-        setSummarySumData(response.data.monthSum);
+        setSummarySumData(response.data.data.monthlyResponseDto.monthSum);
       })
       .catch((error)=>{
         console.log(error);
       })
     };
     handleSumData();
-  })
+  },[userId, month])
 
   return (
     <>

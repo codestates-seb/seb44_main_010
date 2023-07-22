@@ -178,8 +178,14 @@ export const SignupButtonContainer = styled.div`
 `;
 
 type OptionType = { value: string; label: string };
+type HandleFetchDataFunction = () => void;
 
-export default function InputContainer() {
+interface InputContaienrProps{
+  setShowInput :React.Dispatch<React.SetStateAction<boolean>>;
+  handleFetchData:HandleFetchDataFunction;
+}
+
+export default function InputContaine ({ setShowInput, handleFetchData }:InputContaienrProps){
   const [expenditureSelected, setExpenditureSelected] = useState(false);
   const [category, setCategory] = useState<OptionType | null>(null);
   const [content, setContent] = useState("");
@@ -234,19 +240,17 @@ export default function InputContainer() {
       paymentTime: selectedDate
       ? new Date(selectedDate.getTime() - offset).toISOString()
       : null,
-      paymentType: expenditureSelected ? "출금" : "입금",
-      counterPartyName: "John Doe",
+      paymentType: "현금",
       amount: price !== null ? (expenditureSelected ? -price : price) : null,
       category: category?.value || "",
-      purpose: content,
-      accountId: 1,
-      //클라이언트 입력창의 목록을 못보내고 있는 상황...
-      //피그마의 목록을 서버의 카테고리와 동기화 시키기
-      // 수입 - 카테고리 3개, 지출 - 카데고리 7개
-    };
+      purpose: content ? content: "",
+      propertyId: 1 // 자산에서 처음 현금추가할때, 로컬스토리지에서 저장했던 ‘propertyId’를 가져온다
 
+    };
     dayUpload(Consumptiondata)
       .then((response) => {
+        setShowInput(false);
+        handleFetchData();
         console.log("데이터 추가 성공:", response.data);
       })
       .catch((error) => {

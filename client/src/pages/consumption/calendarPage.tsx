@@ -8,50 +8,53 @@ import {
   SideButtonsContainer,
 } from "../../pages/consumption/calendarPageStyled";
 import { useState, useEffect } from "react";
-import { calendarRender ,monthSumRender} from "../../api/index";
+import { calendarRender, monthSumRender } from "../../api/index";
 import GraphContainer from "../../containers/graphContainer";
 import { RightContainer } from "./calendarPageStyled";
 
 export type CalendarSumData = [number, number, number];
 
 export default function CalenderPage() {
+  const [userId, setUserId] = useState(1);
   const [month, setMonth] = useState<number>(7);
-  const [JulyData, setJulyData] = useState([]);
+  const [calenderData, setCalenderData] = useState([]);
+  const [cashCalenderData, setCashCalenderData] = useState([]);
   const [calendarSumData, setCalendarSumData] = useState<CalendarSumData>([
     0, 0, 0,
   ]);
-
+ 
+  //1. 캘린더 상세내역
   useEffect(() => {
     const handleFetchData = () => {
-      calendarRender(1, month)
+      calendarRender(userId, month)
         .then((response) => {
-          // 데이터 처리 로직
           //console.log(response.data);
           //console.log(response.data.data);
-          setJulyData(response.data.calendarDaySummary);
-          setCalendarSumData(response.data.data.daySummary);
+          // 캘린더 계좌 결제내역
+          setCalenderData(response.data.data.daySummaries);
+          // 캘린더 현금 결제내역
+          setCashCalenderData(response.data.data.cashDailySums)
         })
         .catch((error) => {
-          // 에러 처리 로직
           console.log(error);
         });
     };
     handleFetchData();
-  }, [month]);
+  }, [userId,month]);
 
-  useEffect(()=>{
-    const handleSumData = ()=>{
-      monthSumRender(1,month)
-      .then((response)=>{
-        setCalendarSumData(response.data.monthSum);
-      })
-      .catch((error)=>{
-        console.log(error);
-      })
+  //2. 월별 합계내역
+  useEffect(() => {
+    const handleSumData = () => {
+      monthSumRender(userId, month)
+        .then((response) => {
+          setCalendarSumData(response.data.data.monthlyResponseDto.monthSum);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     };
     handleSumData();
-  })
-
+  }, [userId,month]);
 
   return (
     <>
@@ -64,7 +67,8 @@ export default function CalenderPage() {
             </div>
             <RightContainer>
               <CalendarContainer
-                JulyData={JulyData}
+                calenderData={calenderData}
+                cashCalenderData={cashCalenderData}
                 month={month}
                 setMonth={setMonth}
                 calendarSumData={calendarSumData}

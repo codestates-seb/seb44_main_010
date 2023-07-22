@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import dot from "../../../assets/Rectangle 80.svg";
 import { useEffect } from "react";
-import { DayConsumptionDataItem } from "../../../containers/dayConsumptionContainer.tsx";
+import { DayConsumptionItem } from "../../../pages/consumption/dayPage";
+import { CashConsumption } from "../../../pages/consumption/dayPage";
 
 const ConsumptionDetailBox = styled.div`
   width: 50vw;
@@ -46,7 +47,7 @@ const NameContainer = styled.div`
 const PriceContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content:center;
+  justify-content: center;
   align-items: flex-end;
   height: 5vh;
   width: 50%;
@@ -69,51 +70,70 @@ const 없다 = styled.div`
 
 const DayItem = styled.div`
   display: flex;
-  flex-direction:row;
-  width:100%;
-  height:100%;
-`
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+`;
 
 export default function DayConsumptionDetail({
   detailBoxRef,
-  dayConsumptionData
+  dayConsumptionData,
+  cashConsumptionData,
 }: {
   detailBoxRef: React.RefObject<HTMLDivElement>;
-  dayConsumptionData: DayConsumptionDataItem[]; 
+  dayConsumptionData: DayConsumptionItem[];
+  cashConsumptionData: CashConsumption[];
 }) {
-
   useEffect(() => {
     const setBoxHeight = () => {
       if (detailBoxRef.current) {
         const itemHeight = 5;
-        const itemCount = dayConsumptionData.length;
-        const calculatedHeight = itemHeight * itemCount + 4 * itemCount;
+        const itemCount = dayConsumptionData.length + cashConsumptionData.length;
+        const calculatedHeight = itemHeight * itemCount + 3 * itemCount;
         detailBoxRef.current.style.height = `${calculatedHeight}vh`;
       }
     };
     setBoxHeight();
-  }, [dayConsumptionData]);
+  }, [dayConsumptionData, cashConsumptionData, detailBoxRef]);
 
+  console.log([...cashConsumptionData]);
   return (
-    dayConsumptionData.length === 0  ? (
-  <없다>소비 내역이 없습니다.</없다>
-  ) : 
-    <ConsumptionDetailBox ref={detailBoxRef}>
-      {dayConsumptionData.map((item: DayConsumptionDataItem) => (
-        <ConsumptionDetailContainer key={item.paymentId}>
-          <DayItem>
-          <NameContainer>
-            <img src={dot} alt="icon"></img>
-            <div className="title">{item.purpose}</div>
-          </NameContainer>
-          <PriceContainer>
-            <div className="price">{item.amount}</div>
-            <div className="source">{item.accountId}</div>
-          </PriceContainer>
-          </DayItem>
-        </ConsumptionDetailContainer>
-      ))}
-    </ConsumptionDetailBox>
+    <>
+      {dayConsumptionData.length === 0 && cashConsumptionData.length === 0 ? (
+        <없다>소비 내역이 없습니다.</없다>
+      ) : (
+        <ConsumptionDetailBox ref={detailBoxRef}>
+          {dayConsumptionData.map((item: DayConsumptionItem) => (
+            <ConsumptionDetailContainer key={item.paymentResponse.paymentId}>
+              <DayItem>
+                <NameContainer>
+                  <img src={dot} alt="icon" />
+                  <div className="title">{item.paymentResponse.purpose}</div>
+                </NameContainer>
+                <PriceContainer>
+                  <div className="price">{item.paymentResponse.amount}</div>
+                  <div className="source">{item.bankName}</div>
+                </PriceContainer>
+              </DayItem>
+            </ConsumptionDetailContainer>
+          ))}
+          { cashConsumptionData && cashConsumptionData.map((item: CashConsumption) => (
+            <ConsumptionDetailContainer key={item.paymentId}>
+              <DayItem>
+                <NameContainer>
+                  <img src={dot} alt="icon" />
+                  <div className="title">{item.purpose}</div>
+                </NameContainer>
+                <PriceContainer>
+                  <div className="price">{item.amount}</div>
+                  <div className="source">{item.paymentType}</div>
+                </PriceContainer>
+              </DayItem>
+            </ConsumptionDetailContainer>
+          ))}
+        </ConsumptionDetailBox>
+      )}
+    </>
   );
 }
 

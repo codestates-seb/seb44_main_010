@@ -49,7 +49,8 @@ export const Cell = styled.div`
 
 const daysInMonth = 37;
 
-export default function RenderCalendar({month, JulyData}:CalendarDetailProps) {
+ //cashCalenderData 써먹어야 함
+export default function RenderCalendar({month, calenderData, cashCalenderData}:CalendarDetailProps) {
   let startDay: number;
   if (month === 7 || month === 4) {
     //토
@@ -80,7 +81,6 @@ export default function RenderCalendar({month, JulyData}:CalendarDetailProps) {
     calendar.push(<EmptyCell key={`empty-${i}`} />);
   }
 
-
   // 날짜 셀 추가
   while (dayCount <= daysInMonth) {
 
@@ -101,7 +101,7 @@ export default function RenderCalendar({month, JulyData}:CalendarDetailProps) {
         : dayCount <= 30
     ) {
       const currentDate = new Date(`2023-${month.toString().padStart(2, "0")}-${dayCount.toString().padStart(2, "0")}T12:00:00`);
-      const matchingData = JulyData.find(data => new Date(data.date).getDate() === currentDate.getDate());
+      const matchingData = calenderData.find(data => new Date(data.date).getDate() === currentDate.getDate());
 
       if (matchingData) {
         income = matchingData.income;
@@ -111,8 +111,8 @@ export default function RenderCalendar({month, JulyData}:CalendarDetailProps) {
       calendar.push(
         <Cell key={`day-${dayCount}`}>
           <div className="dayCount">{dayCount}</div>
-          <div className="입금">{income}</div>
-          <div className="출금">{expense}</div>
+          <div className="입금">{income === 0 ? null : `+${income}`}</div>
+          <div className="출금">{expense === 0 ? null : expense}</div>
         </Cell>
       );
     } else {

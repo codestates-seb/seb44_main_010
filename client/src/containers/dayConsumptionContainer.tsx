@@ -5,6 +5,8 @@ import DayBottomConsumption from "../components/card/C.Day/DayBottomConsumption"
 import { useState, useRef, useEffect } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { DaySumData } from "../pages/consumption/dayPage";
+import { DayConsumptionItem } from "../pages/consumption/dayPage";
+import { CashConsumption } from "../pages/consumption/dayPage";
 
 
 export const ConsumptionBox = styled.div<ConsumptionBoxProps>`
@@ -25,18 +27,6 @@ interface ConsumptionBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   dynamicHeight: string;
 }
 
-export interface DayConsumptionDataItem {
-    // 객체의 속성에 대한 타입 선언
-    paymentId: number,
-    paymentTime: string,
-    paymentType: string,
-    counterPartyName: string,
-    amount: number,
-    purpose: string,
-    category: string,
-    accountId: number 
-  }
-  
 export default function ConsumptionContainer({
   showInput,
   setShowInput,
@@ -47,7 +37,8 @@ export default function ConsumptionContainer({
   setMonth,
   setDate,
   dayConsumptionData,
-  daySumData
+  daySumData,
+  cashConsumptionData
 }: {
   showInput: boolean;
   setShowInput: React.Dispatch<React.SetStateAction<boolean>>;
@@ -57,8 +48,9 @@ export default function ConsumptionContainer({
   setYears: Dispatch<SetStateAction<number>>;
   setMonth: Dispatch<SetStateAction<number>>;
   setDate: Dispatch<SetStateAction<number>>;
-  dayConsumptionData: DayConsumptionDataItem[]; // 객체를 담은 배열 형식으로 선언
+  dayConsumptionData: DayConsumptionItem[];
   daySumData: DaySumData | Record<string, never>
+  cashConsumptionData: CashConsumption[];
 
 }) {
   const [dynamicHeight, setDynamicHeight] = useState("0");
@@ -85,6 +77,7 @@ export default function ConsumptionContainer({
       <DayConsumptionDetail
         detailBoxRef={detailBoxRef}
         dayConsumptionData={dayConsumptionData}
+        cashConsumptionData={cashConsumptionData}
       />
       <DayBottomConsumption daySumData={daySumData}/>
     </ConsumptionBox>

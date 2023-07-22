@@ -17,25 +17,37 @@ export interface CalendarData {
   date: string;
   income: number;
   expense: number;
+  total:  null | number;
+}
+
+export interface CashCalendarData{
+  id: number;
+  date : string;
+  monthlyIncome: string;
+  monthlyExpense: number;
+  monthlyTotal: number;
+  propertyId: number;
 }
 
 export interface CalendarContainerProps {
-  JulyData: CalendarData[];
+  calenderData: CalendarData[];
   month: number;
   setMonth: React.Dispatch<React.SetStateAction<number>>;
-  calendarSumData: CalendarSumData
+  calendarSumData: CalendarSumData;
+  cashCalenderData :CashCalendarData[];
 }
 
 export default function CalendarContainer({
-  JulyData,
+  calenderData,
   month,
   setMonth,
   calendarSumData,
+  cashCalenderData
 }: CalendarContainerProps) {
   return (
     <ConsumptionBox>
       <CalendarTop month={month} setMonth={setMonth} />
-      <CalendarDetail month={month} JulyData={JulyData} />
+      <CalendarDetail month={month} calenderData={calenderData} cashCalenderData={cashCalenderData}/>
       <CalendarBottom calendarSumData={calendarSumData}/>
     </ConsumptionBox>
   );

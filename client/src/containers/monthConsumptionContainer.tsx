@@ -2,14 +2,17 @@ import MonthConsumptionDetail from "../components/card/C.Month/MonthComsumptionD
 import MonthTopConsumption from "../components/card/C.Month/MonthTopConsumption";
 import styled from "styled-components";
 import MonthBottomConsumption from "../components/card/C.Month/MonthBottomConsumption";
-import { useState, useRef, useEffect } from "react";
 import { Dispatch, SetStateAction } from "react";
-import { MonthSumData } from "../pages/consumption/monthPage";
+import {
+  MonthConsumptionDataItem,
+  MonthSumData,
+} from "../pages/consumption/monthPage";
+import { GroupedData } from "../pages/consumption/monthPage";
+import { CashGroupedData } from "../pages/consumption/monthPage";
+import { CashMonthConsumptionDataItem } from "../pages/consumption/monthPage";
 
-export const ConsumptionBox = styled.div<ConsumptionBoxProps>`
+export const ConsumptionBox = styled.div`
   width: 50vw;
-  height: ${({ dynamicHeight }) => `calc(${dynamicHeight}+ 45vh)`};
-  //65vh, 아이템 갯수에 따라서 박스의 높이가 달라져야 함
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -20,63 +23,93 @@ export const ConsumptionBox = styled.div<ConsumptionBoxProps>`
   border-radius: 3rem;
 `;
 
-interface ConsumptionBoxProps extends React.HTMLAttributes<HTMLDivElement> {
-  dynamicHeight: string;
+export type CombinedItem = MonthConsumptionDataItem | CashMonthConsumptionDataItem;
+
+export interface CombinedData {
+  date: string;
+  data: CombinedItem[];
 }
 
-export interface MonthConsumptionDataItem {
-    // 객체의 속성에 대한 타입 선언
-    paymentId: number,
-    paymentTime: string,
-    paymentType: string,
-    counterPartyName: string,
-    amount: number,
-    purpose: string,
-    category: string,
-    accountId: number 
-  }
-  
 export default function MonthConsumptionContainer({
   years,
   month,
   setYears,
   setMonth,
-  monthConsumptionData,
   monthSumData,
-  groupedData
+  groupedData,
+  cashGroupedData,
 }: {
   years: number;
   month: number;
   setYears: Dispatch<SetStateAction<number>>;
   setMonth: Dispatch<SetStateAction<number>>;
-  monthConsumptionData: MonthConsumptionDataItem[]; // 객체를 담은 배열 형식으로 선언
-  monthSumData: MonthSumData | Record<string, never>
-  groupedData: MonthConsumptionDataItem[][]; //2차원 배열
-
+  monthSumData: MonthSumData | Record<string, never>;
+  groupedData: GroupedData[];
+  cashGroupedData: CashGroupedData[];
 }) {
-  const [dynamicHeight, setDynamicHeight] = useState("0");
-  const detailBoxRef = useRef<HTMLDivElement>(null);
+  //6월 데이터와 7월 데이터를 나눠서, 6월 박스의 높이만 커지게 하지 않게 합니다
+  const monthData = groupedData.filter(
+    (group) => parseInt(group.date.split("-")[1]) === month
+  );
+  const cashMonthData = cashGroupedData.filter(
+    (group) => parseInt(group.date.split("-")[1]) === month
+  );
 
-  useEffect(() => {
-    if (detailBoxRef.current && detailBoxRef.current.style.height) {
-      setDynamicHeight(detailBoxRef.current.style.height);
-    }
-  }, []);
+  // 계좌그룹핑 + 현금 그룹핑 데이터 합치기
+  const combinedData: CombinedData[] = combineDataByDate(
+    monthData,
+    cashMonthData
+  );
+
+  //console.log(combinedData);
 
   return (
-    <ConsumptionBox dynamicHeight={dynamicHeight}>
+    <ConsumptionBox>
       <MonthTopConsumption
         years={years}
         month={month}
         setYears={setYears}
         setMonth={setMonth}
       />
-      <MonthConsumptionDetail
-        detailBoxRef={detailBoxRef}
-        monthConsumptionData={monthConsumptionData}
-        groupedData = {groupedData}
-      />
-      <MonthBottomConsumption monthSumData={monthSumData}/>
+      <MonthConsumptionDetail combinedData={combinedData} />
+      <MonthBottomConsumption monthSumData={monthSumData} />
     </ConsumptionBox>
   );
+}
+
+/*
+{date: '2023-07-01', data: Array(2)} //계좌
+{date: '2023-07-01', data: Array(10)} //현금
+{date: '2023-07-01', data: Array(12)} 이렇게 나오면 좋겠다
+*/
+
+function combineDataByDate(
+  monthData: GroupedData[],
+  cashMonthData: CashGroupedData[]
+): CombinedData[] {
+
+  //빈객체를 초기값으로 설정
+  const combinedDataMap:{[date: string]:(MonthConsumptionDataItem|CashMonthConsumptionDataItem)[]} = {};
+
+  //계좌데이터 그룹별로 합치기
+  monthData.forEach((group)=>{
+  if(!combinedDataMap[group.date]){
+    combinedDataMap[group.date] =[];
+  }
+  combinedDataMap[group.date].push(...group.data);
+  });
+
+  //현금데이터 그룹별로 합치기
+  cashMonthData.forEach((group)=>{
+    if(!combinedDataMap[group.date]){
+      combinedDataMap[group.date]=[];
+    }
+    combinedDataMap[group.date].push(...group.data);
+  });
+
+  //CombinedData 형식으로 변환하여 배열담기
+  const combinedData = Object.entries(combinedDataMap).map(([date, data])=>({
+  date, data
+  }))
+  return combinedData;
 }
