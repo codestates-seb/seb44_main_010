@@ -38,6 +38,7 @@ export default function MonthConsumptionContainer({
   monthSumData,
   groupedData,
   cashGroupedData,
+  isLoading
 }: {
   years: number;
   month: number;
@@ -46,6 +47,7 @@ export default function MonthConsumptionContainer({
   monthSumData: MonthSumData | Record<string, never>;
   groupedData: GroupedData[];
   cashGroupedData: CashGroupedData[];
+  isLoading: boolean;
 }) {
   //6월 데이터와 7월 데이터를 나눠서, 6월 박스의 높이만 커지게 하지 않게 합니다
   const monthData = groupedData.filter(
@@ -71,7 +73,7 @@ export default function MonthConsumptionContainer({
         setYears={setYears}
         setMonth={setMonth}
       />
-      <MonthConsumptionDetail combinedData={combinedData} />
+      <MonthConsumptionDetail combinedData={combinedData} isLoading={isLoading}/>
       <MonthBottomConsumption monthSumData={monthSumData} />
     </ConsumptionBox>
   );

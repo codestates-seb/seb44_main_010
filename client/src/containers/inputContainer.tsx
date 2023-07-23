@@ -224,12 +224,8 @@ export default function InputContaine ({ setShowInput, handleFetchData }:InputCo
   };
 
   const handleCancelClick = () => {
-    // 각 상태값을 초기값으로 변경합니다.
-    setExpenditureSelected(true);
-    setCategory(null);
-    setContent("");
-    setPrice(null);
-    setSelectedDate(null);
+    // 입력창을 안보이게 합니다
+    setShowInput(false);
   };
 
   const offset = new Date().getTimezoneOffset() * 60000;
@@ -260,7 +256,7 @@ export default function InputContaine ({ setShowInput, handleFetchData }:InputCo
 
   return (
     <InputWrapper>
-      <Title>내역입력</Title>
+      <Title>현금내역 입력창</Title>
       <InputThings>
         <ButtonAlignment>
           <AddButton
