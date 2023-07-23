@@ -1,13 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
-
-interface UserResponseDto {
+export interface UserResponseDto {
   name: string;
   email: string;
   createdAt: string;
   updatedAt: string;
 }
 
-interface PropertyResponse {
+export interface PropertyResponse {
   propertyId: number;
   title: string;
   content: string;
@@ -16,7 +14,7 @@ interface PropertyResponse {
   userId: number;
 }
 
-interface Account {
+export interface Account {
   accountId: number;
   acoountType: string;
   balance: number;
@@ -27,7 +25,7 @@ interface Account {
   cardNum: string;
 }
 
-interface MonthlyResponseDto {
+export interface MonthlyResponseDto {
   accountsList: Account[];
   input: number;
   stock: number;
@@ -37,7 +35,7 @@ interface MonthlyResponseDto {
   monthSum: number[];
 }
 
-interface ApiResponse {
+export interface ApiResponse {
   data: {
     userResponseDto: UserResponseDto;
     propertyResponse: PropertyResponse[];
@@ -46,22 +44,4 @@ interface ApiResponse {
   states: string;
 }
 
-export type ProfileData = ApiResponse | null;
-
-const initialState: { profileData: ProfileData } = {
-  profileData: null,
-};
-
-const profile = createSlice({
-  name: "profile",
-  initialState,
-  reducers: {
-    addProfile(state, action) {
-      state.profileData = action.payload;
-    },
-  },
-});
-
-export const { addProfile } = profile.actions;
-
-export default profile;
+export type AssetData = ApiResponse | null;

@@ -1,14 +1,23 @@
 import styled from "styled-components";
-import axios from "axios";
-import {useState, useEffect, useRef} from "react";
+import axios, { AxiosResponse } from "axios";
+import { useState, useRef, useEffect } from "react";
+
 import DeleteIcon from "../../../assets/delete.svg";
 import YellowLeft from "../../../assets/yellowleft.svg";
 import YellowRight from "../../../assets/yellowright.svg";
+import Deposit from "../../../assets/svg/deposit.svg";
 
-interface Item {
+import { Account, ApiResponse } from "../../../interface/asset";
+import { getLocalstorage } from "../../../util/localStorage";
+
+interface El {
   id: number;
   bank_name: string;
   bank_amount: number;
+}
+
+interface SavingAccountProps {
+  assetdata?: ApiResponse["data"];
 }
 
 const Main = styled.div`
@@ -34,6 +43,8 @@ const SavingAccountContainer = styled.div`
   border: 1px solid #d9d9d9;
   padding: 3rem;
   margin: 5rem;
+
+  position: relative;
 `;
 
 const Top = styled.div`
@@ -42,7 +53,7 @@ const Top = styled.div`
 
 const BankName = styled.div`
   font-size: 4rem;
-  margin: 2rem;
+  margin-bottom: 2rem;
   color: #414141;
 `;
 
@@ -54,6 +65,10 @@ const Delete = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   margin-left: 10rem;
+
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
 `;
 
 const BankAmount = styled.div`
@@ -83,39 +98,69 @@ const RightButton = styled.img`
   margin-left: 5rem;
 `;
 
-export default function SavingAccount() {
-  const [data, setData] = useState<Item[]>([]);
-  const [displayedData, setDisplayedData] = useState<Item[]>([]);
+const BankImg = styled.div`
+  background: url(${Deposit});
+  background-size: 100% 100%;
+  background-position: center;
+
+  margin-right: 2rem;
+
+  width: 4rem;
+  height: 4rem;
+`;
+
+export default function SavingAccount({ assetdata }: SavingAccountProps) {
+  // const [data, setData] = useState<El[]>([]);
+  const [displayedData, setDisplayedData] = useState<Account[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const SavingAccountBoxRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    getData();
-  }, []);
+  const accountsList = assetdata?.monthlyResponseDto.accountsList;
+  console.log(accountsList?.length);
+
+  const depositFilter = accountsList?.filter((e) => {
+    return e.acoountType === "입출금";
+  });
+  console.log(depositFilter);
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   useEffect(() => {
-    if (data.length > 0) {
-      setDisplayedData(data.slice(currentIndex, currentIndex + 3));
+    if (depositFilter && depositFilter.length > 0) {
+      setDisplayedData(depositFilter.slice(currentIndex, currentIndex + 3));
     }
-  }, [data, currentIndex]);
+  }, [depositFilter, currentIndex]);
 
-  const getData = async () => {
-    try {
-      const response = await axios.get("http://localhost:3000/account");
-      const data = response.data;
-      setData(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getData = async () => {
+  //   try {
+  //     const response = await axios.get("http://localhost:3000/account");
+  //     const data = response.data;
+  //     setData(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const handleDelete = async (id: number) => {
-    try {
-      await axios.delete(`http://localhost:3000/account/${id}`);
-      getData();
-    } catch (error) {
-      console.log(error);
-    }
+  const handleDelete = (id: number) => {
+    const currentData = new Date();
+    const currentMonth = currentData.getMonth() + 1;
+    const userId = getLocalstorage("userId");
+    const acessToken = getLocalstorage("acessToken");
+
+    axios.defaults.headers.common["Authorization"] = acessToken;
+    axios;
+    axios.delete(`/asset/myInfo/${userId}/${currentMonth}/${id}`).catch((err) => {
+      if (err.response) {
+        const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
+        window.alert(errMessage);
+        console.log(errMessage);
+      } else {
+        console.error(err);
+        window.alert("An unknown error occurred.");
+      }
+    });
   };
 
   const handlePrevious = () => {
@@ -125,22 +170,23 @@ export default function SavingAccount() {
   };
 
   const handleNext = () => {
-    if (currentIndex + 3 < data.length) {
+    if (currentIndex + 3 < (depositFilter?.length ?? 0)) {
       setCurrentIndex(currentIndex + 3);
     }
   };
 
   return (
     <Main ref={SavingAccountBoxRef}>
-      {displayedData.length > 0 ? (
+      {(depositFilter?.length ?? 0) > 0 ? (
         <SavingAccountList>
-          {displayedData.map((item: Item) => (
-            <SavingAccountContainer key={item.id}>
+          {depositFilter?.map((el) => (
+            <SavingAccountContainer key={el.accountId}>
+              {/* <Delete onClick={() => handleDelete(el.accountId)} /> */}
               <Top>
-                <BankName>{item.bank_name}</BankName>
-                <Delete onClick={() => handleDelete(item.id)} />
+                <BankImg />
+                <BankName>{el.bankname}</BankName>
               </Top>
-              <BankAmount>{item.bank_amount}원</BankAmount>
+              <BankAmount>{el.balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</BankAmount>
             </SavingAccountContainer>
           ))}
         </SavingAccountList>
