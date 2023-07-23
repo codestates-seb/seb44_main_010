@@ -15,9 +15,10 @@ const LoginCompletedPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const reduxTest = useSelector((state: RootState) => {
-    return state.proFile;
-  });
+  // const reduxTest = useSelector((state: RootState) => {
+  //   return state.proFile;
+  // });
+  // console.log(reduxTest);
 
   const isLogin = useSelector((state: RootState) => {
     return state.loginSlice.isLogined;
@@ -27,17 +28,6 @@ const LoginCompletedPage: React.FC = () => {
     if (!isLogin) {
       navigate("/");
     } else {
-      // axios
-      //   .get("/user/login")
-      //   .then((res) => {
-      //     console.log(res.data);
-      //     // setUseName(res.data.username);
-      //   })
-      //   .catch((err) => {
-      //     const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
-      //     window.alert(errMessage);
-      //   });
-
       setUseName(getLocalstorage("username"));
     }
   }, [isLogin, navigate]);
@@ -56,26 +46,21 @@ const LoginCompletedPage: React.FC = () => {
         },
       })
       .then((res) => {
+        // console.log(res.data);
         dispatch(addProfile(res.data));
-        console.log(res.data);
-        console.log(reduxTest);
       })
       .catch((err) => {
-        const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
-        window.alert(errMessage);
+        if (err.response) {
+          const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
+          window.alert(errMessage);
+        } else {
+          console.error(err);
+          window.alert("An unknown error occurred.");
+        }
       });
 
     navigate("/");
   };
-
-  // const a = useSelector((state) => {
-  //   return state;
-  // });
-
-  // console.log(a);
-
-  // console.log(currentMonth);
-  // console.log("1");
 
   return (
     <S.Main>

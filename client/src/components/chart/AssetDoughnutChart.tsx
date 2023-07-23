@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartOptions } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -42,7 +44,7 @@ const options: ChartOptions<"doughnut"> = {
           const total: number = (context.dataset.data as number[]).reduce((acc, cur) => acc + cur, 0);
           const percentage: string = ((count / total) * 100).toFixed(2);
           const label: string = context.label;
-          const info = `${label}: ${count}만원 (${percentage}%)`;
+          const info = `${label}: ${count}원 (${percentage}%)`;
           return info;
         },
       },
@@ -67,12 +69,22 @@ const ChartWrapper = styled.div`
 `;
 
 export default function AssetDoughnutChart() {
+  const profileInput = useSelector((state: RootState) => {
+    return state.proFile.profileData?.data?.monthlyResponseDto?.input;
+  });
+  const profileStock = useSelector((state: RootState) => {
+    return state.proFile.profileData?.data?.monthlyResponseDto?.stock;
+  });
+  const profileEtc = useSelector((state: RootState) => {
+    return state.proFile.profileData?.data?.monthlyResponseDto?.etc;
+  });
+
   const data = {
     labels: ["입출금", "증권", "기타"],
     datasets: [
       {
         label: "test",
-        data: [40, 20, 35],
+        data: [profileInput, profileStock, profileEtc],
         backgroundColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
         borderColor: ["#ffeb9b", "#b5f2ff", "#c5f2ba"],
         circumference: 180,

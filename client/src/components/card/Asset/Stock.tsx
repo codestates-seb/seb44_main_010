@@ -1,14 +1,22 @@
 import styled from "styled-components";
 import axios from "axios";
-import {useState, useEffect, useRef} from "react";
+import { useState, useRef } from "react";
+
 import DeleteIcon from "../../../assets/delete.svg";
 import YellowLeft from "../../../assets/yellowleft.svg";
 import YellowRight from "../../../assets/yellowright.svg";
+import Stockimg from "../../../assets/svg/stock.svg";
 
-interface Item {
-  id: number;
-  stock_name: string;
-  stock_amount: number;
+import { ApiResponse } from "../../../interface/asset";
+
+// interface Item {
+//   id: number;
+//   stock_name: string;
+//   stock_amount: number;
+// }
+
+interface SavingAccountProps {
+  assetdata?: ApiResponse["data"];
 }
 
 const Main = styled.div`
@@ -34,10 +42,13 @@ const StockContainer = styled.div`
   border: 1px solid #d9d9d9;
   padding: 3rem;
   margin: 5rem;
+
+  position: relative;
 `;
 
 const Top = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const StockName = styled.div`
@@ -54,6 +65,10 @@ const Delete = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   margin-left: 10rem;
+
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
 `;
 
 const StockAmount = styled.div`
@@ -83,36 +98,55 @@ const RightButton = styled.img`
   margin-left: 5rem;
 `;
 
-export default function Stock() {
-  const [data, setData] = useState<Item[]>([]);
-  const [displayedData, setDisplayedData] = useState<Item[]>([]);
+const StockImg = styled.div`
+  background: url(${Stockimg});
+  background-size: 100% 100%;
+  background-position: center;
+
+  /* margin-right: 2rem; */
+
+  width: 6rem;
+  height: 6rem;
+`;
+
+export default function Stock({ assetdata }: SavingAccountProps) {
+  // const [data, setData] = useState<Item[]>([]);
+  // const [displayedData, setDisplayedData] = useState<Item[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const StockBoxRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    getData();
-  }, []);
+  const accountsList = assetdata?.monthlyResponseDto.accountsList;
+  console.log(accountsList?.length);
 
-  useEffect(() => {
-    if (data.length > 0) {
-      setDisplayedData(data.slice(currentIndex, currentIndex + 3));
-    }
-  }, [data, currentIndex]);
+  const stockFilter = accountsList?.filter((e) => {
+    return e.acoountType === "증권";
+  });
+  console.log(stockFilter);
 
-  const getData = async () => {
-    try {
-      const response = await axios.get("http://localhost:3000/stock");
-      const data = response.data;
-      setData(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // useEffect(() => {
+  //   getData();
+  // }, []);
+
+  // useEffect(() => {
+  //   if (data.length > 0) {
+  //     setDisplayedData(data.slice(currentIndex, currentIndex + 3));
+  //   }
+  // }, [data, currentIndex]);
+
+  // const getData = async () => {
+  //   try {
+  //     const response = await axios.get("http://localhost:3000/stock");
+  //     const data = response.data;
+  //     setData(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const handleDelete = async (id: number) => {
     try {
       await axios.delete(`http://localhost:3000/stock/${id}`);
-      getData();
+      // getData();
     } catch (error) {
       console.log(error);
     }
@@ -125,22 +159,23 @@ export default function Stock() {
   };
 
   const handleNext = () => {
-    if (currentIndex + 3 < data.length) {
+    if (currentIndex + 3 < (stockFilter?.length ?? 0)) {
       setCurrentIndex(currentIndex + 3);
     }
   };
 
   return (
     <Main ref={StockBoxRef}>
-      {displayedData.length > 0 ? (
+      {(stockFilter?.length ?? 0) > 0 ? (
         <StockList>
-          {displayedData.map((item: Item) => (
-            <StockContainer key={item.id}>
+          {stockFilter?.map((el) => (
+            <StockContainer key={el.accountId}>
+              {/* <Delete onClick={() => handleDelete(el.accountId)} /> */}
               <Top>
-                <StockName>{item.stock_name}</StockName>
-                <Delete onClick={() => handleDelete(item.id)} />
+                <StockImg />
+                <StockName>{el.bankname}</StockName>
               </Top>
-              <StockAmount>{item.stock_amount}원</StockAmount>
+              <StockAmount>{el.balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</StockAmount>
             </StockContainer>
           ))}
         </StockList>

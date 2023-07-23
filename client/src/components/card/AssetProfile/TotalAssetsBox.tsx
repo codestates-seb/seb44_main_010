@@ -1,4 +1,6 @@
-import {styled} from "styled-components";
+import { useSelector } from "react-redux";
+import { styled } from "styled-components";
+import { RootState } from "../../../redux/store";
 
 const Main = styled.div`
   display: flex;
@@ -36,12 +38,20 @@ const TotalAsset = styled.div`
 `;
 
 export default function TotalAssetsBox() {
+  const profileTotal = useSelector((state: RootState) => {
+    return state.proFile.profileData?.data?.monthlyResponseDto?.total;
+  });
+  function formatNumberWithCommas(number: number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  const formattedProfile = formatNumberWithCommas(Number(profileTotal));
   return (
     <Main>
       <TotalContainer>
         <Title>
           <TotalName>총 자산</TotalName>
-          <TotalAsset>7,000,000원</TotalAsset>
+          <TotalAsset>{formattedProfile}원</TotalAsset>
         </Title>
       </TotalContainer>
     </Main>

@@ -2,15 +2,17 @@ import { useSelector } from "react-redux";
 import { styled } from "styled-components";
 import { RootState } from "../../../redux/store";
 
+import profileImg from "../../../assets/svg/profile1.svg";
+
 const Main = styled.div`
   /* border: 1px solid; */
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 3rem;
-  width: 20vw;
   background-color: #ffffff;
-  height: 15vh;
+  /* width: 20vw; */
+  /* height: 15vh; */
 `;
 
 const UserContainer = styled.div`
@@ -18,47 +20,68 @@ const UserContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 20vw;
-  height: 15vh;
+  padding: 3rem 10rem 3rem 10rem;
+  /* width: 80%; */
+  /* height: 15vh; */
 `;
 
 const UserImg = styled.div`
+  /* border: 2px solid #e1e1e1; */
   display: flex;
   justify-content: center;
   align-items: center;
   width: 20rem;
   height: 20rem;
-  border: 2px solid #e1e1e1;
   border-radius: 50%;
 `;
 
+const ProfileImg = styled.div`
+  background: url(${profileImg});
+  background-size: 100% 100%;
+  background-position: center;
+
+  width: 100%;
+  height: 100%;
+`;
+
 const Title = styled.div`
+  margin-left: 2rem;
   display: flex;
   justify-content: center;
   flex-direction: column;
 `;
 
 const UserName = styled.div`
+  font-weight: 600;
   font-size: 6rem;
+
+  span {
+    font-size: 6rem;
+    font-weight: 300;
+  }
 `;
 
 const Text = styled.div`
   font-size: 3rem;
-  margin-top: 5rem;
+  margin-top: 2rem;
 `;
 
 export default function UserBox() {
   const profileName = useSelector((state: RootState) => {
-    return state.proFile.data.userResponseDto.name;
+    return state.proFile.profileData?.data?.userResponseDto?.name;
   });
-  // const accountsList = profileName?.accountsList;
   // console.log(profileName);
   return (
     <Main>
       <UserContainer>
-        <UserImg>프로필 사진</UserImg>
+        <UserImg>
+          <ProfileImg />
+        </UserImg>
         <Title>
-          <UserName>{profileName}님</UserName>
+          <UserName>
+            {profileName}
+            <span>님</span>
+          </UserName>
           <Text>좋은 하루 되세요!</Text>
         </Title>
       </UserContainer>

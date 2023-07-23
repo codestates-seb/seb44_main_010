@@ -1,33 +1,46 @@
+import { useSelector } from "react-redux";
 import { styled } from "styled-components";
+import { RootState } from "../../../redux/store";
+
+import stockImg from "../../../assets/svg/stock.svg";
 
 const Main = styled.div`
+  /* border: 2px solid #e1e1e1; */
+  /* margin-bottom: 2rem; */
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid #e1e1e1;
   border-radius: 10rem;
   width: 90%;
   background-color: #b5f2ff;
-  margin-bottom: 2rem;
 `;
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-around;
-  width: 50vw;
+  justify-content: space-between;
+  width: 90%;
   margin: 1rem;
 `;
 
 const Img = styled.div`
+  /* border: 2px solid #e1e1e1; */
+  /* background-color: #ffffff; */
   display: flex;
   justify-content: center;
   align-items: center;
   width: 10rem;
   height: 10rem;
-  border: 2px solid #e1e1e1;
-  background-color: #ffffff;
   border-radius: 50%;
   margin-right: 2rem;
+`;
+
+const StockImg = styled.div`
+  background: url(${stockImg});
+  background-size: 100% 100%;
+  background-position: center;
+
+  width: 10rem;
+  height: 7rem;
 `;
 
 const Title = styled.div`
@@ -57,15 +70,36 @@ const Text = styled.div`
 `;
 
 export default function StockBox() {
+  const profileStock = useSelector((state: RootState) => {
+    return state.proFile.profileData?.data?.monthlyResponseDto?.stock;
+  });
+
+  function formatNumberWithCommas(number: number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+  const formattedProfile = formatNumberWithCommas(Number(profileStock));
+
+  const profileTotal = useSelector((state: RootState) => {
+    return state.proFile.profileData?.data?.monthlyResponseDto?.total;
+  });
+
+  const percent = (a: number, b: number) => {
+    return Math.floor((a / b) * 100);
+  };
+
+  const stockPercent = percent(Number(profileStock), Number(profileTotal));
+
   return (
     <Main>
       <Container>
         <Title>
-          <Img>Img</Img>
-          <Text>증권 25%</Text>
+          <Img>
+            <StockImg />
+          </Img>
+          <Text>증권 {stockPercent}%</Text>
         </Title>
         <Contents>
-          <Total>250,000원</Total>
+          <Total>{formattedProfile}원</Total>
           {/* <Text>지난 달보다 +200,000원</Text> */}
         </Contents>
       </Container>

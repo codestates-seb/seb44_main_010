@@ -18,6 +18,11 @@ export default function IntroductionPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const reduxText = useSelector((state: RootState) => {
+    return state.proFile;
+  });
+  console.log(reduxText);
+
   const outerDivRef = useRef<HTMLDivElement>(null);
   // const [scrollIndex, setScrollIndex] = useState(1);
   const isLogined = useSelector((state: RootState) => {
@@ -185,6 +190,8 @@ export default function IntroductionPage() {
         const { deltaY } = e;
         const { scrollTop } = outerDivRef.current; // 스크롤 위쪽 끝부분 위치
         const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
+
+        console.log(deltaY);
 
         if (deltaY > 0) {
           // 스크롤 내릴 때
