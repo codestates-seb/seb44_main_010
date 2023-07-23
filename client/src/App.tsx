@@ -4,9 +4,13 @@ import { BrowserRouter } from "react-router-dom";
 
 import ContentWithFooter from "./ContentWithFooter";
 import axios from "axios";
+import { getLocalstorage } from "./util/localStorage";
+const acessToken = getLocalstorage("acessToken");
 
-axios.defaults.baseURL = "https://83c0-2406-5900-1009-4081-e488-faee-550f-b3a3.ngrok-free.app";
+axios.defaults.baseURL = "https://ef8b-61-43-126-143.ngrok-free.app/";
 axios.defaults.withCredentials = true;
+axios.defaults.headers.common["Authorization"] = acessToken;
+
 
 function App() {
   return (

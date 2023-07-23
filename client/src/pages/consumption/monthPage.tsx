@@ -6,94 +6,159 @@ import {
   Grid,
   ContentContainer,
   SideButtonsContainer,
-} from '../../pages/consumption/monthPageStyled';
+} from "../../pages/consumption/monthPageStyled";
 import { useState, useEffect } from "react";
 import { monthRender } from "../../api/index";
-import { MonthConsumptionDataItem } from "../../containers/monthConsumptionContainer";
+import { monthSumRender } from "../../api/index";
+export type MonthSumData = [number, number, number];
 
-export interface MonthSumData {
+export interface PaymentResponse {
+  accountId: number;
+  amount: number;
+  category: string;
+  counterPartyName: string;
+  paymentId: number;
+  paymentTime: string;
+  paymentType: string;
+  purpose: string;
+}
+
+export interface MonthConsumptionDataItem {
+  paymentResponse: PaymentResponse;
+  bankName: string;
+}
+
+export interface GroupedData {
   date: string;
-  income: number;
-  expense: number;
-  total: number;
+  data: MonthConsumptionDataItem[];
+}
+
+export interface CashMonthConsumptionDataItem {
+  amount: number;
+  category: string;
+  paymentId: number;
+  paymentTime: string;
+  paymentType:string;
+  purpose: string;
+  propertyId: number;
+}
+
+export interface CashGroupedData{
+  date: string;
+  data: CashMonthConsumptionDataItem[];
 }
 
 export default function MonthPage() {
-  
-  //const [userId, setUserId] = useState(1);
+  const [userId, setUserId] = useState(1);
   const [years, setYears] = useState(2023);
   const [month, setMonth] = useState(7);
   const [monthConsumptionData, setMonthConsumptionData] = useState([]);
-  const [monthSumData, setMonthSumData] = useState<MonthSumData>({
-    date: "",
-    income: 0,
-    expense: 0,
-    total: 0
-  });
-  const [groupedData, setGroupedData] = useState<MonthConsumptionDataItem[][]>([]);
+  const [cashMonthConsumptionData, setCashMonthConsumptionData] = useState([]);
+  const [monthSumData, setMonthSumData] = useState<MonthSumData>([0, 0, 0]);
+  const [groupedData, setGroupedData] = useState<GroupedData[]>([]);
+  const [cashGroupedData, setCashGroupedData] = useState<CashGroupedData[]>([]);
+
+  // 1. 서버에서 준 데이터 그대로 받기
+  useEffect(() => {
+    const handleFetchData = async() => {
+        try {
+          const response = await monthRender(userId, month);
+          //console.log(response.data.data)
+          //console.log(response.data.data.paymentBankResponses)
+          setMonthConsumptionData(response.data.data.paymentBankResponses);
+          setCashMonthConsumptionData(response.data.data.cashPayments);
+          setUserId(1); //userId는 로그인 유저에 따라 달라질 것임
+        }
+        catch(error) {
+          // 에러 처리 로직
+          console.log(error);
+        }
+    };
+    handleFetchData();
+  }, [userId, month]);
 
 
   
-// 1. 서버에서 준 데이터 그대로
-useEffect(() => {
-  const handleFetchData = () => {
-    monthRender(1, month) 
+  //2-1 날짜 기준으로 데이터그룹핑
+  useEffect(() => {
+    const groupByDate = (data: MonthConsumptionDataItem[]): GroupedData[] => {
+      const groupedData: { [date: string]: MonthConsumptionDataItem[] } = {};
+      data.forEach((item) => {
+        const date = item.paymentResponse.paymentTime.split("T")[0];
+        if (!groupedData[date]) {
+          groupedData[date] = [];
+        }
+        groupedData[date].push(item);
+      });
+      return Object.entries(groupedData).map(([date, data]) => ({
+        date,
+        data,
+      }));
+    };
+    setGroupedData(groupByDate(monthConsumptionData));
+  }, [monthConsumptionData]);
+
+  //2-2 현금 날짜 기준으로 데이터 그룹핑
+  useEffect(()=>{
+    const cashGroupByDate = (data: CashMonthConsumptionDataItem[]): CashGroupedData[] =>{
+    const groupedData: {[date: string]: CashMonthConsumptionDataItem[]} = {};
+    data.forEach((item)=>{
+      const date = item.paymentTime.split("T")[0];
+      if(!groupedData[date]){
+        groupedData[date] =[];
+      }
+        groupedData[date].push(item);
+    })
+    return Object.entries(groupedData).map(([date, data]) => ({
+      date,
+      data,
+    }))
+    }
+    setCashGroupedData(cashGroupByDate(cashMonthConsumptionData));
+  }, [cashMonthConsumptionData])
+ 
+  //3. 월별 합계내역
+  useEffect(() => {
+    monthSumRender(userId, month)
       .then((response) => {
-        setMonthConsumptionData(response.data.data);
-        setMonthSumData(response.data.data.monthSummary); 
+        //console.log(response.data.data.monthlyResponseDto.monthSum)
+        setMonthSumData(response.data.data.monthlyResponseDto.monthSum);
       })
       .catch((error) => {
-        // 에러 처리 로직
         console.log(error);
       });
-  };
-  handleFetchData();
-}, [month]); 
+  }, [month, userId]);
 
- //2. 날짜 기준으로 데이터 그룹핑
- useEffect(() => {
-  const groupByDate = (data: MonthConsumptionDataItem[]): { [key: string]: MonthConsumptionDataItem[] } => {
-    return data.reduce((acc: { [key: string]: MonthConsumptionDataItem[] }, item: MonthConsumptionDataItem) => {
-      const date = item.paymentTime.split('T')[0];
-
-      if (!acc[date]) {
-        acc[date] = [];
-      }
-
-      acc[date].push(item);
-
-      return acc;
-    }, {});
-  };
-
-  setGroupedData(Object.values(groupByDate(monthConsumptionData)));
-}, [monthConsumptionData]);
-
+  //console.log(monthConsumptionData) 
+  //console.log(groupedData) 
+  //console.log(cashMonthConsumptionData) 
+  //console.log(cashGroupedData)
+  
 
   return (
     <>
-    <ConsumptionHeader />
-    <MonthPageContainer>
-      <ContentContainer>
-        <Grid>
+      <ConsumptionHeader />
+      <MonthPageContainer>
+        <ContentContainer>
+          <Grid>
             <div style={{ width: "25vw", height: "68vh", border: "1px solid" }}>
               자산프로필
             </div>
-          <MonthConsumptionContainer 
-            years={years}
-            month={month}
-            setYears={setYears}
-            setMonth={setMonth}
-            monthConsumptionData={monthConsumptionData}
-            monthSumData={monthSumData}
-            groupedData={groupedData}
-          />
-        </Grid>
-        <SideButtonsContainer>
-          <SideButtons />
-        </SideButtonsContainer>
-      </ContentContainer>
-    </MonthPageContainer>
+            <MonthConsumptionContainer
+              years={years}
+              month={month}
+              setYears={setYears}
+              setMonth={setMonth}
+              monthSumData={monthSumData}
+              groupedData={groupedData}
+              cashGroupedData={cashGroupedData}
+            />
+          </Grid>
+          <SideButtonsContainer>
+            <SideButtons />
+          </SideButtonsContainer>
+        </ContentContainer>
+      </MonthPageContainer>
     </>
   );
 }

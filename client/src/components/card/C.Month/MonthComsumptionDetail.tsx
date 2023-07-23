@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import dot from "../../../assets/Rectangle 80.svg";
 import { useEffect } from "react";
-import { MonthConsumptionDataItem } from "../../../containers/monthConsumptionContainer.tsx";
+import { useRef } from "react";
+import { CombinedData } from "../../../containers/monthConsumptionContainer.tsx";
+import { CombinedItem } from "../../../containers/monthConsumptionContainer.tsx";
 
 const ConsumptionDetailBox = styled.div`
   width: 50vw;
-  border: 1px solid;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,26 +18,22 @@ const ConsumptionDetailBox = styled.div`
 `;
 
 const ConsumptionDetailContainer = styled.div`
-  height: auto;
   width: 40vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 5rem;
-  border-bottom: 1px solid #DDDDDD;
+  border-bottom: 1px solid #dddddd;
 
   &:last-child {
     border-bottom: none;
   }
 
-
-
   img {
     width: 1vh;
     height: 1vh;
   }
-
 `;
 
 const DateContainer = styled.div`
@@ -67,7 +64,7 @@ const NameContainer = styled.div`
 const PriceContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content:center;
+  justify-content: center;
   align-items: flex-end;
   height: 5vh;
   width: 50%;
@@ -90,57 +87,85 @@ const 없다 = styled.div`
 
 const DayItem = styled.div`
   display: flex;
-  flex-direction:row;
-  align-items:center;
-  justify-content:center;
-  width:100%;
-  height:100%;
-`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 5vh; // 아이템 한개당 정확한 높이를 명시해주기
+`;
 
 export default function MonthConsumptionDetail({
-  detailBoxRef,
-  monthConsumptionData,
-  groupedData,
+  combinedData,
 }: {
-  detailBoxRef: React.RefObject<HTMLDivElement>;
-  monthConsumptionData: MonthConsumptionDataItem[];
-  groupedData: MonthConsumptionDataItem[][];
+  combinedData: CombinedData[];
 }) {
-  useEffect(() => {
-    const setBoxHeight = () => {
-      if (detailBoxRef.current) {
-        const itemHeight = 4.5;
-        const itemCount = groupedData.reduce((count, group) => count + group.length, 0);
-        const calculatedHeight = itemHeight * itemCount + 4 * itemCount;
-        detailBoxRef.current.style.height = `${calculatedHeight}vh`;
-      }
-    };
-    setBoxHeight();
-  }, [monthConsumptionData]);
+  const detailBoxRef = useRef<HTMLDivElement>(null);
 
-  return monthConsumptionData.length === 0 ? (
+  useEffect(() => {
+    if (detailBoxRef.current) {
+      const itemCount =
+        combinedData?.reduce(
+          (height, group) => height + group.data.length,
+          0
+        ) || 0;
+      const 날짜갯수 = combinedData.length;
+      const calculatedHeight = (itemCount + 날짜갯수 * 2 - 7) * 5;
+      detailBoxRef.current.style.height = `${calculatedHeight}vh`;
+      //console.log(itemCount)
+    }
+  }, [combinedData]);
+
+  return combinedData.length === 0 ? (
     <없다>소비 내역이 없습니다.</없다>
   ) : (
     <ConsumptionDetailBox ref={detailBoxRef}>
-      {groupedData.map((group, index) => (
-        <ConsumptionDetailContainer key={index} >
-          <DateContainer>
-            {parseInt(group[0].paymentTime.split("-")[2])}일
-          </DateContainer> {/* 날짜 표시 */}
-          {group.map((item)=> (
-            <DayItem>
+      {combinedData.map((group, index) => (
+        <ConsumptionDetailContainer key={index}>
+          <DateContainer>{parseInt(group.date.split("-")[2])}일</DateContainer>
+          {group.data.map((item) => renderItem(item))}
+          {/* <DayItem>
               <NameContainer>
-                <img src={dot} alt="icon"></img>
-                <div className="title">{item.purpose}</div>
+                <img src={dot} alt="icon" />
+                <div className="title">{item.}</div>
               </NameContainer>
               <PriceContainer>
-                <div className="price">{item.amount}</div>
-                <div className="source">{item.accountId}</div>
-              </PriceContainer>
-            </DayItem>
-          ))}
+                <div className="price">{item.}</div>
+                <div className="source">{item.}</div>
+          </PriceContainer>
+          </DayItem>*/}
         </ConsumptionDetailContainer>
       ))}
     </ConsumptionDetailBox>
   );
+}
+
+function renderItem(item: CombinedItem) {
+  if ("bankName" in item) {
+    //계좌 데이터 처리
+    return (
+      <DayItem>
+        <NameContainer>
+          <img src={dot} alt="icon" />
+          <div className="title">{item.paymentResponse.purpose}</div>
+        </NameContainer>
+        <PriceContainer>
+          <div className="price">{item.paymentResponse.amount}</div>
+          <div className="source">{item.bankName}</div>
+        </PriceContainer>
+      </DayItem>
+    );
+  } else {
+    return (
+      <DayItem>
+        <NameContainer>
+          <img src={dot} alt="icon" />
+          <div className="title">{item.purpose}</div>
+        </NameContainer>
+        <PriceContainer>
+          <div className="price">{item.amount}</div>
+          <div className="source">{item.paymentType}</div>
+        </PriceContainer>
+      </DayItem>
+    );
+  }
 }

@@ -17,7 +17,7 @@ export default function BudgetChart({ summarySumData, savedBudget }: BudgetChart
     datasets: [
       {
         label: "금액",
-        data: [savedBudget,  summarySumData[1]], // Replace 5000000 with a valid number for testing
+        data: [savedBudget,  -summarySumData[1]], // Replace 5000000 with a valid number for testing
         borderColor: ['#4FC0D0'],
         backgroundColor: ["#4FC0D0", "#A2FF86"],
       }

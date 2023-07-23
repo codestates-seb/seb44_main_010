@@ -80,18 +80,18 @@ export default function MonthBottomConsumption({ monthSumData }: {monthSumData: 
   return (
     Object.keys(monthSumData).length === 0 ? <EmptyBottomContainer /> :
      (
-        <BottomContainer key={monthSumData.date}>
+        <BottomContainer>
           <IncomeContainer>
             <div className="수입">수입</div>
-            <div className="수입액">{monthSumData.income}</div>
+            <div className="수입액">{monthSumData[0]}</div>
           </IncomeContainer>
           <SpenditureContainer>
             <div className="지출">지출</div>
-            <div className="지출액">{monthSumData.expense}</div>
+            <div className="지출액">{monthSumData[1]}</div>
           </SpenditureContainer>
           <SumContainer>
             <div className="합계">합계</div>
-            <div className="합계액">{monthSumData.total}</div>
+            <div className="합계액">{monthSumData[2]}</div>
           </SumContainer>
           </BottomContainer>
       )

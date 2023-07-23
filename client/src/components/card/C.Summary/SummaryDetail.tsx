@@ -26,7 +26,6 @@ export interface SummaryDetailProps {
 
 export default function SummaryDetail({ categoryData, summarySumData }: SummaryDetailProps) {
   
-  
   return (
     <SummaryBox>
       <ChartBox>
