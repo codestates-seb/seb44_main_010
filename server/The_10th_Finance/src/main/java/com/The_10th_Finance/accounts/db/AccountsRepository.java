@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccountsRepository extends JpaRepository<Accounts,Long> {
-    @Query("SELECT a FROM property_account a where a.accountId =:userId")
+    @Query("SELECT a FROM property_account a where a.userId =:userId")
     Optional<List<Accounts>> findMyAccount(@Param("userId") Long userId);
 
     @Query("select a.acoountType FROM property_account a where a.accountId =:accountId")

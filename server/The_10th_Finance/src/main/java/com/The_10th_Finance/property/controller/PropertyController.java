@@ -41,7 +41,7 @@ public class PropertyController {
         propertyService.deleteOne(id);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/patch/{id}")
     public Response.SuccessResponse patchTodo(@PathVariable(name = "id") @Positive Long id,
                                    @Valid @RequestBody PropertyPatch propertyPatch) {
         Property userCash = propertyService.getOne(id);

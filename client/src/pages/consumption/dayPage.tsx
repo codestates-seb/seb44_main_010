@@ -10,6 +10,7 @@ import {
 import { useState, useEffect } from "react";
 import InputContainer from "../../containers/inputContainer";
 import { dayRender } from "../../api/index";
+import { useCallback } from "react";
 
 export interface DaySumData {
   date: string;
@@ -18,13 +19,45 @@ export interface DaySumData {
   total: number;
 }
 
+export interface PaymentResponse {
+  accountId: number;
+  amount: number;
+  category: string;
+  counterPartyName: string;
+  paymentId: number;
+  paymentTime: string;
+  paymentType: string;
+  purpose: string;
+}
+
+export interface CashConsumption {
+  paymentTime: string;
+  paymentType: string;
+  amount: number;
+  purpose: string;
+  category: string;
+  paymentId: number;
+  propertyId: number;
+}
+
+export interface DayConsumptionItem {
+  paymentResponse: PaymentResponse;
+  bankName: string;
+  cashPayments: CashConsumption;
+}
+
 export default function DayPage() {
   const [showInput, setShowInput] = useState(false);
-  //const [userId, setUserId] = useState(1);
+  const [userId, setUserId] = useState(1);
   const [years, setYears] = useState(2023);
   const [month, setMonth] = useState(7);
   const [date, setDate] = useState(1);
-  const [dayConsumptionData, setDayConsumptionData] = useState([]);
+  const [dayConsumptionData, setDayConsumptionData] = useState<
+    DayConsumptionItem[]
+  >([]);
+  const [cashConsumptionData, setCashConsumptionData] = useState<
+    CashConsumption[]
+  >([]);
   const [daySumData, setDaySumData] = useState<DaySumData>({
     date: "",
     income: 0,
@@ -33,23 +66,26 @@ export default function DayPage() {
   });
 
   // 소비내역이 추가되면은 오른쪽 상세내역이 다시 렌더링되어야 함
-  useEffect(() => {
-    const handleFetchData = () => {
-      dayRender(1, month, date)
-        .then((response) => {
-          // 데이터 처리 로직
-          //console.log(response.data);
-          //console.log(response.data.data);
-          setDayConsumptionData(response.data.data.paymentResponses);
-          setDaySumData(response.data.data.daySummary);
-        })
-        .catch((error) => {
-          // 에러 처리 로직
-          console.log(error);
-        });
-    };
-    handleFetchData();
-  }, [date, month]);
+  const handleFetchData = useCallback(() => {
+    dayRender(userId, month, date)
+      .then((response) => {
+        // 데이터 처리 로직
+        //console.log(response.data.data);
+        setDayConsumptionData(response.data.data.paymentResponses); //계좌 결제내역
+        setCashConsumptionData(response.data.data.cashPayments); //현금 결제내역
+        setDaySumData(response.data.data.daySummary); //일일 합계
+        setUserId(1); //userId는 로그인 유저에 따라 달라질 것임
+      })
+      .catch((error) => {
+        // 에러 처리 로직
+        console.log(error);
+      })
+  },[userId, month, date]);
+
+ useEffect(()=>{
+  handleFetchData();
+ },[handleFetchData])
+  //cashConsumptionData 계속 서버요청이 되는상태임 => useCallBack으로 렌더링 최적화 한뒤, 해결!
 
   return (
     <>
@@ -58,7 +94,7 @@ export default function DayPage() {
         <ContentContainer>
           <Grid>
             {showInput ? (
-              <InputContainer />
+              <InputContainer setShowInput={setShowInput} handleFetchData={handleFetchData}/>
             ) : (
               <div
                 style={{ width: "25vw", height: "68vh", border: "1px solid" }}
@@ -76,6 +112,7 @@ export default function DayPage() {
               setMonth={setMonth}
               setDate={setDate}
               dayConsumptionData={dayConsumptionData}
+              cashConsumptionData={cashConsumptionData}
               daySumData={daySumData}
             />
           </Grid>

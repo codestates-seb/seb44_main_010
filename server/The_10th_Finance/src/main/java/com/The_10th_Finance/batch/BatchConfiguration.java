@@ -1,6 +1,6 @@
 //package com.The_10th_Finance.batch;
 //
-//import com.The_10th_Finance.payment.db.Payment;
+//import com.The_10th_Finance.payment.db.CashPayment;
 //import com.The_10th_Finance.payment.service.PaymentService;
 //import com.The_10th_Finance.user.db.User;
 //import com.The_10th_Finance.user.service.UserService;
@@ -49,10 +49,10 @@
 //    }
 //
 //    @Bean
-//    public ItemProcessor<User, Payment> processor() {
+//    public ItemProcessor<User, CashPayment> processor() {
 //        // User를 받아서 PaymentList를 만드는 로직
 //        return user -> {
-//            Payment payment = Payment.builder()
+//            CashPayment payment = CashPayment.builder()
 //                    .paymentTime(LocalDateTime.now())
 //                    .paymentType("입금")
 //                    .counterPartyName("John Doe")
@@ -66,10 +66,10 @@
 //    }
 //
 //    @Bean
-//    public ItemWriter<Payment> writer() {
+//    public ItemWriter<CashPayment> writer() {
 //        return payments -> {
 //            log.info("{}",payments.size());
-//            for (Payment payment : payments) {
+//            for (CashPayment payment : payments) {
 //                paymentService.post(payment);
 //            }
 //        };
@@ -77,9 +77,9 @@
 //
 //
 //    @Bean
-//    public Step myStep(ItemReader<User> reader, ItemProcessor<User, Payment> processor, ItemWriter<Payment> writer) {
+//    public Step myStep(ItemReader<User> reader, ItemProcessor<User, CashPayment> processor, ItemWriter<CashPayment> writer) {
 //        return stepBuilderFactory.get("myStep")
-//                .<User, Payment>chunk(1)
+//                .<User, CashPayment>chunk(1)
 //                .reader(reader)
 //                .processor(processor)
 //                .writer(writer)

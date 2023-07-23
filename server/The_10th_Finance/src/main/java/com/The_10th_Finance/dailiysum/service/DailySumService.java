@@ -37,7 +37,7 @@ public class DailySumService {
         dailySumRepository.save(dailySum);
     }
     @Transactional(readOnly = true)
-    public DailySum getDailySumListByMonthDate(List<Long> accountId, int month, int date) {
+    public List<DailySum> getDailySumListByMonthDate(List<Long> accountId, int month, int date) {
         return  dailySumRepository.findDailySumByAccountIdInAndMonthAndDate(accountId,month,date).orElseThrow(()->new BusinessLogicException(ExceptionCode.NOSUCHFOUND));
     }
 }

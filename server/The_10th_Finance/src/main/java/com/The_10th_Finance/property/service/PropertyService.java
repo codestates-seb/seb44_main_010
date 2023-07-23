@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Service
 @Slf4j
@@ -28,10 +30,13 @@ public class PropertyService {
        return propertyRepository.findById(id).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOSUCHFOUND));
     }
     @Transactional(readOnly = true)
-    public Property getByUserid(Long userid) {
-        return propertyRepository.findPropertiesByUserId(userid).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOSUCHFOUND));
+    public List<Property> getByUserid(Long userid) {
+        return propertyRepository.findPropertiesByUserId(userid).orElse(null);
     }
-
+    @Transactional(readOnly = true)
+    public Long getMoney(Long id) {
+        return propertyRepository.findPropertiesByPropertyType("현금",id).orElse(null);
+    }
     @Transactional
     public void deleteOne(Long id) {
         propertyRepository.deleteById(id);

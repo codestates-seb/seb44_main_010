@@ -33,6 +33,7 @@ public class UserController {
 
     @PostMapping("/captcha")
     public ResponseEntity verifyCaptcha(@RequestParam("token") String token){
+        log.info("{}",token);
         if(captchaService.verify(token)){
             return ResponseEntity.ok("success");
         }else{

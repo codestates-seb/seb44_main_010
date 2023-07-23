@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PaymentRepository extends JpaRepository<Payment,Long> {
-    @Query("select p from payment p where p.accountId=:accountIds AND month(p.paymentTime)=:month")
+    @Query("select p from payment p where p.accountId in :accountIds AND month(p.paymentTime)=:month")
     Optional<List<Payment>> findPaymentByAccountIdInAndMonth(@Param("accountIds")List<Long> accountIds, @Param("month")int month);
 
 
 
-    @Query("select p from payment p where p.accountId=:accountIds AND month(p.paymentTime)=:month AND day(p.paymentTime)=:day")
+    @Query("select p from payment p where p.accountId in :accountIds AND month(p.paymentTime)=:month AND day(p.paymentTime)=:day")
     Optional<List<Payment>> findPaymentByAccountIdInAndMonthAndDate(@Param("accountIds")List<Long> accountIds, @Param("month")int month,@Param("day")int day);
 }

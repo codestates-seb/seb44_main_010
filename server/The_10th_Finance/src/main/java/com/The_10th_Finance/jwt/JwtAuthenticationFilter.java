@@ -25,6 +25,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -67,8 +68,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setHeader("Access-Control-Expose-Headers", "Authorization, Refresh");
         response.setHeader("Authorization", "Bearer " + accessToken);  // (4-4)
         response.setHeader("Refresh", refreshToken);
-//                super.successfulAuthentication(request, response, chain, authResult);
-//        chain.doFilter(request, response);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+        String json = String.format("{\"username\":\"%s\", \"userId\":\"%s\"}", user.getName(), user.getId());
+        out.print(json);
+        out.flush();
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
 

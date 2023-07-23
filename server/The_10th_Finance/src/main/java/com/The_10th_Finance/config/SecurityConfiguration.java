@@ -9,7 +9,7 @@ import com.The_10th_Finance.handler.MemberAuthenticationSuccessHandler;
 import com.The_10th_Finance.jwt.JwtAuthenticationFilter;
 import com.The_10th_Finance.jwt.JwtTokenizer;
 import com.The_10th_Finance.jwt.JwtVerificationFilter;
-import com.The_10th_Finance.oauth2.OAuth2MemberSuccessHandler;
+//import com.The_10th_Finance.oauth2.OAuth2MemberSuccessHandler;
 import com.The_10th_Finance.user.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -53,7 +53,7 @@ public class SecurityConfiguration {
                 .cors(cors -> cors
                         .configurationSource(request -> {
                             CorsConfiguration configuration = new CorsConfiguration();
-                            configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+                            configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:5176"));
                             configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE","OPTIONS")); // 특정 HTTP 메서드 허용
                             configuration.setAllowedHeaders(Arrays.asList("*")); // 모든 헤더 허용
 //                            configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type", "Refresh"));
@@ -70,23 +70,30 @@ public class SecurityConfiguration {
                 .httpBasic().disable()   // (5)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .oauth2Login(oauth2 -> oauth2
-                .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, authorityUtils, userService)))
+//                .oauth2Login(oauth2 -> oauth2
+//                .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, authorityUtils, userService)))
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers("/h2-console/**").permitAll()
                         .antMatchers("/user/login").permitAll()
                         .antMatchers("/user/find").permitAll()
-                        .antMatchers("/consumption/daily/{userId}/{month}/{date}").permitAll()
-                        .antMatchers("/consumption//monthly/{userId}/{Month}").permitAll()
-                        .antMatchers("/consumption//day_upload").permitAll()
-                        .antMatchers("/main/dailysum/{userId}/{Month}/{Date}").permitAll()
-                        .antMatchers("/{accesstocken}/{refreshtocken}").permitAll()
-                        .antMatchers("/oauth2/authorization/google","oauth2/authorization/github").permitAll()
-                        .antMatchers("/payment/complete","/payment/sum","/account/post","/main/{userId}/{Month}").permitAll()
-                        .antMatchers("/user/profile","/user/captcha","/user/sign-up","/user/RefreshToken").permitAll()
-                        .antMatchers("/user/emailConfirm","/property/post").permitAll()
-                        .antMatchers("/main/daily/{userId}/{Month}/{Date}").permitAll()
-                        .antMatchers("/login/oauth2/code/google","/oauth2/authorization/github").permitAll()
+                        .antMatchers("/user/captcha").permitAll()
+                        .antMatchers("/user/emailConfirm").permitAll()
+                        .antMatchers("/bank/post").permitAll()
+                        .antMatchers("/dialogflow").permitAll()
+                        .antMatchers("/cashPayment/post").permitAll()
+                        .antMatchers("/asset/myInfo/{userId}/{Month}").hasRole("USER")
+                        .antMatchers("/account/post").hasRole("USER")
+                        .antMatchers("/property/patch/{id}").hasRole("USER")
+                        .antMatchers("/consumption/daily/{userId}/{month}/{date}").hasRole("USER")
+                        .antMatchers("/consumption/category/{userId}/{Month}").hasRole("USER")
+                        .antMatchers("/consumption//monthly/{userId}/{Month}").hasRole("USER")
+                        .antMatchers("/consumption/day_upload").hasRole("USER")
+                        .antMatchers("/consumption/calender/{userId}/{Month}").hasRole("USER")
+                        .antMatchers("/main/dailysum/{userId}/{Month}/{Date}").hasRole("USER")
+                        .antMatchers("/payment/complete","/payment/sum","/main/{userId}/{Month}").hasRole("USER")
+                        .antMatchers("/user/profile","/user/sign-up","/user/RefreshToken").permitAll()
+                        .antMatchers("/user/emailConfirm","/property/post").hasRole("USER")
+                        .antMatchers("/main/daily/{userId}/{Month}/{Date}").hasRole("USER")
                         .antMatchers("/login/error").permitAll()
                         .antMatchers("/user/mypage").hasRole("USER")
 //                        .antMatchers(HttpMethod.OPTIONS,"/**").permitAll() // OPTIONS 요청 허
