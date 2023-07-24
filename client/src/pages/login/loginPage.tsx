@@ -5,7 +5,7 @@ import * as S from "./loginPageStyled";
 export default function LoginPage() {
   return (
     <S.Main>
-      <LoginContainer></LoginContainer>
+      <LoginContainer />
     </S.Main>
   );
 }
