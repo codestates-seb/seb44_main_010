@@ -9,6 +9,8 @@ import Cash from "../../components/card/Asset/CashList";
 import AddProperty from "../../components/card/Asset/AddProperty";
 import AddCar from "../../components/card/Asset/AddCar";
 import AddCash from "../../components/card/Asset/AddCash";
+import EditCashContainer from "../../containers/EditCashContainer";
+
 import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,11 +23,24 @@ export default function AssetPage() {
   const refreshKey = useSelector((state: RootState) => {
     return state.refreshSlice.key;
   });
-  const reduxtest = useSelector((state) => state);
-  console.log(reduxtest);
   const [cashModal, setCashModal] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [cashClose, setCashClose] = useState(false);
+
   const dispatch = useDispatch();
+
+  const propertyResponse = useSelector((state: RootState) => {
+    return state.proFile.profileData?.data.propertyResponse;
+  });
+
+  const propertyFilter = propertyResponse?.find((el) => {
+    return el.propertyType === "현금";
+  });
+  // console.log(Boolean(propertyFilter));
+
+  useEffect(() => {
+    setCashClose(Boolean(propertyFilter));
+  }, [propertyFilter]);
 
   useEffect(() => {
     const currentData = new Date();
@@ -56,6 +71,11 @@ export default function AssetPage() {
         }
       });
   }, [dispatch, refreshKey]);
+
+  const closeModal = () => {
+    setEditing(false); // 모달 상태를 false로 업데이트하여 닫음
+  };
+  const [propertyType] = useState("");
 
   return (
     <>
@@ -89,8 +109,9 @@ export default function AssetPage() {
             <S.AddButtons>
               <AddProperty />
               <AddCar />
-              <AddCash cashModal={cashModal} setCashModal={setCashModal} editing={editing} setEditing={setEditing} />
+              {!cashClose && <AddCash cashModal={cashModal} setCashModal={setCashModal} editing={editing} setEditing={setEditing} />}
             </S.AddButtons>
+            {editing && <EditCashContainer closeModal={closeModal} propertyType={propertyType} />}
           </S.Grid>
         </S.ContentContainer>
       </S.AssetPageContainer>

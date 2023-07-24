@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import Cash from "../../../assets/Cash.svg";
 import CashContainer from "../../../containers/CashContainer";
-import EditCashContainer from "../../../containers/EditCashContainer";
+// import EditCashContainer from "../../../containers/EditCashContainer";
 
 const Main = styled.div`
   display: flex;
@@ -32,7 +32,7 @@ const Title = styled.div`
   font-size: 3rem;
 `;
 
-export default function AddCash({ cashModal, setCashModal, editing, setEditing }: { cashModal: boolean; setCashModal: (value: boolean) => void; editing: boolean; setEditing: (value: boolean) => void }) {
+export default function AddCash({ cashModal, setCashModal }: { cashModal: boolean; setCashModal: (value: boolean) => void; editing: boolean; setEditing: (value: boolean) => void }) {
   const [propertyType, setPropertyType] = useState("");
 
   const toggleModal = () => {
@@ -40,16 +40,16 @@ export default function AddCash({ cashModal, setCashModal, editing, setEditing }
     setPropertyType("현금");
   };
 
-  const closeModal = () => {
-    setEditing(!editing); // 모달 상태를 false로 업데이트하여 닫음
-  };
+  // const closeModal = () => {
+  //   setEditing(false); // 모달 상태를 false로 업데이트하여 닫음
+  // };
 
   return (
     <Main onClick={toggleModal}>
       <CashImg src={Cash}></CashImg>
       <Title>현금 추가하기</Title>
-      {cashModal && <EditCashContainer closeModal={toggleModal} propertyType={propertyType} />}
-      {editing && <CashContainer closeModal={closeModal} propertyType={propertyType} />}
+      {/* {editing && <EditCashContainer closeModal={closeModal} propertyType={propertyType} />} */}
+      {cashModal && <CashContainer closeModal={toggleModal} propertyType={propertyType} />}
     </Main>
   );
 }

@@ -83,7 +83,7 @@ const RightButton = styled.img`
   margin-left: 5rem;
 `;
 
-export default function Cash({ assetdata}: SavingAccountProps) {
+export default function Cash({ assetdata }: SavingAccountProps) {
   // const [data, setData] = useState<Item[]>([]);
   const [displayedData, setDisplayedData] = useState<PropertyResponse[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
