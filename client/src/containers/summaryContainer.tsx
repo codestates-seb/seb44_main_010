@@ -8,10 +8,10 @@ import { CategoryData } from "../pages/consumption/summaryPage";
 export const ConsumptionBox = styled.div`
   width: 50vw;
   height: 110vh;
-  border: 1px solid #dddddd;
   display: flex;
   flex-direction: column;
   border-radius: 15px;
+  box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.1);
 `;
 
 export interface MonthData {

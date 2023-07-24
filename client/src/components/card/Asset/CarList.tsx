@@ -49,7 +49,7 @@ const Top = styled.div`
 `;
 
 const CarName = styled.div`
-  font-size: 4rem;
+  font-size: 3.5rem;
   margin: 2rem;
   color: #414141;
 `;
@@ -65,7 +65,7 @@ const CarName = styled.div`
 // `;
 
 const CarAmount = styled.div`
-  font-size: 4rem;
+  font-size: 3.5rem;
 `;
 
 const PageButton = styled.div`

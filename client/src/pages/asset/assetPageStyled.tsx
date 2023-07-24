@@ -22,7 +22,7 @@ export const Grid = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 2px solid #e1e1e1;
+  box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.1);
   border-radius: 3rem;
   width: 50vw;
   margin-left: 7rem;
@@ -41,4 +41,6 @@ export const Title = styled.div`
 
 export const AddButtons = styled.div`
   display: flex;
+  margin-top: 15rem;
+  margin-bottom: 15rem;
 `;

@@ -42,7 +42,6 @@ const StockContainer = styled.div`
   border: 1px solid #d9d9d9;
   padding: 3rem;
   margin: 5rem;
-
   position: relative;
 `;
 
@@ -52,7 +51,7 @@ const Top = styled.div`
 `;
 
 const StockName = styled.div`
-  font-size: 4rem;
+  font-size: 3.5rem;
   margin: 2rem;
   color: #414141;
 `;
@@ -72,7 +71,7 @@ const StockName = styled.div`
 // `;
 
 const StockAmount = styled.div`
-  font-size: 4rem;
+  font-size: 3.5rem;
 `;
 
 const EmptyText = styled.div`

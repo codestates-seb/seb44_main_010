@@ -144,6 +144,7 @@ export default function CarContainer({closeModal, propertyType }: {closeModal: C
       .then((res) => {
         console.log(res.data);
         dispatch(incrementRefreshKey());
+        closeModal();
       })
       .catch((err) => {
         if (err.response) {
