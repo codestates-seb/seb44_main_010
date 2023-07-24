@@ -87,8 +87,8 @@ const ProfileModal = styled.div`
 
   position: absolute;
 
-  top: 15rem;
-  left: -14rem;
+  top: 12rem;
+  left: -16rem;
 `;
 
 const ProfileTextBox = styled.div<ProfileTextBoxProps>`
