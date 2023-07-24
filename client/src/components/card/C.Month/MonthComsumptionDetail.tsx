@@ -95,8 +95,10 @@ const DayItem = styled.div`
 `;
 
 export default function MonthConsumptionDetail({
+  isLoading,
   combinedData,
 }: {
+  isLoading: boolean;
   combinedData: CombinedData[];
 }) {
   const detailBoxRef = useRef<HTMLDivElement>(null);
@@ -115,7 +117,7 @@ export default function MonthConsumptionDetail({
     }
   }, [combinedData]);
 
-  return combinedData.length === 0 ? (
+  return isLoading === false && combinedData.length === 0 ? (
     <없다>소비 내역이 없습니다.</없다>
   ) : (
     <ConsumptionDetailBox ref={detailBoxRef}>

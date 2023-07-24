@@ -9,6 +9,10 @@ import {
 } from "../../pages/consumption/summaryPageStyled";
 import { useState, useEffect } from "react";
 import { summaryRender ,monthSumRender} from "../../api/index";
+import { getLocalstorage } from "../../util/localStorage";
+import Loading from "../../components/default/Loading";
+
+const userId = Number(getLocalstorage('userId'))
 
 export interface CategoryData {
   categoryincomeSumsMap: { [category: string]: number };
@@ -22,7 +26,7 @@ export interface SummaryChartdata {
 export type SummarySumData = [number, number, number];
 
 export default function SummaryPage() {
-  const [userId, setUserId] = useState(1);
+
   const [years, setYears] = useState<number>(2023);
   const [month, setMonth] = useState<number>(7);
   const [categoryData, setCategoryData] = useState<CategoryData>({
@@ -30,9 +34,11 @@ export default function SummaryPage() {
     categoryexpenseSumsMap: {},
   });
   const [summarySumData, setSummarySumData] = useState<SummarySumData>([0,0,0]);
+  const [isLoading, setIsLoading] = useState<boolean>(true); // 데이터 로딩상태 저장
 
   //1. 카테고리 상세내역
   useEffect(() => {
+    setIsLoading(true); //데이터 로딩 시작시 로딩표시
     const handleFetchData = () => {
       summaryRender(userId, month)
         .then((response) => {
@@ -40,19 +46,23 @@ export default function SummaryPage() {
           //console.log(response.data);
           //console.log(response.data.data);
           setCategoryData(response.data.data);
-          setUserId(1); //userId는 로그인 유저에 따라 달라질 것임
+
         })
         .catch((error) => {
           // 에러 처리 로직
           console.log(error);
+        })
+        .finally(()=>{
+          setIsLoading(false) ; // 로딩끝남 
         });
     };
     handleFetchData();
-  }, [userId,month]);
+  }, [month]);
 
   //2. 월별 합계 상세내역
   useEffect(()=>{
     const handleSumData = ()=>{
+      setIsLoading(true); //데이터 로딩 시작시 로딩표시
       monthSumRender(userId, month)
       .then((response)=>{
         setSummarySumData(response.data.data.monthlyResponseDto.monthSum);
@@ -60,13 +70,17 @@ export default function SummaryPage() {
       .catch((error)=>{
         console.log(error);
       })
-    };
+      .finally(()=>{
+        setIsLoading(false) ; // 로딩끝남 
+      });
+    }
     handleSumData();
-  },[userId, month])
+  },[month])
 
   return (
     <>
     <ConsumptionHeader />
+    {isLoading ? <Loading isLoading={isLoading} /> :(
     <DayPageContainer>
       <ContentContainer>
         <Grid>
@@ -87,6 +101,8 @@ export default function SummaryPage() {
         </SideButtonsContainer>
       </ContentContainer>
     </DayPageContainer>
+    )
+}
     </>
   );
 }

@@ -10,6 +10,11 @@ import {
 import { useState, useEffect } from "react";
 import { monthRender } from "../../api/index";
 import { monthSumRender } from "../../api/index";
+import { getLocalstorage } from "../../util/localStorage";
+import Loading from "../../components/default/Loading";
+
+const userId = Number(getLocalstorage('userId'))
+
 export type MonthSumData = [number, number, number];
 
 export interface PaymentResponse {
@@ -49,7 +54,6 @@ export interface CashGroupedData{
 }
 
 export default function MonthPage() {
-  const [userId, setUserId] = useState(1);
   const [years, setYears] = useState(2023);
   const [month, setMonth] = useState(7);
   const [monthConsumptionData, setMonthConsumptionData] = useState([]);
@@ -57,9 +61,11 @@ export default function MonthPage() {
   const [monthSumData, setMonthSumData] = useState<MonthSumData>([0, 0, 0]);
   const [groupedData, setGroupedData] = useState<GroupedData[]>([]);
   const [cashGroupedData, setCashGroupedData] = useState<CashGroupedData[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true); // 데이터 로딩상태 저장
 
   // 1. 서버에서 준 데이터 그대로 받기
   useEffect(() => {
+    setIsLoading(true); //데이터 로딩 시작시 로딩표시
     const handleFetchData = async() => {
         try {
           const response = await monthRender(userId, month);
@@ -67,20 +73,22 @@ export default function MonthPage() {
           //console.log(response.data.data.paymentBankResponses)
           setMonthConsumptionData(response.data.data.paymentBankResponses);
           setCashMonthConsumptionData(response.data.data.cashPayments);
-          setUserId(1); //userId는 로그인 유저에 따라 달라질 것임
+          setIsLoading(false) ; // 로딩끝남 
         }
         catch(error) {
           // 에러 처리 로직
           console.log(error);
+          setIsLoading(false) ; // 로딩끝남 
         }
     };
     handleFetchData();
-  }, [userId, month]);
+  }, [month]);
 
 
   
   //2-1 날짜 기준으로 데이터그룹핑
   useEffect(() => {
+    setIsLoading(true); //데이터 로딩 시작시 로딩표시
     const groupByDate = (data: MonthConsumptionDataItem[]): GroupedData[] => {
       const groupedData: { [date: string]: MonthConsumptionDataItem[] } = {};
       data.forEach((item) => {
@@ -96,10 +104,12 @@ export default function MonthPage() {
       }));
     };
     setGroupedData(groupByDate(monthConsumptionData));
+    setIsLoading(false) ; // 로딩끝남 
   }, [monthConsumptionData]);
 
   //2-2 현금 날짜 기준으로 데이터 그룹핑
   useEffect(()=>{
+    setIsLoading(true); //데이터 로딩 시작시 로딩표시
     const cashGroupByDate = (data: CashMonthConsumptionDataItem[]): CashGroupedData[] =>{
     const groupedData: {[date: string]: CashMonthConsumptionDataItem[]} = {};
     data.forEach((item)=>{
@@ -115,19 +125,23 @@ export default function MonthPage() {
     }))
     }
     setCashGroupedData(cashGroupByDate(cashMonthConsumptionData));
+    setIsLoading(false) ; // 로딩끝남 
   }, [cashMonthConsumptionData])
  
   //3. 월별 합계내역
   useEffect(() => {
+    setIsLoading(true); //데이터 로딩 시작시 로딩표시
     monthSumRender(userId, month)
       .then((response) => {
         //console.log(response.data.data.monthlyResponseDto.monthSum)
         setMonthSumData(response.data.data.monthlyResponseDto.monthSum);
+        setIsLoading(false) ; // 로딩끝남 
       })
       .catch((error) => {
         console.log(error);
+        setIsLoading(false) ; // 로딩끝남 
       });
-  }, [month, userId]);
+  }, [month]);
 
   //console.log(monthConsumptionData) 
   //console.log(groupedData) 
@@ -138,7 +152,7 @@ export default function MonthPage() {
   return (
     <>
       <ConsumptionHeader />
-      <MonthPageContainer>
+      {isLoading ? <Loading isLoading={isLoading} /> :(<MonthPageContainer>
         <ContentContainer>
           <Grid>
             <div style={{ width: "25vw", height: "68vh", border: "1px solid" }}>
@@ -152,13 +166,15 @@ export default function MonthPage() {
               monthSumData={monthSumData}
               groupedData={groupedData}
               cashGroupedData={cashGroupedData}
+              isLoading ={isLoading}
             />
           </Grid>
           <SideButtonsContainer>
             <SideButtons />
           </SideButtonsContainer>
         </ContentContainer>
-      </MonthPageContainer>
+      </MonthPageContainer>)
+}
     </>
   );
 }
