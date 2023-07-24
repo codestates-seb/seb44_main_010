@@ -98,7 +98,7 @@ const ButtonContainer = styled.div`
 
 type CloseModalFunction = () => void;
 
-export default function PropertyContainer({ closeModal }: { closeModal: CloseModalFunction }) {
+export default function PropertyContainer({ closeModal, propertyType }: { closeModal: CloseModalFunction , propertyType:string}) {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState<number | null>(null);
   const userId = getLocalstorage("userId");
@@ -131,7 +131,7 @@ export default function PropertyContainer({ closeModal }: { closeModal: CloseMod
       title: title,
       content: "내용임",
       amount: price,
-      propertyType: "현금",
+      propertyType: propertyType,
       userId: userId,
     };
     // const acessToken = getLocalstorage("acessToken");

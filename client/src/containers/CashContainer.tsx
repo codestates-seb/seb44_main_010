@@ -2,6 +2,10 @@ import {useState} from "react";
 import styled from "styled-components";
 import {AddButton} from "../components/button/AddButton";
 import Cash from "../../src/assets/Cash.svg";
+import axios, { AxiosResponse } from "axios";
+import { getLocalstorage } from "../util/localStorage";
+import { useDispatch } from "react-redux";
+import { incrementRefreshKey } from "../redux/refreshSlice";
 
 const Main = styled.div`
   position: absolute;
@@ -94,9 +98,12 @@ const ButtonContainer = styled.div`
 
 type CloseModalFunction = () => void;
 
-export default function CashContainer({closeModal}: {closeModal: CloseModalFunction}) {
+export default function CashContainer({closeModal, propertyType}: {closeModal: CloseModalFunction, propertyType:string}) {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState<number | null>(null);
+  const userId = getLocalstorage("userId");
+  const dispatch = useDispatch();
+
 
   const handleContainerClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -119,12 +126,38 @@ export default function CashContainer({closeModal}: {closeModal: CloseModalFunct
   };
 
   const handleAddClick = () => {
-    const data = {
+    // 이 부분에 axios요청으로 데이터를 넣어줘야 할 것 같음
+    const Cashdata = {
       title: title,
-      price: price,
+      content: "내용임",
+      amount: price,
+      userId: userId,
+      propertyType: propertyType
     };
-    console.log(data);
+    // const acessToken = getLocalstorage("acessToken");
+    // axios.defaults.headers.common["Authorization"] = acessToken;
+    axios
+      .post("/property/post", Cashdata, {
+        headers: {
+          "ngrok-skip-browser-warning": true,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        dispatch(incrementRefreshKey());
+      })
+      .catch((err) => {
+        if (err.response) {
+          const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
+          window.alert(errMessage);
+          console.log(errMessage);
+        } else {
+          console.error(err);
+          window.alert("알 수없는 오류가 발생했습니다.");
+        }
+      });
   };
+
 
   return (
     <Main onClick={handleContainerClick}>
