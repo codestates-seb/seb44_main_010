@@ -98,13 +98,7 @@ const ButtonContainer = styled.div`
 
 type CloseModalFunction = () => void;
 
-export default function CashContainer({
-  closeModal,
-  propertyType,
-}: {
-  closeModal: CloseModalFunction;
-  propertyType: string;
-}) {
+export default function CashContainer({ closeModal, propertyType }: { closeModal: CloseModalFunction; propertyType: string }) {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState<number | null>(null);
   const userId = getLocalstorage("userId");
@@ -151,13 +145,11 @@ export default function CashContainer({
         console.log(res.data);
         dispatch(incrementRefreshKey());
         closeModal();
-        setLocalStorage('propertyId', res.data.data.propertyId); //propertyId 로컬스토리지에 저장
+        setLocalStorage("propertyId", res.data.data.propertyId); //propertyId 로컬스토리지에 저장
       })
       .catch((err) => {
         if (err.response) {
-          const errMessage = (
-            err.response as AxiosResponse<{ message: string }>
-          )?.data.message;
+          const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
           window.alert(errMessage);
           console.log(errMessage);
         } else {
@@ -174,38 +166,18 @@ export default function CashContainer({
         <CashImg src={Cash}></CashImg>
         <InputContainer>
           <div className="title">제목</div>
-          <TitleInput
-            onChange={handleTitleChange}
-            placeholder="제목을 입력하세요."
-            value={title}
-          />
+          <TitleInput onChange={handleTitleChange} placeholder="제목을 입력하세요." value={title} />
         </InputContainer>
         <InputContainer>
           <div className="title">금액</div>
-          <PriceInput
-            onChange={handlePriceChange}
-            placeholder="금액을 입력하세요."
-            value={price !== null ? price : ""}
-          />
+          <PriceInput onChange={handlePriceChange} placeholder="금액을 입력하세요." value={price !== null ? price : ""} />
           <div className="단위">원</div>
         </InputContainer>
         <ButtonContainer>
-          <AddButton
-            onClick={handleCancelClick}
-            width={20}
-            height={8}
-            backgroundcolor="white"
-            borderRadius={50}
-          >
+          <AddButton onClick={handleCancelClick} width={20} height={8} backgroundcolor="white" borderRadius={50}>
             취소하기
           </AddButton>
-          <AddButton
-            onClick={handleAddClick}
-            width={20}
-            height={8}
-            backgroundcolor="yellow"
-            borderRadius={50}
-          >
+          <AddButton onClick={handleAddClick} width={20} height={8} backgroundcolor="yellow" borderRadius={50}>
             추가하기
           </AddButton>
         </ButtonContainer>
