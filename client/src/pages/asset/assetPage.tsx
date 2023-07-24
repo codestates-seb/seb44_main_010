@@ -69,8 +69,16 @@ export default function AssetPage() {
             {assetdata && <S.Title>부동산</S.Title>}
             {assetdata && <Property assetdata={assetdata} />}
             {assetdata && <S.Title>자동차</S.Title>}
-            {assetdata &&<Car assetdata={assetdata} />}
-            {assetdata && <S.Title>현금</S.Title>}
+            {assetdata && <Car assetdata={assetdata} />}
+            {assetdata && (
+              <S.Title>
+                현금
+                <S.RetouchButton>
+                  <S.Retouchicon />
+                  수정
+                </S.RetouchButton>
+              </S.Title>
+            )}
             {assetdata && <Cash assetdata={assetdata} />}
             <S.AddButtons>
               <AddProperty />
