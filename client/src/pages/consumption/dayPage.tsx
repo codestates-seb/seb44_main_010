@@ -13,6 +13,10 @@ import { dayRender } from "../../api/index";
 import { useCallback } from "react";
 import Loading from "../../components/default/Loading";
 import { getLocalstorage } from "../../util/localStorage";
+import AssetProfileContainer from "../../containers/assetProfileContainer";
+import { useDispatch } from "react-redux";
+import axios, { AxiosResponse } from "axios";
+import { addProfile } from "../../redux/profileSlice";
 
 const userId = Number(getLocalstorage('userId'))
 
@@ -69,6 +73,39 @@ export default function DayPage() {
   });
  const [isLoading, setIsLoading] = useState<boolean>(true); // 데이터 로딩상태 저장
 
+ const dispatch = useDispatch();
+
+  //자산프로필: 페이지가 새로고침시에 초기화되도, 요청 다시 불러오기
+  //addProfile: 리덕스 함수에 저장, 새로고침 시 초기화
+  useEffect(() => {
+  const currentData = new Date();
+  const currentMonth = currentData.getMonth() + 1;
+  const userId = getLocalstorage("userId");
+  const acessToken = getLocalstorage("acessToken");
+
+  axios.defaults.headers.common["Authorization"] = acessToken;
+  axios
+    .get(`/asset/myInfo/${userId}/${currentMonth}`, {
+      headers: {
+        "ngrok-skip-browser-warning": true,
+      },
+    })
+    .then((res) => {
+      // console.log(res.data);
+      dispatch(addProfile(res.data));
+    })
+    .catch((err) => {
+      if (err.response) {
+        const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
+        window.alert(errMessage);
+        console.log(errMessage);
+      } else {
+        console.error(err);
+        window.alert("알 수없는 오류가 발생했습니다.");
+      }
+    });
+}, [dispatch]);
+
   // 소비내역이 추가되면은 오른쪽 상세내역이 다시 렌더링되어야 함
   const handleFetchData = useCallback(() => {
     dayRender(userId, month, date)
@@ -104,11 +141,7 @@ export default function DayPage() {
           {showInput ? (
             <InputContainer setShowInput={setShowInput} handleFetchData={handleFetchData}/>
           ) : (
-            <div
-              style={{ width: "25vw", height: "68vh", border: "1px solid" }}
-            >
-              자산프로필
-            </div>
+            <AssetProfileContainer/>
           )}
           <DayConsumptionContainer
             showInput={showInput}

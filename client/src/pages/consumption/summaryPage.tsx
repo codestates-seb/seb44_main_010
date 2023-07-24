@@ -11,6 +11,10 @@ import { useState, useEffect } from "react";
 import { summaryRender ,monthSumRender} from "../../api/index";
 import { getLocalstorage } from "../../util/localStorage";
 import Loading from "../../components/default/Loading";
+import AssetProfileContainer from "../../containers/assetProfileContainer";
+import { useDispatch } from "react-redux";
+import axios, { AxiosResponse } from "axios";
+import { addProfile } from "../../redux/profileSlice";
 
 const userId = Number(getLocalstorage('userId'))
 
@@ -35,6 +39,37 @@ export default function SummaryPage() {
   });
   const [summarySumData, setSummarySumData] = useState<SummarySumData>([0,0,0]);
   const [isLoading, setIsLoading] = useState<boolean>(true); // 데이터 로딩상태 저장
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+  const currentData = new Date();
+  const currentMonth = currentData.getMonth() + 1;
+  const userId = getLocalstorage("userId");
+  const acessToken = getLocalstorage("acessToken");
+
+  axios.defaults.headers.common["Authorization"] = acessToken;
+  axios
+    .get(`/asset/myInfo/${userId}/${currentMonth}`, {
+      headers: {
+        "ngrok-skip-browser-warning": true,
+      },
+    })
+    .then((res) => {
+      // console.log(res.data);
+      dispatch(addProfile(res.data));
+    })
+    .catch((err) => {
+      if (err.response) {
+        const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
+        window.alert(errMessage);
+        console.log(errMessage);
+      } else {
+        console.error(err);
+        window.alert("알 수없는 오류가 발생했습니다.");
+      }
+    });
+}, [dispatch]);
 
   //1. 카테고리 상세내역
   useEffect(() => {
@@ -84,9 +119,7 @@ export default function SummaryPage() {
     <DayPageContainer>
       <ContentContainer>
         <Grid>
-          <div style={{ width: "25vw", height: "68vh", border: "1px solid" }}>
-            자산프로필
-          </div>
+        <AssetProfileContainer/>
           <SummaryContainer
             years={years}
             setYears={setYears}
