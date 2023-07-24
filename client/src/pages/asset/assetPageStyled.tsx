@@ -1,5 +1,5 @@
 import styled from "styled-components";
- 
+import retouchicon from "../../assets/svg/retouchIcon.svg";
 
 export const AssetPageContainer = styled.div`
   display: flex;
@@ -31,6 +31,7 @@ export const Grid = styled.div`
 
 export const Title = styled.div`
   display: flex;
+  justify-content: space-between;
   font-size: 5rem;
   color: #414141;
   font-weight: 600;
@@ -43,4 +44,34 @@ export const AddButtons = styled.div`
   display: flex;
   margin-top: 15rem;
   margin-bottom: 15rem;
+`;
+
+export const RetouchButton = styled.div`
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  font-size: 3rem;
+  padding: 3rem;
+  background-color: #ebebeb;
+
+  box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.1);
+
+  border-radius: 10rem;
+
+  transition: 0.3s;
+  &:hover {
+    background-color: #bcbcbc;
+  }
+`;
+
+export const Retouchicon = styled.div`
+  background: url(${retouchicon});
+  background-size: 100% 100%;
+  background-position: center;
+
+  margin-right: 2rem;
+
+  width: 3rem;
+  height: 3rem;
 `;
