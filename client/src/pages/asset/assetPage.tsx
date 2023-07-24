@@ -21,11 +21,24 @@ export default function AssetPage() {
   const refreshKey = useSelector((state: RootState) => {
     return state.refreshSlice.key;
   });
-  const reduxtest = useSelector((state) => state);
-  console.log(reduxtest);
   const [cashModal, setCashModal] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [cashClose, setCashClose] = useState(false);
+
   const dispatch = useDispatch();
+
+  const propertyResponse = useSelector((state: RootState) => {
+    return state.proFile.profileData?.data.propertyResponse;
+  });
+
+  const propertyFilter = propertyResponse?.find((el) => {
+    return el.propertyType === "현금";
+  });
+  // console.log(Boolean(propertyFilter));
+
+  useEffect(() => {
+    setCashClose(Boolean(propertyFilter));
+  }, [propertyFilter]);
 
   useEffect(() => {
     const currentData = new Date();
@@ -89,7 +102,7 @@ export default function AssetPage() {
             <S.AddButtons>
               <AddProperty />
               <AddCar />
-              <AddCash cashModal={cashModal} setCashModal={setCashModal} editing={editing} setEditing={setEditing} />
+              {cashClose ? null : <AddCash cashModal={cashModal} setCashModal={setCashModal} editing={editing} setEditing={setEditing} />}
             </S.AddButtons>
           </S.Grid>
         </S.ContentContainer>

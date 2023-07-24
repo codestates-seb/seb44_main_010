@@ -41,15 +41,17 @@ export default function AddCash({ cashModal, setCashModal, editing, setEditing }
   };
 
   const closeModal = () => {
-    setEditing(!editing); // 모달 상태를 false로 업데이트하여 닫음
+    setEditing(false); // 모달 상태를 false로 업데이트하여 닫음
   };
+
+  console.log(editing);
 
   return (
     <Main onClick={toggleModal}>
       <CashImg src={Cash}></CashImg>
       <Title>현금 추가하기</Title>
-      {cashModal && <EditCashContainer closeModal={toggleModal} propertyType={propertyType} />}
-      {editing && <CashContainer closeModal={closeModal} propertyType={propertyType} />}
+      {editing && <EditCashContainer closeModal={closeModal} propertyType={propertyType} />}
+      {cashModal && <CashContainer closeModal={toggleModal} propertyType={propertyType} />}
     </Main>
   );
 }
