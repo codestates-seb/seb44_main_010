@@ -21,6 +21,8 @@ export default function AssetPage() {
   const refreshKey = useSelector((state: RootState) => {
     return state.refreshSlice.key;
   });
+  const reduxtest = useSelector((state) => state);
+  console.log(reduxtest);
   const [cashModal, setCashModal] = useState(false);
   const [editing, setEditing] = useState(false);
   const dispatch = useDispatch();
@@ -45,9 +47,7 @@ export default function AssetPage() {
       })
       .catch((err) => {
         if (err.response) {
-          const errMessage = (
-            err.response as AxiosResponse<{ message: string }>
-          )?.data.message;
+          const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
           window.alert(errMessage);
           console.log(errMessage);
         } else {
@@ -74,20 +74,22 @@ export default function AssetPage() {
             {assetdata && <Car assetdata={assetdata} />}
             {assetdata && (
               <S.Title>
-                현금{
-
-                }
-                <S.RetouchButton onClick={() => { setCashModal(true); setEditing(true); }}>
+                현금{}
+                <S.RetouchButton
+                  onClick={() => {
+                    setEditing(true);
+                  }}
+                >
                   <S.Retouchicon />
                   수정
                 </S.RetouchButton>
               </S.Title>
             )}
-            {assetdata && <Cash assetdata={assetdata}/>}
+            {assetdata && <Cash assetdata={assetdata} />}
             <S.AddButtons>
               <AddProperty />
               <AddCar />
-              <AddCash cashModal={cashModal} setCashModal={setCashModal} editing={editing}/>
+              <AddCash cashModal={cashModal} setCashModal={setCashModal} editing={editing} setEditing={setEditing} />
             </S.AddButtons>
           </S.Grid>
         </S.ContentContainer>
