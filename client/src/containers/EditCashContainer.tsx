@@ -118,6 +118,8 @@ export default function EditCashContainer({ closeModal, propertyType }: { closeM
     return el.propertyType === "현금";
   });
 
+  console.log(propertyFilter);
+
   // propertyResponse필터를 통해 현금만 들어있는 데이터의 propertyId 가져오기
   const propertyId = propertyFilter?.propertyId;
   // console.log(propertyId);
@@ -155,7 +157,7 @@ export default function EditCashContainer({ closeModal, propertyType }: { closeM
     // const acessToken = getLocalstorage("acessToken");
     // axios.defaults.headers.common["Authorization"] = acessToken;
     axios
-      .post(`/property/patch/${propertyId}`, Cashdata, {
+      .patch(`/property/patch/${propertyId}`, Cashdata, {
         headers: {
           "ngrok-skip-browser-warning": true,
         },
