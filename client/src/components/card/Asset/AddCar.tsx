@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {useState} from "react";
 import Car from "../../../assets/Car.svg";
-import CarContainer from "../../../containers/CashContainer";
+import CarContainer from "../../../containers/CarContainer";
 
 const Main = styled.div`
   display: flex;
@@ -32,9 +32,11 @@ const Title = styled.div`
 `;
 export default function AddCar() {
   const [modal, setModal] = useState(false);
+  const [propertyType, setPropertyType] = useState("")
 
   const toggleModal = () => {
     setModal(!modal);
+    setPropertyType("차")
   };
 
   const closeModal = () => {
@@ -45,7 +47,7 @@ export default function AddCar() {
     <Main onClick={toggleModal}>
       <CarImg src={Car}></CarImg>
       <Title>자동차 추가하기</Title>
-      {modal && <CarContainer closeModal={closeModal} />}
+      {modal && <CarContainer closeModal={closeModal} propertyType={propertyType}/>}
     </Main>
   );
 }

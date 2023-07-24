@@ -57,20 +57,6 @@ const BankName = styled.div`
   color: #414141;
 `;
 
-// const Delete = styled.div`
-//   cursor: pointer;
-//   width: 3rem;
-//   height: 3rem;
-//   background-image: url(${DeleteIcon});
-//   background-size: cover;
-//   background-repeat: no-repeat;
-//   margin-left: 10rem;
-
-//   position: absolute;
-//   top: 2rem;
-//   right: 2rem;
-// `;
-
 const BankAmount = styled.div`
   font-size: 4rem;
 `;
@@ -113,55 +99,24 @@ export default function SavingAccount({ assetdata }: SavingAccountProps) {
   // const [data, setData] = useState<El[]>([]);
   const [displayedData, setDisplayedData] = useState<Account[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [depositFilter, setDepositFilter] = useState<Account[]>([]); // depositFilter 상태 추가
   const SavingAccountBoxRef = useRef<HTMLDivElement>(null);
 
-  const accountsList = assetdata?.monthlyResponseDto.accountsList;
-  console.log(accountsList?.length);
-
-  const depositFilter = accountsList?.filter((e) => {
-    return e.acoountType === "입출금";
-  });
-  console.log(depositFilter);
-
-  // useEffect(() => {
-  //   getData();
-  // }, []);
-
+  //계속 요청이 불러와짐 => 문제해결
   useEffect(() => {
-    if (depositFilter && depositFilter.length > 0) {
-      setDisplayedData(depositFilter.slice(currentIndex, currentIndex + 3));
+    if (assetdata) {
+      const accountsList = assetdata?.monthlyResponseDto.accountsList;
+
+      const filter = accountsList?.filter((e) => {
+        return e.acoountType === "입출금";
+      });
+
+      if (filter && filter.length > 0) {
+        setDisplayedData(filter.slice(currentIndex, currentIndex + 3));
+        setDepositFilter(filter); // depositFilter 상태 업데이트
+      }
     }
-  }, [depositFilter, currentIndex]);
-
-  // const getData = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:3000/account");
-  //     const data = response.data;
-  //     setData(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const handleDelete = (id: number) => {
-  //   const currentData = new Date();
-  //   const currentMonth = currentData.getMonth() + 1;
-  //   const userId = getLocalstorage("userId");
-  //   const acessToken = getLocalstorage("acessToken");
-
-  //   axios.defaults.headers.common["Authorization"] = acessToken;
-  //   axios;
-  //   axios.delete(`/asset/myInfo/${userId}/${currentMonth}/${id}`).catch((err) => {
-  //     if (err.response) {
-  //       const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
-  //       window.alert(errMessage);
-  //       console.log(errMessage);
-  //     } else {
-  //       console.error(err);
-  //       window.alert("An unknown error occurred.");
-  //     }
-  //   });
-  // };
+  }, [assetdata, currentIndex]);
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
@@ -170,8 +125,12 @@ export default function SavingAccount({ assetdata }: SavingAccountProps) {
   };
 
   const handleNext = () => {
-    if (currentIndex + 3 < (depositFilter?.length ?? 0)) {
-      setCurrentIndex(currentIndex + 3);
+    if (assetdata && depositFilter) {
+      const totalCount = depositFilter.length;
+      const nextIndex = currentIndex + 3;
+      if (nextIndex < totalCount) {
+        setCurrentIndex(nextIndex);
+      }
     }
   };
 
@@ -200,3 +159,52 @@ export default function SavingAccount({ assetdata }: SavingAccountProps) {
     </Main>
   );
 }
+
+
+  // const Delete = styled.div`
+//   cursor: pointer;
+//   width: 3rem;
+//   height: 3rem;
+//   background-image: url(${DeleteIcon});
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   margin-left: 10rem;
+
+//   position: absolute;
+//   top: 2rem;
+//   right: 2rem;
+// `;
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
+
+ // const getData = async () => {
+  //   try {
+  //     const response = await axios.get("http://localhost:3000/account");
+  //     const data = response.data;
+  //     setData(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // const handleDelete = (id: number) => {
+  //   const currentData = new Date();
+  //   const currentMonth = currentData.getMonth() + 1;
+  //   const userId = getLocalstorage("userId");
+  //   const acessToken = getLocalstorage("acessToken");
+
+  //   axios.defaults.headers.common["Authorization"] = acessToken;
+  //   axios;
+  //   axios.delete(`/asset/myInfo/${userId}/${currentMonth}/${id}`).catch((err) => {
+  //     if (err.response) {
+  //       const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
+  //       window.alert(errMessage);
+  //       console.log(errMessage);
+  //     } else {
+  //       console.error(err);
+  //       window.alert("An unknown error occurred.");
+  //     }
+  //   });
+  // };

@@ -85,41 +85,21 @@ export default function Car({ assetdata }: SavingAccountProps) {
   // const [data, setData] = useState<Item[]>([]);
   const [displayedData, setDisplayedData] = useState<PropertyResponse[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [carFilter, setCarFilter] = useState<PropertyResponse[]>([]); // carFilter 상태추가
   const CarBoxRef = useRef<HTMLDivElement>(null);
-
-  const propertyResponse = assetdata?.propertyResponse;
-
-  const propertytFilter = propertyResponse?.filter((e) => {
-    return e.propertyType === "자동차";
-  });
-  // useEffect(() => {
-  //   getData();
-  // }, []);
-
+  
   useEffect(() => {
-    if (propertytFilter && propertytFilter.length > 0) {
-      setDisplayedData(propertytFilter.slice(currentIndex, currentIndex + 3));
+    if(assetdata){
+      const propertyResponse = assetdata?.propertyResponse;
+      const filter = propertyResponse?.filter((e) => {
+        return e.propertyType === "차";
+      });
+      if (filter && filter.length > 0) {
+        setDisplayedData(filter.slice(currentIndex, currentIndex + 3));
+        setCarFilter(filter);
+      }
     }
-  }, [propertytFilter, currentIndex]);
-
-  // const getData = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:3000/car");
-  //     const data = response.data;
-  //     setData(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const handleDelete = async (id: number) => {
-  //   try {
-  //     await axios.delete(`http://localhost:3000/car/${id}`);
-  //     getData();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  }, [assetdata,currentIndex]);
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
@@ -128,12 +108,12 @@ export default function Car({ assetdata }: SavingAccountProps) {
   };
 
   const handleNext = () => {
-    if (currentIndex + 3 < (propertytFilter?.length ?? 0)) {
+    if (currentIndex + 3 < (carFilter?.length ?? 0)) {
       setCurrentIndex(currentIndex + 3);
     }
   };
 
-  if (propertytFilter?.length === 0) {
+  if (carFilter?.length === 0) {
     return null;
   }
 
@@ -157,3 +137,26 @@ export default function Car({ assetdata }: SavingAccountProps) {
     </Main>
   );
 }
+
+// useEffect(() => {
+  //   getData();
+  // }, []);
+
+  // const getData = async () => {
+  //   try {
+  //     const response = await axios.get("http://localhost:3000/car");
+  //     const data = response.data;
+  //     setData(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // const handleDelete = async (id: number) => {
+  //   try {
+  //     await axios.delete(`http://localhost:3000/car/${id}`);
+  //     getData();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };

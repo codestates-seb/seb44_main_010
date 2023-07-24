@@ -113,44 +113,23 @@ export default function Stock({ assetdata }: SavingAccountProps) {
   // const [data, setData] = useState<Item[]>([]);
   const [displayedData, setDisplayedData] = useState<Account[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [stockFilter, setStockFilter] = useState<Account[]>([]); // stockFilter 상태 추가
   const StockBoxRef = useRef<HTMLDivElement>(null);
 
-  const accountsList = assetdata?.monthlyResponseDto.accountsList;
-  console.log(accountsList?.length);
-
-  const stockFilter = accountsList?.filter((e) => {
-    return e.acoountType === "증권";
-  });
-  console.log(stockFilter);
-
-  // useEffect(() => {
-  //   getData();
-  // }, []);
-
   useEffect(() => {
-    if (stockFilter && stockFilter.length > 0) {
-      setDisplayedData(stockFilter.slice(currentIndex, currentIndex + 3));
+    if (assetdata){
+      const accountsList = assetdata?.monthlyResponseDto.accountsList;
+      const filter = accountsList?.filter((e) => {
+        return e.acoountType === "증권";
+      });
+      if (filter && filter.length > 0) {
+        setDisplayedData(filter.slice(currentIndex, currentIndex + 3));
+        setStockFilter(filter)
+      }
     }
-  }, [stockFilter, currentIndex]);
+  }, [assetdata, currentIndex]);
 
-  // const getData = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:3000/stock");
-  //     const data = response.data;
-  //     setData(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const handleDelete = async (id: number) => {
-  //   try {
-  //     await axios.delete(`http://localhost:3000/stock/${id}`);
-  //     // getData();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
@@ -159,10 +138,14 @@ export default function Stock({ assetdata }: SavingAccountProps) {
   };
 
   const handleNext = () => {
-    if (currentIndex + 3 < (stockFilter?.length ?? 0)) {
-      setCurrentIndex(currentIndex + 3);
-    }
-  };
+    if (assetdata && stockFilter) {
+      const totalCount = stockFilter.length;
+      const nextIndex = currentIndex + 3;
+      if (nextIndex < totalCount) {
+        setCurrentIndex(nextIndex);
+      }
+  }
+}
 
   return (
     <Main ref={StockBoxRef}>
@@ -189,3 +172,26 @@ export default function Stock({ assetdata }: SavingAccountProps) {
     </Main>
   );
 }
+
+
+// useEffect(() => {
+  //   getData();
+  // }, []);
+
+  // const getData = async () => {
+  //   try {
+  //     const response = await axios.get("http://localhost:3000/stock");
+  //     const data = response.data;
+  //     setData(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // const handleDelete = async (id: number) => {
+  //   try {
+  //     await axios.delete(`http://localhost:3000/stock/${id}`);
+  //     // getData();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }

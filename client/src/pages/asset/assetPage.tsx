@@ -22,7 +22,6 @@ export default function AssetPage() {
   const refreshKey = useSelector((state: RootState) => {
     return state.refreshSlice.key;
   });
-  console.log(refreshKey);
 
   const dispatch = useDispatch();
 
@@ -70,7 +69,7 @@ export default function AssetPage() {
             {assetdata && <S.Title>부동산</S.Title>}
             {assetdata && <Property assetdata={assetdata} />}
             {assetdata && <S.Title>자동차</S.Title>}
-            {assetdata && <Car assetdata={assetdata} />}
+            {assetdata &&<Car assetdata={assetdata} />}
             {assetdata && <S.Title>현금</S.Title>}
             {assetdata && <Cash assetdata={assetdata} />}
             <S.AddButtons>

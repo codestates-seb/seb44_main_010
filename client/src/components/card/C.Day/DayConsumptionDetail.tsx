@@ -96,7 +96,6 @@ export default function DayConsumptionDetail({
     setBoxHeight();
   }, [dayConsumptionData, cashConsumptionData, detailBoxRef]);
 
-  console.log([...cashConsumptionData]);
   return (
     <>
       {dayConsumptionData.length === 0 && cashConsumptionData.length === 0 ? (

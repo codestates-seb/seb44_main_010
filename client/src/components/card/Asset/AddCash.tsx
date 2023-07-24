@@ -31,11 +31,13 @@ const Title = styled.div`
   font-size: 3rem;
 `;
 
-export default function AddCar() {
+export default function AddCash() {
   const [modal, setModal] = useState(false);
+  const [propertyType, setPropertyType] = useState("")
 
   const toggleModal = () => {
     setModal(!modal);
+    setPropertyType("현금")
   };
 
   const closeModal = () => {
@@ -46,7 +48,7 @@ export default function AddCar() {
     <Main onClick={toggleModal}>
       <CashImg src={Cash}></CashImg>
       <Title>현금 추가하기</Title>
-      {modal && <CashContainer closeModal={closeModal} />}
+      {modal && <CashContainer closeModal={closeModal} propertyType={propertyType}/>}
     </Main>
   );
 }
