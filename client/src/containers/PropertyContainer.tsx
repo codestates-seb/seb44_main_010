@@ -98,7 +98,7 @@ const ButtonContainer = styled.div`
 
 type CloseModalFunction = () => void;
 
-export default function PropertyContainer({ closeModal, propertyType }: { closeModal: CloseModalFunction , propertyType:string}) {
+export default function PropertyContainer({ closeModal, propertyType}: { closeModal: CloseModalFunction , propertyType:string}) {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState<number | null>(null);
   const userId = getLocalstorage("userId");
@@ -146,6 +146,8 @@ export default function PropertyContainer({ closeModal, propertyType }: { closeM
       .then((res) => {
         console.log(res.data);
         dispatch(incrementRefreshKey());
+        closeModal();
+
       })
       .catch((err) => {
         if (err.response) {

@@ -49,7 +49,7 @@ export default function AddProperty() {
     <Main onClick={toggleModal}>
       <PropertyImg src={Property}></PropertyImg>
       <Title>부동산 추가하기</Title>
-      {modal && <PropertyContainer propertyType={propertyType} closeModal={closeModal} />}
+      {modal && <PropertyContainer propertyType={propertyType} closeModal={closeModal}/>}
     </Main>
   );
 }

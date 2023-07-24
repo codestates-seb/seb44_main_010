@@ -5,6 +5,7 @@ export const DayPageContainer = styled.div`
     flex-direction:column;
     margin-top: 19rem;
     align-items:center;
+    margin-bottom: 15rem;
 `;
 export const Grid = styled.div`
     width: 80vw;
