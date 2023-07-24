@@ -24,8 +24,8 @@ const CaptchaBox = styled.div`
   margin-bottom: 3rem;
 `;
 
-// const API_KEY = "6LdwszsnAAAAALN8_5ZRSwACts9StQCnOqmS_VrP";
-const API_KEY = import.meta.env.VITE_RECAPTCHA_API_KEY;
+const API_KEY = "6LdwszsnAAAAALN8_5ZRSwACts9StQCnOqmS_VrP";
+// const API_KEY = import.meta.env.VITE_RECAPTCHA_API_KEY;
 
 // 6LeeeS0nAAAAAOmWGttGqobyMy0ltORyOnLvIA3H
 

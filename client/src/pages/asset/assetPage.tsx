@@ -77,7 +77,6 @@ export default function AssetPage() {
                 현금{}
                 <S.RetouchButton
                   onClick={() => {
-                    setCashModal(true);
                     setEditing(true);
                   }}
                 >
@@ -90,7 +89,7 @@ export default function AssetPage() {
             <S.AddButtons>
               <AddProperty />
               <AddCar />
-              <AddCash cashModal={cashModal} setCashModal={setCashModal} editing={editing} />
+              <AddCash cashModal={cashModal} setCashModal={setCashModal} editing={editing} setEditing={setEditing} />
             </S.AddButtons>
           </S.Grid>
         </S.ContentContainer>

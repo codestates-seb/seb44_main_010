@@ -32,7 +32,7 @@ const Title = styled.div`
   font-size: 3rem;
 `;
 
-export default function AddCash({ cashModal, setCashModal, editing }: { cashModal: boolean; setCashModal: (value: boolean) => void; editing: boolean }) {
+export default function AddCash({ cashModal, setCashModal, editing, setEditing }: { cashModal: boolean; setCashModal: (value: boolean) => void; editing: boolean; setEditing: (value: boolean) => void }) {
   const [propertyType, setPropertyType] = useState("");
 
   const toggleModal = () => {
@@ -41,14 +41,15 @@ export default function AddCash({ cashModal, setCashModal, editing }: { cashModa
   };
 
   const closeModal = () => {
-    setCashModal(false); // 모달 상태를 false로 업데이트하여 닫음
+    setEditing(!editing); // 모달 상태를 false로 업데이트하여 닫음
   };
 
   return (
     <Main onClick={toggleModal}>
       <CashImg src={Cash}></CashImg>
       <Title>현금 추가하기</Title>
-      {cashModal && editing ? <EditCashContainer closeModal={toggleModal} propertyType={propertyType} /> : <CashContainer closeModal={closeModal} propertyType={propertyType} />}
+      {cashModal && <EditCashContainer closeModal={toggleModal} propertyType={propertyType} />}
+      {editing && <CashContainer closeModal={closeModal} propertyType={propertyType} />}
     </Main>
   );
 }

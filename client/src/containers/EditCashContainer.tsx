@@ -4,9 +4,9 @@ import { AddButton } from "../components/button/AddButton";
 import Cash from "../../src/assets/Cash.svg";
 import axios, { AxiosResponse } from "axios";
 import { getLocalstorage } from "../util/localStorage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { incrementRefreshKey } from "../redux/refreshSlice";
-// import { RootState } from "../redux/store";
+import { RootState } from "../redux/store";
 
 const Main = styled.div`
   position: absolute;
@@ -99,7 +99,7 @@ const ButtonContainer = styled.div`
 
 type CloseModalFunction = () => void;
 
-const propertyId = getLocalstorage("propertyId");
+// const propertyId = getLocalstorage("propertyId");
 // console.log(propertyId);
 
 export default function EditCashContainer({ closeModal, propertyType }: { closeModal: CloseModalFunction; propertyType: string }) {
@@ -109,17 +109,17 @@ export default function EditCashContainer({ closeModal, propertyType }: { closeM
   const dispatch = useDispatch();
 
   // 리덕스 store에 저장되어있는 자산데이터 가져오기
-  // const propertyResponse = useSelector((state: RootState) => {
-  //   return state.proFile.profileData?.data.propertyResponse;
-  // });
+  const propertyResponse = useSelector((state: RootState) => {
+    return state.proFile.profileData?.data.propertyResponse;
+  });
 
   // propertyId가 현금인 것만 가져오기
-  // const propertyFilter = propertyResponse?.filter((el) => {
-  //   return el.propertyType === "현금";
-  // });
+  const propertyFilter = propertyResponse?.find((el) => {
+    return el.propertyType === "현금";
+  });
 
-  //
-  // const propertyId = propertyFilter?.propertyId
+  // propertyResponse필터를 통해 현금만 들어있는 데이터의 propertyId 가져오기
+  const propertyId = propertyFilter?.propertyId;
 
   const handleContainerClick = (e: React.MouseEvent) => {
     e.stopPropagation();
