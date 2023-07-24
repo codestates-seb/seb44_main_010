@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 // import DeleteIcon from "../../../assets/delete.svg";
 import YellowLeft from "../../../assets/yellowleft.svg";
 import YellowRight from "../../../assets/yellowright.svg";
+import propertyImg from "../../../assets/Property.svg";
 
 import { ApiResponse, PropertyResponse } from "../../../interface/asset";
 
@@ -44,6 +45,7 @@ const PropertyContainer = styled.div`
 
 const Top = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const PropertyName = styled.div`
@@ -82,6 +84,17 @@ const RightButton = styled.img`
   margin-left: 5rem;
 `;
 
+const PropertyImg = styled.div`
+  background: url(${propertyImg});
+  background-size: 100% 100%;
+  background-position: center;
+
+  margin-right: 2rem;
+
+  width: 4rem;
+  height: 4rem;
+`;
+
 export default function Property({ assetdata }: SavingAccountProps) {
   // const [data, setData] = useState<Item[]>([]);
   const [displayedData, setDisplayedData] = useState<PropertyResponse[]>([]);
@@ -89,18 +102,17 @@ export default function Property({ assetdata }: SavingAccountProps) {
   const [propertytFilter, setPropertytFilter] = useState<PropertyResponse[]>([]); // propertytFilter 상태 추가
   const PropertyBoxRef = useRef<HTMLDivElement>(null);
 
-
   useEffect(() => {
-    if(assetdata){
+    if (assetdata) {
       const propertyResponse = assetdata?.propertyResponse;
 
       const filter = propertyResponse?.filter((e) => {
-      return e.propertyType === "부동산";
-  });
-  if (filter && filter.length > 0) {
-    setDisplayedData(filter.slice(currentIndex, currentIndex + 3));
-    setPropertytFilter(filter);
-  }
+        return e.propertyType === "부동산";
+      });
+      if (filter && filter.length > 0) {
+        setDisplayedData(filter.slice(currentIndex, currentIndex + 3));
+        setPropertytFilter(filter);
+      }
     }
   }, [assetdata, currentIndex]);
 
@@ -127,9 +139,10 @@ export default function Property({ assetdata }: SavingAccountProps) {
           <PropertyContainer key={item.propertyId}>
             {/* <Delete onClick={() => handleDelete(item.id)} /> */}
             <Top>
+              <PropertyImg />
               <PropertyName>{item.title}</PropertyName>
             </Top>
-            <PropertyAmount>{item.amount}원</PropertyAmount>
+            <PropertyAmount>{item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</PropertyAmount>
           </PropertyContainer>
         ))}
       </PropertyList>
@@ -142,24 +155,24 @@ export default function Property({ assetdata }: SavingAccountProps) {
 }
 
 // useEffect(() => {
-  //   getData();
-  // }, []);
+//   getData();
+// }, []);
 
-  // const getData = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:3000/property");
-  //     const data = response.data;
-  //     setData(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+// const getData = async () => {
+//   try {
+//     const response = await axios.get("http://localhost:3000/property");
+//     const data = response.data;
+//     setData(data);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
-  // const handleDelete = async (id: number) => {
-  //   try {
-  //     await axios.delete(`http://localhost:3000/property/${id}`);
-  //     getData();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+// const handleDelete = async (id: number) => {
+//   try {
+//     await axios.delete(`http://localhost:3000/property/${id}`);
+//     getData();
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };

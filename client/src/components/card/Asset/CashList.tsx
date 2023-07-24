@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from "react";
 // import DeleteIcon from "../../../assets/delete.svg";
 import YellowLeft from "../../../assets/yellowleft.svg";
 import YellowRight from "../../../assets/yellowright.svg";
+import cashImg from "../../../assets/Cash.svg";
+
 import { ApiResponse, PropertyResponse } from "../../../interface/asset";
 
 // interface Item {
@@ -43,6 +45,7 @@ const CashContainer = styled.div`
 
 const Top = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const CashName = styled.div`
@@ -89,7 +92,7 @@ export default function Cash({ assetdata }: SavingAccountProps) {
   const CashBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if(assetdata){
+    if (assetdata) {
       const propertyResponse = assetdata?.propertyResponse;
       const filter = propertyResponse?.filter((e) => {
         return e.propertyType === "현금";
@@ -99,7 +102,7 @@ export default function Cash({ assetdata }: SavingAccountProps) {
         setCashFilter(filter);
       }
     }
-  }, [assetdata,currentIndex]);
+  }, [assetdata, currentIndex]);
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
@@ -117,6 +120,17 @@ export default function Cash({ assetdata }: SavingAccountProps) {
     return null;
   }
 
+  const CashImg = styled.div`
+    background: url(${cashImg});
+    background-size: 100% 100%;
+    background-position: center;
+
+    margin-right: 2rem;
+
+    width: 4rem;
+    height: 4rem;
+  `;
+
   return (
     <Main ref={CashBoxRef}>
       <CashList>
@@ -124,9 +138,10 @@ export default function Cash({ assetdata }: SavingAccountProps) {
           <CashContainer key={item.propertyId}>
             {/* <Delete onClick={() => handleDelete(item.id)} /> */}
             <Top>
+              <CashImg />
               <CashName>{item.title}</CashName>
             </Top>
-            <CashAmount>{item.amount}원</CashAmount>
+            <CashAmount>{item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</CashAmount>
           </CashContainer>
         ))}
       </CashList>
@@ -139,24 +154,24 @@ export default function Cash({ assetdata }: SavingAccountProps) {
 }
 
 // useEffect(() => {
-  //   getData();
-  // }, []);
+//   getData();
+// }, []);
 
-  // const getData = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:3000/cash");
-  //     const data = response.data;
-  //     setData(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+// const getData = async () => {
+//   try {
+//     const response = await axios.get("http://localhost:3000/cash");
+//     const data = response.data;
+//     setData(data);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
-  // const handleDelete = async (id: number) => {
-  //   try {
-  //     await axios.delete(`http://localhost:3000/cash/${id}`);
-  //     getData();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+// const handleDelete = async (id: number) => {
+//   try {
+//     await axios.delete(`http://localhost:3000/cash/${id}`);
+//     getData();
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
