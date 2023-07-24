@@ -9,6 +9,8 @@ import Cash from "../../components/card/Asset/CashList";
 import AddProperty from "../../components/card/Asset/AddProperty";
 import AddCar from "../../components/card/Asset/AddCar";
 import AddCash from "../../components/card/Asset/AddCash";
+import EditCashContainer from "../../containers/EditCashContainer";
+
 import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -70,6 +72,11 @@ export default function AssetPage() {
       });
   }, [dispatch, refreshKey]);
 
+  const closeModal = () => {
+    setEditing(false); // 모달 상태를 false로 업데이트하여 닫음
+  };
+  const [propertyType] = useState("");
+
   return (
     <>
       <AssetHeader />
@@ -102,8 +109,9 @@ export default function AssetPage() {
             <S.AddButtons>
               <AddProperty />
               <AddCar />
-              {cashClose ? null : <AddCash cashModal={cashModal} setCashModal={setCashModal} editing={editing} setEditing={setEditing} />}
+              {!cashClose && <AddCash cashModal={cashModal} setCashModal={setCashModal} editing={editing} setEditing={setEditing} />}
             </S.AddButtons>
+            {editing && <EditCashContainer closeModal={closeModal} propertyType={propertyType} />}
           </S.Grid>
         </S.ContentContainer>
       </S.AssetPageContainer>
