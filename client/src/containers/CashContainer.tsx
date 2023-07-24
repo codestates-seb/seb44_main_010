@@ -1,9 +1,9 @@
-import {useState} from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import {AddButton} from "../components/button/AddButton";
+import { AddButton } from "../components/button/AddButton";
 import Cash from "../../src/assets/Cash.svg";
 import axios, { AxiosResponse } from "axios";
-import { getLocalstorage } from "../util/localStorage";
+import { getLocalstorage, setLocalStorage } from "../util/localStorage";
 import { useDispatch } from "react-redux";
 import { incrementRefreshKey } from "../redux/refreshSlice";
 
@@ -93,17 +93,22 @@ const InputContainer = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-around;
-  width: 50%;
+  width: 65%;
 `;
 
 type CloseModalFunction = () => void;
 
-export default function CashContainer({closeModal, propertyType}: {closeModal: CloseModalFunction, propertyType:string}) {
+export default function CashContainer({
+  closeModal,
+  propertyType,
+}: {
+  closeModal: CloseModalFunction;
+  propertyType: string;
+}) {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState<number | null>(null);
   const userId = getLocalstorage("userId");
   const dispatch = useDispatch();
-
 
   const handleContainerClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -132,7 +137,7 @@ export default function CashContainer({closeModal, propertyType}: {closeModal: C
       content: "내용임",
       amount: price,
       userId: userId,
-      propertyType: propertyType
+      propertyType: propertyType,
     };
     // const acessToken = getLocalstorage("acessToken");
     // axios.defaults.headers.common["Authorization"] = acessToken;
@@ -146,10 +151,13 @@ export default function CashContainer({closeModal, propertyType}: {closeModal: C
         console.log(res.data);
         dispatch(incrementRefreshKey());
         closeModal();
+        setLocalStorage('propertyId', res.data.data.propertyId); //propertyId 로컬스토리지에 저장
       })
       .catch((err) => {
         if (err.response) {
-          const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
+          const errMessage = (
+            err.response as AxiosResponse<{ message: string }>
+          )?.data.message;
           window.alert(errMessage);
           console.log(errMessage);
         } else {
@@ -159,7 +167,6 @@ export default function CashContainer({closeModal, propertyType}: {closeModal: C
       });
   };
 
-
   return (
     <Main onClick={handleContainerClick}>
       <Title>내역입력</Title>
@@ -167,18 +174,38 @@ export default function CashContainer({closeModal, propertyType}: {closeModal: C
         <CashImg src={Cash}></CashImg>
         <InputContainer>
           <div className="title">제목</div>
-          <TitleInput onChange={handleTitleChange} placeholder="제목을 입력하세요." value={title} />
+          <TitleInput
+            onChange={handleTitleChange}
+            placeholder="제목을 입력하세요."
+            value={title}
+          />
         </InputContainer>
         <InputContainer>
           <div className="title">금액</div>
-          <PriceInput onChange={handlePriceChange} placeholder="금액을 입력하세요." value={price !== null ? price : ""} />
+          <PriceInput
+            onChange={handlePriceChange}
+            placeholder="금액을 입력하세요."
+            value={price !== null ? price : ""}
+          />
           <div className="단위">원</div>
         </InputContainer>
         <ButtonContainer>
-          <AddButton onClick={handleCancelClick} width={20} height={8} backgroundcolor="white" borderRadius={50}>
+          <AddButton
+            onClick={handleCancelClick}
+            width={20}
+            height={8}
+            backgroundcolor="white"
+            borderRadius={50}
+          >
             취소하기
           </AddButton>
-          <AddButton onClick={handleAddClick} width={20} height={8} backgroundcolor="yellow" borderRadius={50}>
+          <AddButton
+            onClick={handleAddClick}
+            width={20}
+            height={8}
+            backgroundcolor="yellow"
+            borderRadius={50}
+          >
             추가하기
           </AddButton>
         </ButtonContainer>

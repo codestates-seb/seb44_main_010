@@ -93,7 +93,7 @@ const InputContainer = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-around;
-  width: 50%;
+  width: 65%;
 `;
 
 type CloseModalFunction = () => void;

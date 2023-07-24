@@ -11,7 +11,6 @@ import AddCar from "../../components/card/Asset/AddCar";
 import AddCash from "../../components/card/Asset/AddCash";
 import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
-
 import { useDispatch, useSelector } from "react-redux";
 import { getLocalstorage } from "../../util/localStorage";
 import { addProfile } from "../../redux/profileSlice";
@@ -22,7 +21,8 @@ export default function AssetPage() {
   const refreshKey = useSelector((state: RootState) => {
     return state.refreshSlice.key;
   });
-
+  const [cashModal, setCashModal] = useState(false);
+  const [editing, setEditing] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -74,18 +74,20 @@ export default function AssetPage() {
             {assetdata && <Car assetdata={assetdata} />}
             {assetdata && (
               <S.Title>
-                현금
-                <S.RetouchButton>
+                현금{
+
+                }
+                <S.RetouchButton onClick={() => { setCashModal(true); setEditing(true); }}>
                   <S.Retouchicon />
                   수정
                 </S.RetouchButton>
               </S.Title>
             )}
-            {assetdata && <Cash assetdata={assetdata} />}
+            {assetdata && <Cash assetdata={assetdata}/>}
             <S.AddButtons>
               <AddProperty />
               <AddCar />
-              <AddCash />
+              <AddCash cashModal={cashModal} setCashModal={setCashModal} editing={editing}/>
             </S.AddButtons>
           </S.Grid>
         </S.ContentContainer>

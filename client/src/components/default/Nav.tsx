@@ -174,6 +174,7 @@ export default function Nav() {
     deleteLocalstorage("username");
     deleteLocalstorage("userId");
     deleteLocalstorage("_grecaptcha");
+    deleteLocalstorage("propertyId");
     dispatch(mainColor());
     navigate("/");
   };
