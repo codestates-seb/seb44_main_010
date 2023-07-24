@@ -32,15 +32,7 @@ const Title = styled.div`
   font-size: 3rem;
 `;
 
-export default function AddCash({
-  cashModal,
-  setCashModal,
-  editing
-}: {
-  cashModal: boolean;
-  setCashModal: (value: boolean) => void;
-  editing:boolean;
-}) {
+export default function AddCash({ cashModal, setCashModal, editing }: { cashModal: boolean; setCashModal: (value: boolean) => void; editing: boolean }) {
   const [propertyType, setPropertyType] = useState("");
 
   const toggleModal = () => {
@@ -56,13 +48,7 @@ export default function AddCash({
     <Main onClick={toggleModal}>
       <CashImg src={Cash}></CashImg>
       <Title>현금 추가하기</Title>
-      {cashModal && editing ? (<EditCashContainer closeModal={closeModal}
-          propertyType={propertyType}/>): (
-        <CashContainer
-          closeModal={closeModal}
-          propertyType={propertyType}
-        />
-      )}
+      {cashModal && editing ? <EditCashContainer closeModal={toggleModal} propertyType={propertyType} /> : <CashContainer closeModal={closeModal} propertyType={propertyType} />}
     </Main>
   );
 }

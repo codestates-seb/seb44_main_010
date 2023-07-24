@@ -6,6 +6,7 @@ import axios, { AxiosResponse } from "axios";
 import { getLocalstorage } from "../util/localStorage";
 import { useDispatch } from "react-redux";
 import { incrementRefreshKey } from "../redux/refreshSlice";
+// import { RootState } from "../redux/store";
 
 const Main = styled.div`
   position: absolute;
@@ -98,20 +99,27 @@ const ButtonContainer = styled.div`
 
 type CloseModalFunction = () => void;
 
-const propertyId = getLocalstorage('propertyId');
-console.log(propertyId);
+const propertyId = getLocalstorage("propertyId");
+// console.log(propertyId);
 
-export default function EditCashContainer({
-  closeModal,
-  propertyType,
-}: {
-  closeModal: CloseModalFunction;
-  propertyType: string;
-}) {
+export default function EditCashContainer({ closeModal, propertyType }: { closeModal: CloseModalFunction; propertyType: string }) {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState<number | null>(null);
   const userId = getLocalstorage("userId");
   const dispatch = useDispatch();
+
+  // 리덕스 store에 저장되어있는 자산데이터 가져오기
+  // const propertyResponse = useSelector((state: RootState) => {
+  //   return state.proFile.profileData?.data.propertyResponse;
+  // });
+
+  // propertyId가 현금인 것만 가져오기
+  // const propertyFilter = propertyResponse?.filter((el) => {
+  //   return el.propertyType === "현금";
+  // });
+
+  //
+  // const propertyId = propertyFilter?.propertyId
 
   const handleContainerClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -141,7 +149,7 @@ export default function EditCashContainer({
       amount: price,
       userId: userId,
       propertyType: propertyType,
-      propertyId: propertyId
+      propertyId: propertyId,
     };
     // const acessToken = getLocalstorage("acessToken");
     // axios.defaults.headers.common["Authorization"] = acessToken;
@@ -158,9 +166,7 @@ export default function EditCashContainer({
       })
       .catch((err) => {
         if (err.response) {
-          const errMessage = (
-            err.response as AxiosResponse<{ message: string }>
-          )?.data.message;
+          const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
           window.alert(errMessage);
           console.log(errMessage);
         } else {
@@ -177,38 +183,18 @@ export default function EditCashContainer({
         <CashImg src={Cash}></CashImg>
         <InputContainer>
           <div className="title">제목</div>
-          <TitleInput
-            onChange={handleTitleChange}
-            placeholder="제목을 입력하세요."
-            value={title}
-          />
+          <TitleInput onChange={handleTitleChange} placeholder="제목을 입력하세요." value={title} />
         </InputContainer>
         <InputContainer>
           <div className="title">금액</div>
-          <PriceInput
-            onChange={handlePriceChange}
-            placeholder="금액을 입력하세요."
-            value={price !== null ? price : ""}
-          />
+          <PriceInput onChange={handlePriceChange} placeholder="금액을 입력하세요." value={price !== null ? price : ""} />
           <div className="단위">원</div>
         </InputContainer>
         <ButtonContainer>
-          <AddButton
-            onClick={handleCancelClick}
-            width={20}
-            height={8}
-            backgroundcolor="white"
-            borderRadius={50}
-          >
+          <AddButton onClick={handleCancelClick} width={20} height={8} backgroundcolor="white" borderRadius={50}>
             취소하기
           </AddButton>
-          <AddButton
-            onClick={handleEditClick}
-            width={20}
-            height={8}
-            backgroundcolor="yellow"
-            borderRadius={50}
-          >
+          <AddButton onClick={handleEditClick} width={20} height={8} backgroundcolor="yellow" borderRadius={50}>
             수정하기
           </AddButton>
         </ButtonContainer>

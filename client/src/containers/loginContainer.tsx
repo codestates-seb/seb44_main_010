@@ -25,7 +25,6 @@ const CaptchaBox = styled.div`
 `;
 
 // const API_KEY = "6LdwszsnAAAAALN8_5ZRSwACts9StQCnOqmS_VrP";
-// const API_KEY = "6LeeeS0nAAAAAOmWGttGqobyMy0ltORyOnLvIA3H";
 const API_KEY = import.meta.env.VITE_RECAPTCHA_API_KEY;
 
 // 6LeeeS0nAAAAAOmWGttGqobyMy0ltORyOnLvIA3H
