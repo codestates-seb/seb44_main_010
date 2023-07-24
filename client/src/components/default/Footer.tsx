@@ -45,20 +45,20 @@ export default function Footer() {
         <FooterItem_2>
           <span>Front-End</span>
           <br />
-          <span>정지은 | google.com</span>
+          <span>정지은 | kindjjeegoogle.com</span>
           <br />
-          <span>정태현 | google.com</span>
+          <span>정태현 | wxg5483google.com</span>
           <br />
-          <span>채명수 | gmail.com</span>
+          <span>채명수 | coaudtn0276gmail.com</span>
         </FooterItem_2>
         <FooterItem_2>
           <span>Back-End</span>
           <br />
-          <span>이은호 | google.com</span>
+          <span>이은호 | yyh8087google.com</span>
           <br />
-          <span>백지희 | google.com</span>
+          <span>백지희 | a88271150google.com</span>
           <br />
-          <span>장태환 | gmail.com</span>
+          <span>장태환 | taehwanswgmail.com</span>
         </FooterItem_2>
       </FooterBox>
     </Main>

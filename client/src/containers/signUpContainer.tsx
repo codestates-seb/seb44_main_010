@@ -84,6 +84,7 @@ export default function SignUpContainer() {
       setCertification(true);
       axios.post(`/user/emailConfirm?email=${form.email}`).then((res) => {
         setConfirm({ ...confirm, number: res.data });
+        console.log(res.data);
       });
     }
   };
@@ -201,7 +202,7 @@ export default function SignUpContainer() {
           <CertificationButton onClick={hadleCheckConfirmNumber}>인증번호 확인</CertificationButton>
         </InputBox>
       )}
-      {confirm.check || confirm.value === "" ? null : (
+      {String(confirm.number) === String(confirm.value) || confirm.check || confirm.value === "" ? null : (
         <S.Text size={2} weight={600} color="red" marginBottom={3}>
           인증번호를 확인 해주세요.
         </S.Text>

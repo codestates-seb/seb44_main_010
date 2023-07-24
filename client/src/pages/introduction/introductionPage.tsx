@@ -18,10 +18,10 @@ export default function IntroductionPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const reduxText = useSelector((state: RootState) => {
-    return state.proFile;
-  });
-  console.log(reduxText);
+  // const reduxText = useSelector((state: RootState) => {
+  //   return state.proFile;
+  // });
+  // console.log(reduxText);
 
   const outerDivRef = useRef<HTMLDivElement>(null);
   // const [scrollIndex, setScrollIndex] = useState(1);

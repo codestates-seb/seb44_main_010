@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import * as S from "./loginCompletedPageStyled";
 import { AddButton } from "../../components/button/AddButton";
 import { useNavigate } from "react-router-dom";
-import axios, { AxiosResponse } from "axios";
-import { useDispatch, useSelector } from "react-redux";
+// import axios, { AxiosResponse } from "axios";
+import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
 import { getLocalstorage } from "../../util/localStorage";
-import { addProfile } from "../../redux/profileSlice";
+// import { addProfile } from "../../redux/profileSlice";
 
 const LoginCompletedPage: React.FC = () => {
   const [useName, setUseName] = useState("");
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // const reduxTest = useSelector((state: RootState) => {
   //   return state.proFile;
@@ -33,31 +33,31 @@ const LoginCompletedPage: React.FC = () => {
   }, [isLogin, navigate]);
 
   const handleService = () => {
-    const currentData = new Date();
-    const currentMonth = currentData.getMonth() + 1;
-    const userId = getLocalstorage("userId");
-    const acessToken = getLocalstorage("acessToken");
+    // const currentData = new Date();
+    // const currentMonth = currentData.getMonth() + 1;
+    // const userId = getLocalstorage("userId");
+    // const acessToken = getLocalstorage("acessToken");
 
-    axios.defaults.headers.common["Authorization"] = acessToken;
-    axios
-      .get(`/asset/myInfo/${userId}/${currentMonth}`, {
-        headers: {
-          "ngrok-skip-browser-warning": true,
-        },
-      })
-      .then((res) => {
-        // console.log(res.data);
-        dispatch(addProfile(res.data));
-      })
-      .catch((err) => {
-        if (err.response) {
-          const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
-          window.alert(errMessage);
-        } else {
-          console.error(err);
-          window.alert("An unknown error occurred.");
-        }
-      });
+    // axios.defaults.headers.common["Authorization"] = acessToken;
+    // axios
+    //   .get(`/asset/myInfo/${userId}/${currentMonth}`, {
+    //     headers: {
+    //       "ngrok-skip-browser-warning": true,
+    //     },
+    //   })
+    //   .then((res) => {
+    //     // console.log(res.data);
+    //     dispatch(addProfile(res.data));
+    //   })
+    //   .catch((err) => {
+    //     if (err.response) {
+    //       const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
+    //       window.alert(errMessage);
+    //     } else {
+    //       console.error(err);
+    //       window.alert("An unknown error occurred.");
+    //     }
+    //   });
 
     navigate("/");
   };
