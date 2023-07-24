@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from "react";
 // import DeleteIcon from "../../../assets/delete.svg";
 import YellowLeft from "../../../assets/yellowleft.svg";
 import YellowRight from "../../../assets/yellowright.svg";
+import carImg from "../../../assets/Car.svg";
+
 import { ApiResponse, PropertyResponse } from "../../../interface/asset";
 
 // interface Item {
@@ -43,6 +45,7 @@ const CarContainer = styled.div`
 
 const Top = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const CarName = styled.div`
@@ -81,15 +84,26 @@ const RightButton = styled.img`
   margin-left: 5rem;
 `;
 
+const CarImg = styled.div`
+  background: url(${carImg});
+  background-size: 100% 100%;
+  background-position: center;
+
+  margin-right: 2rem;
+
+  width: 4rem;
+  height: 4rem;
+`;
+
 export default function Car({ assetdata }: SavingAccountProps) {
   // const [data, setData] = useState<Item[]>([]);
   const [displayedData, setDisplayedData] = useState<PropertyResponse[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [carFilter, setCarFilter] = useState<PropertyResponse[]>([]); // carFilter 상태추가
   const CarBoxRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
-    if(assetdata){
+    if (assetdata) {
       const propertyResponse = assetdata?.propertyResponse;
       const filter = propertyResponse?.filter((e) => {
         return e.propertyType === "차";
@@ -99,7 +113,7 @@ export default function Car({ assetdata }: SavingAccountProps) {
         setCarFilter(filter);
       }
     }
-  }, [assetdata,currentIndex]);
+  }, [assetdata, currentIndex]);
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
@@ -124,9 +138,10 @@ export default function Car({ assetdata }: SavingAccountProps) {
           <CarContainer key={item.propertyId}>
             {/* <Delete onClick={() => handleDelete(item.id)} /> */}
             <Top>
+              <CarImg />
               <CarName>{item.title}</CarName>
             </Top>
-            <CarAmount>{item.amount}원</CarAmount>
+            <CarAmount>{item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</CarAmount>
           </CarContainer>
         ))}
       </CarList>
@@ -139,24 +154,24 @@ export default function Car({ assetdata }: SavingAccountProps) {
 }
 
 // useEffect(() => {
-  //   getData();
-  // }, []);
+//   getData();
+// }, []);
 
-  // const getData = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:3000/car");
-  //     const data = response.data;
-  //     setData(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+// const getData = async () => {
+//   try {
+//     const response = await axios.get("http://localhost:3000/car");
+//     const data = response.data;
+//     setData(data);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
-  // const handleDelete = async (id: number) => {
-  //   try {
-  //     await axios.delete(`http://localhost:3000/car/${id}`);
-  //     getData();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+// const handleDelete = async (id: number) => {
+//   try {
+//     await axios.delete(`http://localhost:3000/car/${id}`);
+//     getData();
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
