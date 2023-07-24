@@ -1,7 +1,11 @@
-import {useState} from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import {AddButton} from "../components/button/AddButton";
+import { AddButton } from "../components/button/AddButton";
 import Property from "../../src/assets/Property.svg";
+import axios, { AxiosResponse } from "axios";
+import { getLocalstorage } from "../util/localStorage";
+import { useDispatch } from "react-redux";
+import { incrementRefreshKey } from "../redux/refreshSlice";
 
 const Main = styled.div`
   position: absolute;
@@ -94,9 +98,12 @@ const ButtonContainer = styled.div`
 
 type CloseModalFunction = () => void;
 
-export default function PropertyContainer({closeModal}: {closeModal: CloseModalFunction}) {
+export default function PropertyContainer({ closeModal }: { closeModal: CloseModalFunction }) {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState<number | null>(null);
+  const userId = getLocalstorage("userId");
+
+  const dispatch = useDispatch();
 
   const handleContainerClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -119,11 +126,43 @@ export default function PropertyContainer({closeModal}: {closeModal: CloseModalF
   };
 
   const handleAddClick = () => {
-    const data = {
+    // 이 부분에 axios요청으로 데이터를 넣어줘야 할 것 같음
+    const Propertydata = {
       title: title,
-      price: price,
+      content: "내용임",
+      amount: price,
+      propertyType: "현금",
+      userId: userId,
     };
-    console.log(data);
+    // const acessToken = getLocalstorage("acessToken");
+
+    // axios.defaults.headers.common["Authorization"] = acessToken;
+    axios
+      .post("/property/post", Propertydata, {
+        headers: {
+          "ngrok-skip-browser-warning": true,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        dispatch(incrementRefreshKey());
+      })
+      .catch((err) => {
+        if (err.response) {
+          const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
+          window.alert(errMessage);
+          console.log(errMessage);
+        } else {
+          console.error(err);
+          window.alert("알 수없는 오류가 발생했습니다.");
+        }
+      });
+
+    // const data = {
+    //   title: title,
+    //   price: price,
+    // };
+    // console.log(data);
   };
 
   return (

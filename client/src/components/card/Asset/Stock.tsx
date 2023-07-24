@@ -1,13 +1,13 @@
 import styled from "styled-components";
-import axios from "axios";
-import { useState, useRef } from "react";
+// import axios from "axios";
+import { useState, useRef, useEffect } from "react";
 
-import DeleteIcon from "../../../assets/delete.svg";
+// import DeleteIcon from "../../../assets/delete.svg";
 import YellowLeft from "../../../assets/yellowleft.svg";
 import YellowRight from "../../../assets/yellowright.svg";
 import Stockimg from "../../../assets/svg/stock.svg";
 
-import { ApiResponse } from "../../../interface/asset";
+import { Account, ApiResponse } from "../../../interface/asset";
 
 // interface Item {
 //   id: number;
@@ -57,19 +57,19 @@ const StockName = styled.div`
   color: #414141;
 `;
 
-const Delete = styled.div`
-  cursor: pointer;
-  width: 3rem;
-  height: 3rem;
-  background-image: url(${DeleteIcon});
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin-left: 10rem;
+// const Delete = styled.div`
+//   cursor: pointer;
+//   width: 3rem;
+//   height: 3rem;
+//   background-image: url(${DeleteIcon});
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   margin-left: 10rem;
 
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-`;
+//   position: absolute;
+//   top: 2rem;
+//   right: 2rem;
+// `;
 
 const StockAmount = styled.div`
   font-size: 4rem;
@@ -111,7 +111,7 @@ const StockImg = styled.div`
 
 export default function Stock({ assetdata }: SavingAccountProps) {
   // const [data, setData] = useState<Item[]>([]);
-  // const [displayedData, setDisplayedData] = useState<Item[]>([]);
+  const [displayedData, setDisplayedData] = useState<Account[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const StockBoxRef = useRef<HTMLDivElement>(null);
 
@@ -127,11 +127,11 @@ export default function Stock({ assetdata }: SavingAccountProps) {
   //   getData();
   // }, []);
 
-  // useEffect(() => {
-  //   if (data.length > 0) {
-  //     setDisplayedData(data.slice(currentIndex, currentIndex + 3));
-  //   }
-  // }, [data, currentIndex]);
+  useEffect(() => {
+    if (stockFilter && stockFilter.length > 0) {
+      setDisplayedData(stockFilter.slice(currentIndex, currentIndex + 3));
+    }
+  }, [stockFilter, currentIndex]);
 
   // const getData = async () => {
   //   try {
@@ -143,14 +143,14 @@ export default function Stock({ assetdata }: SavingAccountProps) {
   //   }
   // };
 
-  const handleDelete = async (id: number) => {
-    try {
-      await axios.delete(`http://localhost:3000/stock/${id}`);
-      // getData();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleDelete = async (id: number) => {
+  //   try {
+  //     await axios.delete(`http://localhost:3000/stock/${id}`);
+  //     // getData();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
@@ -166,9 +166,9 @@ export default function Stock({ assetdata }: SavingAccountProps) {
 
   return (
     <Main ref={StockBoxRef}>
-      {(stockFilter?.length ?? 0) > 0 ? (
+      {(displayedData?.length ?? 0) > 0 ? (
         <StockList>
-          {stockFilter?.map((el) => (
+          {displayedData?.map((el) => (
             <StockContainer key={el.accountId}>
               {/* <Delete onClick={() => handleDelete(el.accountId)} /> */}
               <Top>

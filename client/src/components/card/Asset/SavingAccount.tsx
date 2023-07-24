@@ -1,20 +1,20 @@
 import styled from "styled-components";
-import axios, { AxiosResponse } from "axios";
+// import axios, { AxiosResponse } from "axios";
 import { useState, useRef, useEffect } from "react";
 
-import DeleteIcon from "../../../assets/delete.svg";
+// import DeleteIcon from "../../../assets/delete.svg";
 import YellowLeft from "../../../assets/yellowleft.svg";
 import YellowRight from "../../../assets/yellowright.svg";
 import Deposit from "../../../assets/svg/deposit.svg";
 
 import { Account, ApiResponse } from "../../../interface/asset";
-import { getLocalstorage } from "../../../util/localStorage";
+// import { getLocalstorage } from "../../../util/localStorage";
 
-interface El {
-  id: number;
-  bank_name: string;
-  bank_amount: number;
-}
+// interface El {
+//   id: number;
+//   bank_name: string;
+//   bank_amount: number;
+// }
 
 interface SavingAccountProps {
   assetdata?: ApiResponse["data"];
@@ -57,19 +57,19 @@ const BankName = styled.div`
   color: #414141;
 `;
 
-const Delete = styled.div`
-  cursor: pointer;
-  width: 3rem;
-  height: 3rem;
-  background-image: url(${DeleteIcon});
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin-left: 10rem;
+// const Delete = styled.div`
+//   cursor: pointer;
+//   width: 3rem;
+//   height: 3rem;
+//   background-image: url(${DeleteIcon});
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   margin-left: 10rem;
 
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-`;
+//   position: absolute;
+//   top: 2rem;
+//   right: 2rem;
+// `;
 
 const BankAmount = styled.div`
   font-size: 4rem;
@@ -143,25 +143,25 @@ export default function SavingAccount({ assetdata }: SavingAccountProps) {
   //   }
   // };
 
-  const handleDelete = (id: number) => {
-    const currentData = new Date();
-    const currentMonth = currentData.getMonth() + 1;
-    const userId = getLocalstorage("userId");
-    const acessToken = getLocalstorage("acessToken");
+  // const handleDelete = (id: number) => {
+  //   const currentData = new Date();
+  //   const currentMonth = currentData.getMonth() + 1;
+  //   const userId = getLocalstorage("userId");
+  //   const acessToken = getLocalstorage("acessToken");
 
-    axios.defaults.headers.common["Authorization"] = acessToken;
-    axios;
-    axios.delete(`/asset/myInfo/${userId}/${currentMonth}/${id}`).catch((err) => {
-      if (err.response) {
-        const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
-        window.alert(errMessage);
-        console.log(errMessage);
-      } else {
-        console.error(err);
-        window.alert("An unknown error occurred.");
-      }
-    });
-  };
+  //   axios.defaults.headers.common["Authorization"] = acessToken;
+  //   axios;
+  //   axios.delete(`/asset/myInfo/${userId}/${currentMonth}/${id}`).catch((err) => {
+  //     if (err.response) {
+  //       const errMessage = (err.response as AxiosResponse<{ message: string }>)?.data.message;
+  //       window.alert(errMessage);
+  //       console.log(errMessage);
+  //     } else {
+  //       console.error(err);
+  //       window.alert("An unknown error occurred.");
+  //     }
+  //   });
+  // };
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
@@ -177,9 +177,9 @@ export default function SavingAccount({ assetdata }: SavingAccountProps) {
 
   return (
     <Main ref={SavingAccountBoxRef}>
-      {(depositFilter?.length ?? 0) > 0 ? (
+      {displayedData.length > 0 ? (
         <SavingAccountList>
-          {depositFilter?.map((el) => (
+          {displayedData.map((el) => (
             <SavingAccountContainer key={el.accountId}>
               {/* <Delete onClick={() => handleDelete(el.accountId)} /> */}
               <Top>
