@@ -10,7 +10,7 @@ const acessToken = getLocalstorage("acessToken");
 
 axios.defaults.headers.common["Authorization"] = acessToken;
 
-axios.defaults.baseURL = "https://ef8b-61-43-126-143.ngrok-free.app/";
+axios.defaults.baseURL = "http://3.36.165.60:8080/";
 axios.defaults.withCredentials = true;
 
 function App() {
