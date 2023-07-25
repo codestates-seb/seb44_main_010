@@ -118,7 +118,7 @@ export default function EditCashContainer({ closeModal, propertyType }: { closeM
     return el.propertyType === "현금";
   });
 
-  console.log(propertyFilter);
+  // console.log(propertyFilter);
 
   // propertyResponse필터를 통해 현금만 들어있는 데이터의 propertyId 가져오기
   const propertyId = propertyFilter?.propertyId;
