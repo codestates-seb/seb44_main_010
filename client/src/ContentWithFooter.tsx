@@ -1,4 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
+import { styled } from "styled-components";
+
 import Footer from "../src/components/default/Footer";
 import IntroductionPage from "../src/pages/introduction/introductionPage";
 import LoginPage from "../src/pages/login/loginPage";
@@ -11,11 +13,44 @@ import CalendarPage from "../src/pages/consumption/calendarPage";
 import SummaryPage from "../src/pages/consumption/summaryPage";
 import ErrorPage from "../src/pages/error/404Page";
 import Nav from "./components/default/Nav";
+import Chatbot from "./containers/chatBotContainer";
+
+import chatBotIcon from "./assets/svg/profile2.svg";
+import { useState } from "react";
+
+const ChatbotIcon = styled.div`
+  cursor: pointer;
+
+  background-image: url(${chatBotIcon});
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+
+  margin-right: 2rem;
+
+  width: 13rem;
+  height: 13rem;
+
+  position: absolute;
+
+  right: 20rem;
+  bottom: 20rem;
+`;
 
 export default function ContentWithFooter() {
   const location = useLocation();
   const showFooter = location.pathname !== "/";
   const showNav = location.pathname !== "/completed";
+
+  const [chatbotClick, setChatbotClick] = useState(false);
+
+  const handleChatbotTrue = () => {
+    setChatbotClick(true);
+  };
+  const handleChatbotFalse = () => {
+    setChatbotClick(false);
+  };
+
   return (
     <>
       {showNav && <Nav />}
@@ -44,6 +79,9 @@ export default function ContentWithFooter() {
         {/* 404 페이지 */}
         <Route path="*" element={<ErrorPage />}></Route>
       </Routes>
+
+      <ChatbotIcon onClick={handleChatbotTrue} />
+      {chatbotClick && <Chatbot handleChatbotFalse={handleChatbotFalse} />}
 
       {showFooter && <Footer />}
     </>
