@@ -19,6 +19,7 @@ const Main = styled.div`
   border: 2px #dddddd;
   border-radius: 3rem;
   z-index: 3;
+  margin-top: 120rem;
 `;
 
 const Title = styled.div`
