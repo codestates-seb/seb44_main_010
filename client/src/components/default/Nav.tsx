@@ -218,7 +218,12 @@ export default function Nav() {
               <ProfileImg onClick={handleProfileImgClick}>
                 {modal ? (
                   <ProfileModal>
-                    <ProfileTextBox borderBottom={1}>
+                    <ProfileTextBox
+                      borderBottom={1}
+                      onClick={() => {
+                        navigate("/asset");
+                      }}
+                    >
                       마이페이지
                       <ProfilePolygon />
                     </ProfileTextBox>
