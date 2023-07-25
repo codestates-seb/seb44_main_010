@@ -240,8 +240,7 @@ export default function InputContaine ({ setShowInput, handleFetchData }:InputCo
       amount: price !== null ? (expenditureSelected ? -price : price) : null,
       category: category?.value || "",
       purpose: content ? content: "",
-      propertyId: 1 // 자산에서 처음 현금추가할때, 로컬스토리지에서 저장했던 ‘propertyId’를 가져온다
-
+      propertyId:  1 // 자산에서 처음 현금추가할때, 로컬스토리지에서 저장했던 ‘propertyId’를 가져온다
     };
     dayUpload(Consumptiondata)
       .then((response) => {
