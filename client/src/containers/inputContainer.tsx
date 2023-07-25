@@ -240,26 +240,38 @@ export default function InputContaine({ setShowInput, handleFetchData }: InputCo
   const offset = new Date().getTimezoneOffset() * 60000;
 
   const handleAddClick = () => {
-    //데이터 객체 생성
-    const Consumptiondata = {
-      paymentTime: selectedDate ? new Date(selectedDate.getTime() - offset).toISOString() : null,
-      paymentType: "현금",
-      amount: price !== null ? (expenditureSelected ? -price : price) : null,
-      category: category?.value || "",
-      purpose: content ? content : "",
-      propertyId: propertyId, // 자산에서 처음 현금추가할때, 로컬스토리지에서 저장했던 ‘propertyId’를 가져온다
-    };
-    dayUpload(Consumptiondata)
-      .then((response) => {
-        setShowInput(false);
-        handleFetchData();
-        console.log("데이터 추가 성공:", response.data);
-      })
-      .catch((error) => {
-        console.log("데이터 추가 실패:", error);
-      });
-  };
+    if (price === null || category === null || selectedDate === null) {
+      alert('Please fill in all the required fields.');
+      return;
+    }
 
+    const confirmMessage = '자산페이지의 현금을 넉넉히 추가하셨나요?\n현금잔액이 없다면, 소비를 등록할 수 없습니다';
+    const isConfirmed = window.confirm(confirmMessage);
+
+    if (isConfirmed) {
+      // 데이터 객체 생성
+      const Consumptiondata = {
+        paymentTime: selectedDate ? new Date(selectedDate.getTime() - offset).toISOString() : null,
+        paymentType: '현금',
+        amount: expenditureSelected ? -price : price,
+        category: category.value,
+        purpose: content || '',
+        propertyId: propertyId,
+      };
+      dayUpload(Consumptiondata)
+        .then((response) => {
+          setShowInput(false);
+          handleFetchData();
+          console.log('데이터 추가 성공:', response.data);
+        })
+        .catch((error) => {
+          console.log('데이터 추가 실패:', error);
+        });
+    } else {
+      // 유저가 취소를 눌렀을 때
+      setShowInput(false);
+    }
+  };
   return (
     <InputWrapper>
       <Title>현금내역 입력창</Title>
