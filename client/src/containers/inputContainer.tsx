@@ -8,8 +8,10 @@ import Dateimg from "../assets/svg/date.svg";
 import { AddButton } from "../components/button/AddButton";
 import { ContentInput, PriceInput } from "../components/input/ConsumptionInput";
 import DateInput from "../components/input/DateInput";
-import { CustomSelect } from "../components/input/ConsumptionInput"; 
+import { CustomSelect } from "../components/input/ConsumptionInput";
 import { dayUpload } from "../api/index";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 export const InputWrapper = styled.div`
   width: 25vw;
@@ -180,17 +182,25 @@ export const SignupButtonContainer = styled.div`
 type OptionType = { value: string; label: string };
 type HandleFetchDataFunction = () => void;
 
-interface InputContaienrProps{
-  setShowInput :React.Dispatch<React.SetStateAction<boolean>>;
-  handleFetchData:HandleFetchDataFunction;
+interface InputContaienrProps {
+  setShowInput: React.Dispatch<React.SetStateAction<boolean>>;
+  handleFetchData: HandleFetchDataFunction;
 }
 
-export default function InputContaine ({ setShowInput, handleFetchData }:InputContaienrProps){
+export default function InputContaine({ setShowInput, handleFetchData }: InputContaienrProps) {
   const [expenditureSelected, setExpenditureSelected] = useState(false);
   const [category, setCategory] = useState<OptionType | null>(null);
   const [content, setContent] = useState("");
   const [price, setPrice] = useState<number | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const propertyResponse = useSelector((state: RootState) => {
+    return state.proFile.profileData?.data.propertyResponse;
+  });
+  const propertyFilter = propertyResponse?.find((el) => {
+    return el.propertyType === "현금";
+  });
+  const propertyId = propertyFilter?.propertyId || null;
 
   const handleExpenditureClick = () => {
     setExpenditureSelected(!expenditureSelected);
@@ -211,8 +221,7 @@ export default function InputContaine ({ setShowInput, handleFetchData }:InputCo
   const handleCategoryChange = (option: OptionType | null) => {
     setCategory(option);
   };
-  
-  
+
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
@@ -233,14 +242,12 @@ export default function InputContaine ({ setShowInput, handleFetchData }:InputCo
   const handleAddClick = () => {
     //데이터 객체 생성
     const Consumptiondata = {
-      paymentTime: selectedDate
-      ? new Date(selectedDate.getTime() - offset).toISOString()
-      : null,
+      paymentTime: selectedDate ? new Date(selectedDate.getTime() - offset).toISOString() : null,
       paymentType: "현금",
       amount: price !== null ? (expenditureSelected ? -price : price) : null,
       category: category?.value || "",
-      purpose: content ? content: "",
-      propertyId:  1 // 자산에서 처음 현금추가할때, 로컬스토리지에서 저장했던 ‘propertyId’를 가져온다
+      purpose: content ? content : "",
+      propertyId: propertyId, // 자산에서 처음 현금추가할때, 로컬스토리지에서 저장했던 ‘propertyId’를 가져온다
     };
     dayUpload(Consumptiondata)
       .then((response) => {
@@ -258,86 +265,38 @@ export default function InputContaine ({ setShowInput, handleFetchData }:InputCo
       <Title>현금내역 입력창</Title>
       <InputThings>
         <ButtonAlignment>
-          <AddButton
-            width={15}
-            height={8}
-            backgroundcolor="white"
-            borderRadius={50}
-            marginTop={3}
-          >
-            <img
-              onClick={handleExpenditureClick}
-              src={expenditureSelected ? checkBox : yellowBox}
-              alt="icon"
-            ></img>
+          <AddButton width={15} height={8} backgroundcolor="white" borderRadius={50} marginTop={3}>
+            <img onClick={handleExpenditureClick} src={expenditureSelected ? checkBox : yellowBox} alt="icon"></img>
             <Text>수입</Text>
           </AddButton>
-          <AddButton
-            width={15}
-            height={8}
-            backgroundcolor="white"
-            borderRadius={50}
-            marginTop={3}
-          >
-            <img
-              onClick={handleExpenditureClick}
-              src={expenditureSelected ? yellowBox : checkBox}
-              alt="icon"
-            ></img>
+          <AddButton width={15} height={8} backgroundcolor="white" borderRadius={50} marginTop={3}>
+            <img onClick={handleExpenditureClick} src={expenditureSelected ? yellowBox : checkBox} alt="icon"></img>
             <Text>지출</Text>
           </AddButton>
         </ButtonAlignment>
         <CategoryContainer>
           <div className="title">카테고리</div>
-          <CustomSelect
-            options={categoryOptions}
-            value={category}
-            placeholder="카테고리를 선택해주세요."
-            onChange={(option: OptionType | null) => handleCategoryChange(option)}
-          ></CustomSelect>
+          <CustomSelect options={categoryOptions} value={category} placeholder="카테고리를 선택해주세요." onChange={(option: OptionType | null) => handleCategoryChange(option)}></CustomSelect>
         </CategoryContainer>
         <CategoryContainer>
           <div className="title">메모</div>
-          <ContentInput
-            onChange={handleContentChange}
-            placeholder="내용을 입력하세요."
-            value={content}
-          />
+          <ContentInput onChange={handleContentChange} placeholder="내용을 입력하세요." value={content} />
         </CategoryContainer>
         <PriceContainer>
           <div className="title">금액</div>
-          <PriceInput
-            onChange={handlePriceChange}
-            placeholder="금액을 입력하세요."
-            value={price !== null ? price : ""}
-          />
+          <PriceInput onChange={handlePriceChange} placeholder="금액을 입력하세요." value={price !== null ? price : ""} />
           <div className="단위">원</div>
         </PriceContainer>
         <DateContainer>
           <div className="title">날짜</div>
-          <DateInput
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
-          />
+          <DateInput selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
           <img src={Dateimg} alt="icon"></img>
         </DateContainer>
         <SignupButtonContainer>
-          <AddButton
-            onClick={handleCancelClick}
-            width={20}
-            height={8}
-            backgroundcolor="white"
-            borderRadius={50}
-          >
+          <AddButton onClick={handleCancelClick} width={20} height={8} backgroundcolor="white" borderRadius={50}>
             취소하기
           </AddButton>
-          <AddButton
-            onClick={handleAddClick}
-            width={20}
-            height={8}
-            backgroundcolor="yellow"
-            borderRadius={50}
-          >
+          <AddButton onClick={handleAddClick} width={20} height={8} backgroundcolor="yellow" borderRadius={50}>
             추가하기
           </AddButton>
         </SignupButtonContainer>
