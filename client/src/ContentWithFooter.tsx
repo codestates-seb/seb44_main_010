@@ -31,7 +31,7 @@ const ChatbotIcon = styled.div`
   width: 13rem;
   height: 13rem;
 
-  position: absolute;
+  position: fixed;
 
   right: 20rem;
   bottom: 20rem;

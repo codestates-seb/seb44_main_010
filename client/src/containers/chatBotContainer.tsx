@@ -277,6 +277,9 @@ const Chatbot = ({ handleChatbotFalse }: ChatbotProps) => {
               <br />
               <br />
               무엇이든 저에게 물어보세요!
+              <br />
+              <br />
+              챗봇 기능은 9 ~ 6시만 가능해요!
               <span>테스트 아이디는 뭔가요?</span>
               <span>메일 인증을 했는데 메일이 안와요</span>
             </StartContents>
