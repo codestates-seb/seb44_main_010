@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Page</title>
+    <script src="https://cdn.bootpay.co.kr/js/bootpay-3.3.6.min.js"></script>
+</head>
+<body>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // orderId를 현재 시간과 랜덤 숫자를 이용하여 동적으로 생성합니다.
+        const orderId = "order_" + new Date().getTime() + "_" + Math.floor(Math.random() * 1000000);
+
+        BootPay.request({
+            price: '1000',
+            application_id: "64a0405400be04001d180d86",
+            name: '블링블링 마스카라',
+            pg: 'inicis',
+            method: 'kakao',
+            show_agree_window: 0,
+            items: [
+                {
+                    item_name: '나는 아이템',
+                    qty: 1,
+                    unique: '123',
+                    price: 10,
+                    cat1: 'TOP',
+                    cat2: '티셔츠',
+                    cat3: '라운드 티',
+                }
+            ],
+            user_info: {
+                username: 'taehwanjang',
+                email: 'jjj@gmail.com',
+                addr: 'Anyangsi',
+                phone: '010-1234-4567'
+            },
+            order_id: orderId,
+            params: {callback1: '그대로 콜백받을 변수 1', callback2: '그대로 콜백받을 변수 2', customvar1234: '변수명도 마음대로'},
+            account_expire_at: '2023-12-23',
+            extra: {
+                start_at: '2023-07-2',
+                end_at: '2023-12-10',
+                vbank_result: 1,
+                quota: '0,2,3',
+                theme: 'purple',
+                custom_background: '#00a086',
+                custom_font_color: '#ffffff'
+            }
+        }).error(function (data) {
+            console.log(data);
+        }).cancel(function (data) {
+            console.log(data);
+        }).ready(function (data) {
+            console.log(data);
+        }).confirm(function (data) {
+            console.log(data);
+            var enable = true;
+            if (enable) {
+                BootPay.transactionConfirm(data);
+            } else {
+                BootPay.removePaymentWindow();
+            }
+        }).close(function (data) {
+            console.log(data);
+        }).done(function (data) {
+            console.log(data);
+
+            // Here we send the payment data to the server
+            fetch('http://localhost:8080/payment/complete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+    });
+</script>
+</body>
+</html>

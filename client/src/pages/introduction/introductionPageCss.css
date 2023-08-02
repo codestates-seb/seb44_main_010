@@ -1,0 +1,35 @@
+.main {
+  /* padding-top: 3rem; */
+  /* margin: 0; */
+  overflow-y: hidden;
+  margin-top: 3rem;
+}
+.outer {
+  height: 99vh;
+  overflow-y: auto;
+}
+
+/* 화면에서 스크롤바 안보이게 */
+.outer::-webkit-scrollbar {
+  display: none;
+}
+
+.inner {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 100px;
+}
+
+.bg-yellow {
+  background-color: #f7f6cf;
+}
+
+.bg-blue {
+  background-color: #b6d8f2;
+}
+
+.bg-pink {
+  background-color: #f4cfdf;
+}
