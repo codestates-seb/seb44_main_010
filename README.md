@@ -1,4 +1,4 @@
-# MoneyMade
+# 머니메이드(MoneyMade)
 
 ## Project 
 ### 개요
