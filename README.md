@@ -12,7 +12,7 @@
 |이름|역할|담당|이름|역할|담당|
 |--|--|--|--|--|--|
 |이은호|BE 팀장| AWS, 배포 자동화, 회의록 등 |정지은|FE 팀장| 소비 페이지 |
-|장태환|BE 팀원| 기능 구현 |채명수|FE 팀원| 메인 페이지, 로그인, 로그아웃 페이지, 클라이언트 배포 |
+|장태환|BE 팀원| 기능 구현 |채명수|FE 팀원| 메인 페이지, 로그인, 회원가입 페이지, 클라이언트 배포 |
 |백지희|BE 팀원| 챗봇 담당 |정태현|FE 팀원| 자산 페이지|
 
 ## 프로젝트 기술 스택
@@ -51,8 +51,42 @@
 <img width="70%" alt="스크린샷 2023-08-02 오후 3 50 17" src="https://github.com/codestates-seb/seb44_main_010/assets/124559717/184288b6-fbdb-44d0-a8c5-e7f79494616c"> 
 </p>
 
-회원가입시 사용되는 메일을 통해 [**이메일 인증하기**](https://velog.io/@coaudtn0276/Project-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%EB%A9%94%EC%9D%BC-%EC%9D%B8%EC%A6%9D-%EA%B8%B0%EB%8A%A5%EA%B5%AC%ED%98%84) 버튼을 누르면 메일을 통해 인증번호 전송.
+- 회원가입시 사용되는 메일을 통해 [**이메일 인증하기**](https://velog.io/@coaudtn0276/Project-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%EB%A9%94%EC%9D%BC-%EC%9D%B8%EC%A6%9D-%EA%B8%B0%EB%8A%A5%EA%B5%AC%ED%98%84) 버튼을 누르면 메일을 통해 인증번호 전송.
 
+<p align="center">
+<img width="70%" alt="스크린샷 2023-08-02 오후 3 50 17" src="https://github.com/codestates-seb/seb44_main_010/assets/124559717/f85b3fbf-790a-4885-87d5-adf7d7974579"> 
+</p>
+
+- 알맞은 메일주소와 메일을 통해 받은 인증번호를 알맞게 넣으면 가입 완료버튼 활성화
+
+#### 2. 로그인 페이지
+<p align="center">
+<img width="70%" alt="스크린샷 2023-08-02 오후 3 50 17" src="https://github.com/codestates-seb/seb44_main_010/assets/124559717/4a4e5fad-d21c-462a-b0fc-50f8aca76946"> 
+</p>
+
+- 회원가입이된 아이디와 비밀번호, [**reCAPTCHA 인증**](https://velog.io/@coaudtn0276/ProjectReact%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-google-reCAPTCHA) 까지 확인이 되면 로그인버튼이 나오면서 로그인이 가능하게 구현
+
+<p align="center">
+<img width="70%" alt="스크린샷 2023-08-02 오후 3 50 17" src="https://github.com/codestates-seb/seb44_main_010/assets/124559717/6bc9f123-0af3-4b32-9a08-0bfae0a116c1"> 
+</p>
+
+- 로그인 완료 후 Local Storage를 통해 발급받은 [**토큰**](https://velog.io/@coaudtn0276/Project-%ED%86%A0%ED%81%B0%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84), 이름, userId를 저장하고 React-toolkit을 이용해 로그인 상태의 유무 확인
+
+#### 3. 서버로부터 받은 Profile데이터 Redux-toolkit으로 저장 후 사용
+<p align="center">
+<img width="30%" alt="스크린샷 2023-08-02 오후 3 50 17" src="https://github.com/codestates-seb/seb44_main_010/assets/124559717/26468ad1-cd32-4083-a83f-8ad44dbb10ea"> 
+</p>
+
+- Profile 컴포넌트의 경우 서비스하는 페이지마다 들어가야하는 데이터였기 때문에 [**Redux-toolkit**](https://velog.io/@coaudtn0276/Project-Redux%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-api%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%80%EC%9E%A5) 으로 저장 후 사용
+
+#### 4. 챗봇 UI
+<p align="center">
+<img width="30%" alt="스크린샷 2023-08-02 오후 3 50 17" src="https://github.com/codestates-seb/seb44_main_010/assets/124559717/fde30c45-2efc-4f84-9895-54a19b7e973c"> 
+</p>
+
+- Dialogflow로 만들어진 서버와 통신 후, 질문에 대한 답변 데이터를 챗봇에 구현
+
+  
 ### BE
 #### 이은호
 
@@ -61,7 +95,13 @@
 #### 장태환
 ## 프로젝트 한계 및 개선 방안
 ### FE
+#### 한계
+- 프로젝트 초기 단계에서 웹과 앱을 동시에 구현하기 위해 PWA 셋팅을 하였지만 후반으로 갈 수록 PWA에 관해서는 다뤄보지 못함.
+프로젝트를 반응형으로 만들면 간단하게 해결될 문제일 줄 알았는데 반응형을 좀 더 정교하게 만들었어야 했다는 생각이 듦.
+- 메인페이지 섹션별 스크롤 이벤트를 구현 하였는데 마우스 휠로는 구현이 잘 됬지만 트랙패드의 경우 버벅거리는 에러를 발견.
 
-
+#### 개선 방안
+- 모바일까지 생각한 반응형 웹의 경우 최소 크기에서부터 컴포넌트들을 배치 하면서 점점 페이지 크기를 키워가면서 구현.
+  
 ### BE
 
