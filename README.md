@@ -48,7 +48,7 @@
 #### 채명수
 #### 1. 회원가입 페이지
 <p align="center">
-<img width="70%" alt="스크린샷 2023-08-02 오후 3 50 17" src="https://github.com/codestates-seb/seb44_main_010/assets/124559717/a89950ee-2f5b-421c-b6e2-36a2452d1355"> 
+<img width="70%" alt="스크린샷 2023-08-02 오후 3 50 17" src="https://github.com/codestates-seb/seb44_main_010/assets/124559717/184288b6-fbdb-44d0-a8c5-e7f79494616c"> 
 </p>
 
 회원가입시 사용되는 메일을 통해 [**이메일 인증하기**](https://velog.io/@coaudtn0276/Project-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%EB%A9%94%EC%9D%BC-%EC%9D%B8%EC%A6%9D-%EA%B8%B0%EB%8A%A5%EA%B5%AC%ED%98%84) 버튼을 누르면 메일을 통해 인증번호 전송.
