@@ -10,7 +10,7 @@ const acessToken = getLocalstorage("acessToken");
 
 axios.defaults.headers.common["Authorization"] = acessToken;
 
-axios.defaults.baseURL = "https://app.moneymade.site";
+axios.defaults.baseURL = "https://moneymade.site/";
 // axios.defaults.baseURL = "https://7a77-58-228-90-138.ngrok-free.app";
 axios.defaults.withCredentials = true;
 

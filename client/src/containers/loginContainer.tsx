@@ -40,6 +40,7 @@ export default function LoginContainer() {
   const [captchaSuccess, setCaptchaSuccess] = useState("");
 
   // console.log(captchaValue);
+  console.log(captchaSuccess);
 
   const dispatch = useDispatch();
   const isLogined = useSelector((state: RootState) => {
