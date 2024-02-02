@@ -24,7 +24,7 @@ const CaptchaBox = styled.div`
   margin-bottom: 3rem;
 `;
 
-// const API_KEY = import.meta.env.VITE_RECAPTCHA_API_KEY;
+const API_KEY = import.meta.env.VITE_RECAPTCHA_API_KEY;
 // const API_KEY = "6LdDAWQpAAAAAExd8SKTP-kXR2PbHMQRmTPHexYT";
 
 // console.log(import.meta.env.VITE_RECAPTCHA_API_KEY === "6LdDAWQpAAAAAExd8SKTP-kXR2PbHMQRmTPHexYT");
@@ -177,7 +177,7 @@ export default function LoginContainer() {
           </S.Text>
         )}
         <CaptchaBox>
-          <ReCAPTCHA sitekey={import.meta.env.VITE_RECAPTCHA_API_KEY} onChange={handleCaptcha} onExpired={handleCaptchaExpired} />
+          <ReCAPTCHA sitekey={API_KEY} onChange={handleCaptcha} onExpired={handleCaptchaExpired} />
         </CaptchaBox>
         {captchaSuccess === "success" ? (
           <AddButton backgroundcolor="yellow" width={95} height={10} borderRadius={10} marginBottom={3}>
