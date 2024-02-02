@@ -24,3 +24,5 @@ src/data/testdata.json
 *.sln
 *.sw?
 introductionPageCss
+
+.env
