@@ -25,9 +25,6 @@ const CaptchaBox = styled.div`
 `;
 
 const API_KEY = import.meta.env.VITE_RECAPTCHA_API_KEY;
-// const API_KEY = "6LdDAWQpAAAAAExd8SKTP-kXR2PbHMQRmTPHexYT";
-
-// console.log(import.meta.env.VITE_RECAPTCHA_API_KEY === "6LdDAWQpAAAAAExd8SKTP-kXR2PbHMQRmTPHexYT");
 
 export default function LoginContainer() {
   const [email, setEmail] = useState("");
